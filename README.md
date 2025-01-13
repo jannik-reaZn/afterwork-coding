@@ -31,7 +31,8 @@ The project setup is done with conda. Follow the [instructions](https://docs.con
 - Create conda environment in the terminal by executing `conda env create -f environment.yml`
 - Afterwards activate the environment `conda activate afterwork-coding`
 - Within VSCode the installed python version needs to be selected as a interpreter. Open any .py file. In the bottom right corner of VSCode the interpreter can be selected. Select the one for `afterwork-coding`.
-- Run the backend locally `uvicorn main:app --reload`
+- Run the backend in debug mode by selecting the `Run and Debug` icon in the left panel of VSCode
+- Select `Python: FastApi (afterwork coding)`
 - Open the server `http://127.0.0.1:8000`
 
 # Git Commands
