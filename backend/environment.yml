@@ -1,0 +1,7 @@
+name: afterwork-coding
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.12.8
+  - fastapi=0.115.6
