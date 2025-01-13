@@ -1,3 +1,5 @@
+# About
+
 # Frontend
 
 The frontend setup is made with [Vite](https://vite.dev/guide/).
@@ -19,6 +21,18 @@ Verify wether npm is installed via `npm -v`.
 - Open the server `http://localhost:5173/`
 
 # Backend
+
+[FastApi](https://fastapi.tiangolo.com/) is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
+
+## Conda
+
+The project setup is done with conda. Follow the [instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html) for installing conda on windows.
+
+- Create conda environment in the terminal by executing `conda env create -f environment.yml`
+- Afterwards activate the environment `conda activate afterwork-coding`
+- Within VSCode the installed python version needs to be selected as a interpreter. Open any .py file. In the bottom right corner of VSCode the interpreter can be selected. Select the one for `afterwork-coding`.
+- Run the backend locally `uvicorn main:app --reload`
+- Open the server `http://127.0.0.1:8000`
 
 # Git Commands
 
