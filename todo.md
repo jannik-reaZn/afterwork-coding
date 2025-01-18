@@ -4,7 +4,7 @@
 - [ ] Vue Router
 - [ ] Vitest
 - [ ] Pinia
-- [ ] Typescripüt
+- [ ] Typescript
 - [ ] Eslint
 - [ ] Prettier
 - [ ] Zod
