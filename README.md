@@ -40,7 +40,7 @@ The project setup is done with conda. Follow the [instructions](https://docs.con
 ## Pull
 
 1. Click on the `Source Control` icon in the left panel
-2. In the section `Source Contro` click the three dots
+2. In the section `Source Control` click the three dots
 3. Select `pull`
 
 Alternatively run `git pull` in the terminal.
