@@ -3,9 +3,9 @@
 - [x] Vue
 - [x] Axios
 - [x] Vue Router
+- [x] Typescript
+- [x] Pinia
 - [ ] Vitest
-- [ ] Pinia
-- [ ] Typescript
 - [ ] Eslint
 - [ ] Prettier
 - [ ] Zod
@@ -15,7 +15,7 @@
 # Backend
 
 - [x] FastApi
-- [ ] Roues Blueprints
+- [ ] Routes Blueprints
 - [ ] Pytest + Code Coverage
 - [ ] SQLModel
 - [ ] Settings and Environment

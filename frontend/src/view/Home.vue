@@ -1,6 +1,8 @@
 <template>
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <button type="button" @click="increment">
+      count is {{ counterStore.count }}
+    </button>
   </div>
   <div>
     <RouterLink to="/example">Go to Example View</RouterLink>
@@ -8,8 +10,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-const count = ref(0);
+import { useCounterStore } from "@/store/counter";
+
+const counterStore = useCounterStore();
+
+const increment = () => {
+  counterStore.increment();
+};
 </script>
 
 <style scoped></style>

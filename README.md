@@ -24,6 +24,10 @@ Verify wether npm is installed via `npm -v`.
 
 For routing in a Vue application the library [Vue Router](https://router.vuejs.org/) is used.
 
+### Pinia Store
+
+[Pinia](https://pinia.vuejs.org/) is a store library for Vue, it allows you to share a state across components/pages. For pinia the [setup stores](https://pinia.vuejs.org/core-concepts/#Setup-Stores) should be used to keep as close to Vue Composition API's setup function.
+
 # Backend
 
 [FastApi](https://fastapi.tiangolo.com/) is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
