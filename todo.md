@@ -1,7 +1,8 @@
 # Frontend
 
 - [x] Vue
-- [ ] Vue Router
+- [x] Axios
+- [x] Vue Router
 - [ ] Vitest
 - [ ] Pinia
 - [ ] Typescript
