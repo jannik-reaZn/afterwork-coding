@@ -4,11 +4,15 @@
 
 The frontend setup is made with [Vite](https://vite.dev/guide/).
 
+<<<<<<< HEAD
 In Vue werden Websites in Komponenten zerlegt, welche jeweils HTML-Block, Style und Script in einer Datei vereinen. Diese werden anschließend in der übergelagerten `App.vue` importiert und ergeben die eigentliche Website. Komponenten sind im Ordner `src\components` gespeichert.
 
 Werden verschiedene Ansichten der Website
 
 ## Node
+=======
+### Node
+>>>>>>> 889d83b1d765f3d1c31a52f44a220cdb30563ab9
 
 Node.js is a JavaScript runtime built on Chrome's V8 engine, designed for executing JavaScript code server-side.Its package ecosystem, npm (Node Package Manager), provides access to a vast collection of libraries and tools, enabling rapid development and scalability.
 
@@ -17,14 +21,31 @@ Install the latest version of [node](https://nodejs.org/en/download). Download t
 Verify wether node is installed via `node -v`.
 Verify wether npm is installed via `npm -v`.
 
-## Setup
+### Setup
 
 - To run the frontend locally go into the frontend directory via `cd frontend`. Install
 - Install the frontend dependencies with `npm install`
 - Run the frontend with `npm run dev`
 - Open the server `http://localhost:5173/`
 
+<<<<<<< HEAD
 Während der Entwicklung wird das Frontend in einer speziellen Konfiguration geladen. Diese ist näher in der Datei `package.json` spezifizert. Außerdem finden sich dort auch die weiteren Möglichkeiten, das Frontend zu starten.
+=======
+### Router
+
+For routing in a Vue application the library [Vue Router](https://router.vuejs.org/) is used.
+
+### Pinia Store
+
+[Pinia](https://pinia.vuejs.org/) is a store library for Vue, it allows you to share a state across components/pages. For pinia the [setup stores](https://pinia.vuejs.org/core-concepts/#Setup-Stores) should be used to keep as close to Vue Composition API's setup function.
+
+### Testing
+
+For testing [Vitest](https://vitest.dev/) is used. Each test should be located in the `frontend/tests` folder. Each test needs to include `<name>.test.ts`. To run tests for the frontend, follow these steps:
+
+- Go into the frontend folder via `cd frontend`
+- Execute `npm run test`
+>>>>>>> 889d83b1d765f3d1c31a52f44a220cdb30563ab9
 
 # Backend
 
@@ -50,7 +71,7 @@ To check whether someone updated the branch or if you are generally up-to-date e
 ## Pull
 
 1. Click on the `Source Control` icon in the left panel
-2. In the section `Source Contro` click the three dots
+2. In the section `Source Control` click the three dots
 3. Select `pull`
 
 Alternatively run `git pull` in the terminal.

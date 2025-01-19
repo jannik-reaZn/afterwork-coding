@@ -1,12 +1,13 @@
 # Frontend
 
 - [x] Vue
-- [ ] Vue Router
-- [ ] Vitest
-- [ ] Pinia
-- [ ] Typescript
+- [x] Axios
+- [x] Vue Router
+- [x] Typescript
+- [x] Pinia
+- [x] Vitest
+- [x] Prettier
 - [ ] Eslint
-- [ ] Prettier
 - [ ] Zod
 - [ ] Vue DevTools
 - [ ] Auto Import (unplugging-auto-import)
@@ -14,7 +15,7 @@
 # Backend
 
 - [x] FastApi
-- [ ] Roues Blueprints
+- [ ] Routes Blueprints
 - [ ] Pytest + Code Coverage
 - [ ] SQLModel
 - [ ] Settings and Environment
