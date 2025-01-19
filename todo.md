@@ -6,8 +6,8 @@
 - [x] Typescript
 - [x] Pinia
 - [x] Vitest
+- [x] Prettier
 - [ ] Eslint
-- [ ] Prettier
 - [ ] Zod
 - [ ] Vue DevTools
 - [ ] Auto Import (unplugging-auto-import)
