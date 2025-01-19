@@ -4,6 +4,10 @@
 
 The frontend setup is made with [Vite](https://vite.dev/guide/).
 
+In Vue werden Websites in Komponenten zerlegt, welche jeweils HTML-Block, Style und Script in einer Datei vereinen. Diese werden anschließend in der übergelagerten `App.vue` importiert und ergeben die eigentliche Website. Komponenten sind im Ordner `src\components` gespeichert.
+
+Werden verschiedene Ansichten der Website
+
 ## Node
 
 Node.js is a JavaScript runtime built on Chrome's V8 engine, designed for executing JavaScript code server-side.Its package ecosystem, npm (Node Package Manager), provides access to a vast collection of libraries and tools, enabling rapid development and scalability.
@@ -19,6 +23,8 @@ Verify wether npm is installed via `npm -v`.
 - Install the frontend dependencies with `npm install`
 - Run the frontend with `npm run dev`
 - Open the server `http://localhost:5173/`
+
+Während der Entwicklung wird das Frontend in einer speziellen Konfiguration geladen. Diese ist näher in der Datei `package.json` spezifizert. Außerdem finden sich dort auch die weiteren Möglichkeiten, das Frontend zu starten.
 
 # Backend
 
@@ -36,6 +42,10 @@ The project setup is done with conda. Follow the [instructions](https://docs.con
 - Open the server `http://127.0.0.1:8000`
 
 # Git Commands
+
+## Status
+
+To check whether someone updated the branch or if you are generally up-to-date enter `git status` in the terminal.
 
 ## Pull
 
