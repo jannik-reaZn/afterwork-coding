@@ -5,7 +5,7 @@
 - [x] Vue Router
 - [x] Typescript
 - [x] Pinia
-- [ ] Vitest
+- [x] Vitest
 - [ ] Eslint
 - [ ] Prettier
 - [ ] Zod

@@ -28,6 +28,13 @@ For routing in a Vue application the library [Vue Router](https://router.vuejs.o
 
 [Pinia](https://pinia.vuejs.org/) is a store library for Vue, it allows you to share a state across components/pages. For pinia the [setup stores](https://pinia.vuejs.org/core-concepts/#Setup-Stores) should be used to keep as close to Vue Composition API's setup function.
 
+### Testing
+
+For testing [Vitest](https://vitest.dev/) is used. Each test should be located in the `frontend/tests` folder. Each test needs to include `<name>.test.ts`. To run tests for the frontend, follow these steps:
+
+- Go into the frontend folder via `cd frontend`
+- Execute `npm run test`
+
 # Backend
 
 [FastApi](https://fastapi.tiangolo.com/) is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
