@@ -78,3 +78,23 @@ Alternatively run `git pull` in the terminal.
 4. Then click `Push`
 
 Alternatively run `git add .`, `git commit -m "message..."` and `git push`
+
+# GitHub
+
+## Branch Protection
+
+- **Require a pull request before merging**
+
+  All commits must be made to a non-protected branch and submitted via a pull request before they can be merged into a branch that matches this rule.
+
+- **Require approvals**
+
+  Pull requests targeting a matching branch require a number of approvals and no changes requested before they can be merged. Required nunmber of of approvals before merging is 1.
+
+- **Require approval of the most recent reviewable push**
+
+  Whether the most recent reviewable push must be approved by someone other than the person who pushed it.
+
+- **Require conversation resolution before merging**
+
+  All conversations on code must be resolved before a pull request can be merged into a branch that matches this rule.
