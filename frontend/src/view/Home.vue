@@ -1,5 +1,6 @@
 <template>
   <div class="card">
+    <Button label="Verify" />
     <button type="button" @click="increment">
       count is {{ counterStore.count }}
     </button>

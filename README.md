@@ -8,7 +8,7 @@ In Vue werden Websites in Komponenten zerlegt, welche jeweils HTML-Block, Style 
 
 Werden verschiedene Ansichten der Website
 
-## Node
+### Node
 
 Node.js is a JavaScript runtime built on Chrome's V8 engine, designed for executing JavaScript code server-side.Its package ecosystem, npm (Node Package Manager), provides access to a vast collection of libraries and tools, enabling rapid development and scalability.
 
@@ -25,6 +25,47 @@ Verify wether npm is installed via `npm -v`.
 - Open the server `http://localhost:5173/`
 
 Während der Entwicklung wird das Frontend in einer speziellen Konfiguration geladen. Diese ist näher in der Datei `package.json` spezifizert. Außerdem finden sich dort auch die weiteren Möglichkeiten, das Frontend zu starten.
+
+### UI Framework
+
+In this project [PrimeVue](https://primevue.org/) is used as an UI framework. PrimeVue is a rich component library for Vue.js, offering a wide range of pre-built UI components, including forms, tables, charts, and interactive widgets. It supports modern features like themes, customizable styling, and accessibility compliance. It includes
+
+- **Component Richness:** Includes commonly used components such as buttons, dropdowns, and data tables, as well as advanced ones like calendars and charts.
+
+- **Theming Support:** Offers a variety of pre-built themes and the ability to create custom themes.
+
+- **Responsive Design:** Components are designed to adapt to different screen sizes seamlessly.
+
+The configuration of PrimeVue is done in the `main.ts` file. Different themes such as `Aura` can be installed and used as a preset. Different components need to be imported individually and set to `app.component`. In the following there is a basic setup is shown:
+
+```ts title="main.ts"
+import { createApp } from "vue";
+import App from "./App.vue";
+import PrimeVue from "primevue/config";
+import Aura from "@primevue/themes/aura"; // theme
+import Button from "primevue/button"; // component
+
+const app = createApp(App);
+app.use(PrimeVue, {
+  theme: {
+    preset: Aura,
+  },
+});
+app.component("Button", Button);
+app.mount("#app");
+```
+
+The installed components can be used within vue components directly without any further imports.
+
+```ts
+<template>
+  <Button label="Verify" />
+</template>
+
+<script setup lang="ts"></script>
+
+<style scoped></style>
+```
 
 ### Router
 
