@@ -5,13 +5,8 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'LogIn',
-  }
-</script>
+<script setup></script>
 
-<!-- Beschränkt den Style auf diese Datei -->
 <style scoped>
   div {
     background-color: rgba(160, 100, 224, 0.034);

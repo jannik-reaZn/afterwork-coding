@@ -83,13 +83,19 @@ Alternatively run `git add .`, `git commit -m "message..."` and `git push`
 
 ## Branch Protection
 
+- **Restrict deletions**
+  Only allow users with bypass permissions to delete matching refs.
+
 - **Require a pull request before merging**
 
   All commits must be made to a non-protected branch and submitted via a pull request before they can be merged into a branch that matches this rule.
 
 - **Require approvals**
 
-  Pull requests targeting a matching branch require a number of approvals and no changes requested before they can be merged. Required nunmber of of approvals before merging is 1.
+  Pull requests targeting a matching branch require a number of approvals and no changes requested before they can be merged. Required number of of approvals before merging is 1 (develop) and 2 (main).
+
+- **Dismiss stale pull request approvals when new commits are pushed**
+  New, reviewable commits pushed will dismiss previous pull request review approvals.
 
 - **Require approval of the most recent reviewable push**
 
@@ -98,3 +104,6 @@ Alternatively run `git add .`, `git commit -m "message..."` and `git push`
 - **Require conversation resolution before merging**
 
   All conversations on code must be resolved before a pull request can be merged into a branch that matches this rule.
+
+- **Block force pushes**
+  Prevent users with push access from force pushing to refs.
