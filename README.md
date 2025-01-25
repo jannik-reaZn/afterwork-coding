@@ -86,7 +86,7 @@ For testing [Vitest](https://vitest.dev/) is used. Each test should be located i
 
 [FastApi](https://fastapi.tiangolo.com/) is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
 
-## Routing
+### Routing
 
 The project backend is built using FastAPI, and `APIRouter` is utilized to organize and modularize the API endpoints. APIRouter allows you to group routes based on functionality or features, making the application more maintainable and scalable.
 
@@ -129,7 +129,45 @@ app = FastAPI()
 app.include_router(users_router)
 ```
 
-## Testing
+### Database
+
+In this project all CRUD operations (create, read, update, delete) are made on a relational database, more specifically SQLite. The creation of the database connection and the SQLite setting are within the `database.py`. For local development and testing SQLite is fine, but in a production environment more robust databases such as PostgreSQL, MySQL or MariaDB should be considered.
+
+All database related operations are made by `SQLAlchemy`. The `get_db` function is a dependency that will be used to create a new database session for each request following the principles of `Dependency Injection`. This setup allows to inject different session into the backend endpoints as dependencies for easier testing.
+
+```python
+from sqlmodel import create_engine, SQLModel, Session
+from sqlalchemy.orm import sessionmaker
+
+SQLITE_DATABASE_URL = "sqlite:///backend/development.db"
+
+engine = create_engine(
+    SQLITE_DATABASE_URL, echo=True, connect_args={"check_same_thread": False}
+)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+def get_db():
+    with Session(engine) as session:
+        yield session
+```
+
+### Database Table Definitions
+
+The database table definitions are stored in the `db` folder. It relys on `SQLModel`, is built on top of `SQLAlchemy` and `Pydantic` for data validation. The `Item` class is very similar to a Pydantic model, altough `table=True` tells SQLModel that this is a table model, it should represent a table in the SQL database, it's not just a data model. `Field(default=None, primary_key=True)` tells SQLModel that the id is the primary key in the SQL database. SQLModel knows that how to handle pythons string and int types into the respective database types (e.g. TEXT or VARCHAR).
+
+```python
+from sqlmodel import SQLModel, Field
+from typing import Optional
+
+class Item(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+```
+
+### Testing
 
 [Pytest](https://docs.pytest.org/en/stable/) is a powerful testing framework for Python. It simplifies the process of writing and running tests, supports a wide range of test types, and provides a rich ecosystem of plugins.
 
@@ -155,7 +193,23 @@ def test_example():
   assert response.json() == {"message": "Welcome to FastAPI with Conda!"}
 ```
 
-## Conda
+Before writing any tests, they should be keept isolated, independent and repeatable. This means tests can run in any order. This means tests can run in any order. It is best practice to abstract the implementation detail. To handle all of this, Pytest offers `fixtures` for setup and teardown functions. For testing, a separate test database in SQLite is created to avoid using the real database and causing side effects. That setup is part of the `conftest.py` file. It created a test database in SQLite and sets up the test client for the FastAPI app. The test client is used in the tests to make requests to the app endpoints and test its CRUD operations.
+
+### HTTP Response Codes
+
+Every http request has a response with a status code that indicate the state of the response. Responses are grouped in five classes and can be viewed in detail [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+- Informational responses (100–199)
+- Successful responses (200–299)
+- Redirection messages (300–399)
+- Client error responses (400–499)
+- Server error responses (500–599)
+
+### Swagger and OpenAPI
+
+For endpoint documentation FastApi provides API documentation, so called `Swagger UI`, which can be found under `http://127.0.0.1:8000/docs`.
+
+### Conda
 
 The project setup is done with conda. Follow the [instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html) for installing conda on windows.
 
@@ -168,11 +222,11 @@ The project setup is done with conda. Follow the [instructions](https://docs.con
 
 # Git Commands
 
-## Status
+### Status
 
 To check whether someone updated the branch or if you are generally up-to-date enter `git status` in the terminal.
 
-## Pull
+### Pull
 
 1. Click on the `Source Control` icon in the left panel
 2. In the section `Source Control` click the three dots
@@ -180,7 +234,7 @@ To check whether someone updated the branch or if you are generally up-to-date e
 
 Alternatively run `git pull` in the terminal.
 
-## Push
+### Push
 
 1. Click on the `Source Control` icon in the left panel
 2. In the section `Changes` click on the plus button to `Stage Changes`
@@ -191,7 +245,7 @@ Alternatively run `git add .`, `git commit -m "message..."` and `git push`
 
 # GitHub
 
-## Branch Protection
+### Branch Protection
 
 - **Restrict deletions**
   Only allow users with bypass permissions to delete matching refs.

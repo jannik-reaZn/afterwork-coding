@@ -6,7 +6,13 @@ from ..database import get_db
 router = APIRouter(prefix="/items", tags=["items"])
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=Item)
+@router.post(
+    "/",
+    status_code=status.HTTP_201_CREATED,
+    response_model=Item,
+    summary="Create an item",
+    description="Create an item with all the information id,  name,  description, price and is_available.",
+)
 def create_item(item: Item, session: Session = Depends(get_db)):
     session.add(item)
     session.commit()
