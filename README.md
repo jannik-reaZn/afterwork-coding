@@ -4,15 +4,11 @@
 
 The frontend setup is made with [Vite](https://vite.dev/guide/).
 
-<<<<<<< HEAD
 In Vue werden Websites in Komponenten zerlegt, welche jeweils HTML-Block, Style und Script in einer Datei vereinen. Diese werden anschließend in der übergelagerten `App.vue` importiert und ergeben die eigentliche Website. Komponenten sind im Ordner `src\components` gespeichert.
 
 Werden verschiedene Ansichten der Website
 
 ## Node
-=======
-### Node
->>>>>>> 889d83b1d765f3d1c31a52f44a220cdb30563ab9
 
 Node.js is a JavaScript runtime built on Chrome's V8 engine, designed for executing JavaScript code server-side.Its package ecosystem, npm (Node Package Manager), provides access to a vast collection of libraries and tools, enabling rapid development and scalability.
 
@@ -28,9 +24,8 @@ Verify wether npm is installed via `npm -v`.
 - Run the frontend with `npm run dev`
 - Open the server `http://localhost:5173/`
 
-<<<<<<< HEAD
 Während der Entwicklung wird das Frontend in einer speziellen Konfiguration geladen. Diese ist näher in der Datei `package.json` spezifizert. Außerdem finden sich dort auch die weiteren Möglichkeiten, das Frontend zu starten.
-=======
+
 ### Router
 
 For routing in a Vue application the library [Vue Router](https://router.vuejs.org/) is used.
@@ -45,7 +40,6 @@ For testing [Vitest](https://vitest.dev/) is used. Each test should be located i
 
 - Go into the frontend folder via `cd frontend`
 - Execute `npm run test`
->>>>>>> 889d83b1d765f3d1c31a52f44a220cdb30563ab9
 
 # Backend
 
