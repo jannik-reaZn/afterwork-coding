@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from .routers import example_router, items_router
+from .database import create_db_and_tables
 
+create_db_and_tables()
 app = FastAPI()
 
 
@@ -17,8 +19,5 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.get("/")
-def read_root():
-    return JSONResponse(content={"message": "Welcome to FastAPI with Conda!"})
+app.include_router(example_router)
+app.include_router(items_router)
