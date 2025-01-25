@@ -86,6 +86,49 @@ For testing [Vitest](https://vitest.dev/) is used. Each test should be located i
 
 [FastApi](https://fastapi.tiangolo.com/) is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
 
+## Routing
+
+The project backend is built using FastAPI, and `APIRouter` is utilized to organize and modularize the API endpoints. APIRouter allows you to group routes based on functionality or features, making the application more maintainable and scalable.
+
+- **Modularity:** Enables grouping related routes into separate modules.
+- **Reusability:** Routes can be defined and reused in different parts of the application.
+- **Dependency Injection:** Supports FastAPI’s dependency injection system seamlessly.
+- **Path Prefixing:** Automatically applies a prefix to all routes in a router, simplifying URL management.
+
+Example usage:
+
+1. **Define a Router:** Create a router in a separate module, e.g., users.py. The prefix parameter in APIRouter (e.g., /users) ensures that all endpoints within the router have consistent URL paths like /users/. Assign tags for OpenAPI documentation.
+
+```python
+from fastapi import APIRouter
+
+router = APIRouter(prefix="/users", tags=["users"])
+
+@router.get("/")
+async def get_users():
+    return {"message": "List of users"}
+
+@router.post("/")
+async def create_user(user: dict):
+    return {"message": "User created", "user": user}
+```
+
+1. **Import all individual routers and expose:** In the `routers/__init__.py` file, import all individual routers and expose them as individual variables:
+
+```python
+from .users import router as users_router
+```
+
+2. **Include the Router in the Main Application:** In your main app.py or equivalent, include the router:
+
+```python
+from fastapi import FastAPI
+from users import users_router
+
+app = FastAPI()
+app.include_router(users_router)
+```
+
 ## Conda
 
 The project setup is done with conda. Follow the [instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html) for installing conda on windows.
