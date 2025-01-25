@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-from .routers import example_router
+from .routers import example_router, items_router
+from .database import create_db_and_tables
 
+create_db_and_tables()
 app = FastAPI()
 
 
@@ -19,3 +20,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(example_router)
+app.include_router(items_router)

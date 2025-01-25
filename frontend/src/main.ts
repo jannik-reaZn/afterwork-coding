@@ -5,6 +5,8 @@ import router from "./router";
 import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
 import Button from "primevue/button";
+import Toast from "primevue/toast";
+import ToastService from "primevue/toastservice";
 import "./style.css";
 
 const pinia = createPinia();
@@ -18,4 +20,6 @@ app.use(PrimeVue, {
   },
 });
 app.component("Button", Button);
+app.component("Toast", Toast);
+app.use(ToastService);
 app.mount("#app");
