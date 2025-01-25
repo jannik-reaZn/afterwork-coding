@@ -129,6 +129,32 @@ app = FastAPI()
 app.include_router(users_router)
 ```
 
+## Testing
+
+[Pytest](https://docs.pytest.org/en/stable/) is a powerful testing framework for Python. It simplifies the process of writing and running tests, supports a wide range of test types, and provides a rich ecosystem of plugins.
+
+- **Simple Syntax:** Tests are written as functions prefixed with test\_.
+- **Rich Assertions:** Provides detailed feedback on failed assertions.
+- **Fixtures:** Modular and reusable setup/teardown code for tests.
+- **Plugins:** Extend functionality (e.g., pytest-django, pytest-cov).
+- **Test Discovery:** Automatically finds tests based on file names and function prefixes.
+
+In bigger applications it makes sense to have tests in a separate folder called `tests`. Since FastApi is composed of several files/modules each test should also lay in these files/modules. For example router specfic tests should be part of the `routers` folder. A file called `src/utils.py` should have a separate test folder and file `tests/src/test_utils.py`
+
+Create functions with a name that starts with `test_` (this is standard pytest conventions). The TestClient object is based on httpx and used to tests requests to the application. Write simple assert statements with the standard Python expressions that you need to check (again, standard pytest).
+
+```python
+from backend.main import app
+from fastapi.testclient import TestClient
+
+client = TestClient(app)
+
+def test_example():
+  response = client.get("/")
+  assert response.status_code == 200
+  assert response.json() == {"message": "Welcome to FastAPI with Conda!"}
+```
+
 ## Conda
 
 The project setup is done with conda. Follow the [instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html) for installing conda on windows.
