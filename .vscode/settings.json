@@ -8,6 +8,14 @@
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter",
+  },
+  "black-formatter.args": ["--line-length", "100"],
   "python.testing.unittestArgs": ["-v", "-s", "./backend", "-p", "test_*.py"],
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
