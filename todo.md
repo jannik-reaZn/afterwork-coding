@@ -16,11 +16,10 @@
 - [x] FastApi
 - [x] Routes Blueprints
 - [x] Pytest
-- [ ] Code Coverage
 - [x] SQLModel
-- [ ] Settings and Environment
-- [ ] Error Handlers
-- [ ] Cors
+- [x] Settings and Environment
+- [x] Error Handlers
+- [x] Cors
 - [ ] Factory Boy
 - [ ] Python on Rails
 - [ ] Alembic
@@ -34,3 +33,4 @@
 - [ ] GitHub Actions
   - [x] Pull Requests
   - [ ] Automatic Testing
+  - [ ] Code Coverage
