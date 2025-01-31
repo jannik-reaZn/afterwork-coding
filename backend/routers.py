@@ -1,4 +1,5 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import APIRouter, FastAPI
+
 from backend.routes import example_router, items_router
 
 
