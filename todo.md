@@ -7,17 +7,17 @@
 - [x] Pinia
 - [x] Vitest
 - [x] Prettier
-- [ ] Eslint
+- [x] Eslint
 - [ ] Zod
 - [ ] Vue DevTools
-- [ ] Auto Import (unplugging-auto-import)
 
 # Backend
 
 - [x] FastApi
-- [ ] Routes Blueprints
-- [ ] Pytest + Code Coverage
-- [ ] SQLModel
+- [x] Routes Blueprints
+- [x] Pytest
+- [ ] Code Coverage
+- [x] SQLModel
 - [ ] Settings and Environment
 - [ ] Error Handlers
 - [ ] Cors
@@ -28,9 +28,9 @@
 
 # GitHub
 
-- [ ] Create Project
-- [ ] Add Contributors
+- [x] Create Project
+- [x] Add Contributors
 - [ ] Kanban Board
 - [ ] GitHub Actions
-  - [ ] Pull Requests
+  - [x] Pull Requests
   - [ ] Automatic Testing
