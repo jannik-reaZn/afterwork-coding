@@ -245,7 +245,35 @@ Alternatively run `git add .`, `git commit -m "message..."` and `git push`
 
 # GitHub
 
-### Branch Protection
+## Kanban Board
+The Kanban board is used to track the progress of tasks, issues, and features in this project. It provides a visual workflow to organize work efficiently.
+
+### How Issues Relate to Board Items
+Each item on the board represents a GitHub issue or pull request. When an issue is created, it can be assigned to a column based on its status. Moving an issue across columns reflects its progress in the development cycle.
+
+### Board Columns
+Use the board to prioritize tasks, track development flow, and ensure smooth progress.
+
+- **Backlog**: Holds all created PBIs (Product Backlog Items).
+- **Ready**: PBIs that are planned but have not been started.
+- **In Progress** – PBIs that are actively being worked on.
+- **In Review** – PBIs or PRs that need review before merging.
+- **Done** – Completed tasks that are ready for deployment or have been merged.
+
+### How to Create a Backlog item
+- Open the Kanban Board and click on `Add Item` in the column for `Backlog`
+- Click on the `+` symbol and click `Create new issue`
+- Add a meaningful `title` and `description` and click `Create`
+- Afterwards an `Assignee` can be assigned to the ticket and `labels` (optional)
+
+
+### Create a Feature Branch
+- Most importantly branches can be created by clicking on the `Create a branch` button
+- Make sure to add `feature` as a prefix of the branch name, e.g. `feature/1-example-issue`. This is important for merging to develop later since branches in pull requests need to have `feature/` in the branch name!
+- Set the `Branch source` to develop and create the branch
+- Afterwards you need to run `git fetch` and `git checkout feature/<your-branch-name>` locally
+
+## Branch Protection
 
 - **Restrict deletions**
   Only allow users with bypass permissions to delete matching refs.
