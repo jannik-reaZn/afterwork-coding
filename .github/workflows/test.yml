@@ -32,9 +32,14 @@ jobs:
 
       - name: Verify Conda Environment
         shell: bash -l {0}
-        run: conda info --envs && conda list
+        run: |
+          conda info --envs
+          conda list | grep pytest
+          which python
+          which pytest
 
       - name: Run Pytest
+        shell: bash -l {0}
         run: pytest backend/tests
 
   frontend-tests:
