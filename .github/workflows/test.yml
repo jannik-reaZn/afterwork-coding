@@ -27,7 +27,7 @@ jobs:
           auto-update-conda: true
           python-version: 3.12.8
           channels: defaults,conda-forge
-          environment-file: environment.yml
+          environment-file: backend/environment.yml
           activate-environment: afterwork-coding
 
       - name: Verify Conda Environment
