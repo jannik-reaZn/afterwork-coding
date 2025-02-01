@@ -7,20 +7,19 @@
 - [x] Pinia
 - [x] Vitest
 - [x] Prettier
-- [ ] Eslint
+- [x] Eslint
 - [ ] Zod
 - [ ] Vue DevTools
-- [ ] Auto Import (unplugging-auto-import)
 
 # Backend
 
 - [x] FastApi
-- [ ] Routes Blueprints
-- [ ] Pytest + Code Coverage
-- [ ] SQLModel
-- [ ] Settings and Environment
-- [ ] Error Handlers
-- [ ] Cors
+- [x] Routes Blueprints
+- [x] Pytest
+- [x] SQLModel
+- [x] Settings and Environment
+- [x] Error Handlers
+- [x] Cors
 - [ ] Factory Boy
 - [ ] Python on Rails
 - [ ] Alembic
@@ -28,9 +27,10 @@
 
 # GitHub
 
-- [ ] Create Project
-- [ ] Add Contributors
+- [x] Create Project
+- [x] Add Contributors
 - [ ] Kanban Board
 - [ ] GitHub Actions
-  - [ ] Pull Requests
+  - [x] Pull Requests
   - [ ] Automatic Testing
+  - [ ] Code Coverage

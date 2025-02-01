@@ -3,8 +3,14 @@ channels:
   - defaults
   - conda-forge
 dependencies:
-  - httpx=0.28.1
-  - pytest=7.4.4
   - python=3.12.8
-  - fastapi=0.115.6
-  - sqlmodel=0.0.22
+  - pip=25.0.0
+  - pip:
+    - black==25.1.0
+    - httpx==0.28.1
+    - flake8==7.1.1
+    - isort==6.0.0
+    - pytest==7.4.4
+    - pydantic-settings==2.7.1
+    - fastapi[standard]==0.115.6
+    - sqlmodel==0.0.22

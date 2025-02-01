@@ -13,7 +13,7 @@ const data = ref<string | null>(null);
 
 async function loadData() {
   try {
-    const response = await fetchData("/");
+    const response = await fetchData();
     console.log("response", response);
     data.value = response.message;
   } catch (error) {

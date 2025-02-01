@@ -1,1 +1,1 @@
-from .item import Item
+from backend.db.item import Item

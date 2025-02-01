@@ -2,6 +2,9 @@
   "recommendations": [
     "Vue.volar",
     "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "ms-python.isort",
+    "ms-python.black-formatter",
+    "ms-python.flake8",
   ]
 }
