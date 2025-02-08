@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session
 
-from ..database import get_db
-from ..db import Item
+from backend.database import get_db
+from backend.db import Item
 
 router = APIRouter(prefix="/items", tags=["items"])
 
