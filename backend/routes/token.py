@@ -4,9 +4,12 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from backend.auth import ACCESS_TOKEN_EXPIRE_MINUTES, Token, authenticate_user, create_access_token
-from backend.config import settingsDep
+from backend.auth import Token, authenticate_user, create_access_token
+from backend.common.config import settingsDep
 from backend.tests.mockedData import fake_users_db
+
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
 
 router = APIRouter(prefix="/token", tags=["token"])
 
