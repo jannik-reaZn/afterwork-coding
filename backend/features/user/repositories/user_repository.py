@@ -1,4 +1,4 @@
-from backend.db import UserInDB
+from backend.features.user.repositories.entity.user_entity import UserInDB
 
 
 def get_user(db, username: str):

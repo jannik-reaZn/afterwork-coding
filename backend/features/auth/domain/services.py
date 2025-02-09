@@ -7,9 +7,9 @@ from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 
 from backend.common.config import Settings, settingsDep
-from backend.db import User
 from backend.features.auth.domain.models import TokenData
-from backend.features.user.repositories import get_user
+from backend.features.user.repositories.entity.user_entity import User
+from backend.features.user.repositories.user_repository import get_user
 from backend.tests.mockedData import fake_users_db
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")

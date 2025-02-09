@@ -1,7 +1,7 @@
 import factory
 from factory.alchemy import SQLAlchemyModelFactory
 
-from backend.db import User
+from backend.features.user.repositories.entity.user_entity import User
 from backend.tests.conftest import TestingSessionLocal
 
 
