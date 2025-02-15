@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import sessionmaker
 from sqlmodel import Session, SQLModel, create_engine
 
+from backend.common.config import Settings, get_settings
 from backend.database import get_db
 from backend.main import app
 
@@ -27,6 +28,26 @@ def db_session():
         yield db
     finally:
         db.close()
+
+
+@pytest.fixture(scope="function")
+def test_settings():
+    """Override the settings for tests."""
+    return Settings(
+        app_name="Test App",
+        cors_origins=["http://localhost:3000"],
+        # secret_key_jwt="test_secret",
+        # algorithm_jwt="HS256",
+        verbose_database_logging=True,
+    )
+
+
+@pytest.fixture(scope="function", autouse=True)
+def override_settings(test_settings):
+    """Override FastAPI settings dependency for all tests."""
+    app.dependency_overrides[get_settings] = lambda: test_settings
+    yield
+    app.dependency_overrides.pop(get_settings, None)
 
 
 @pytest.fixture(scope="function")

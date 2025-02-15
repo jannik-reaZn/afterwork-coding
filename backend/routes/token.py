@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
 from backend.auth import Token, authenticate_user, create_access_token
-from backend.common.config import settingsDep
+from backend.common.config import SettingsDep
 from backend.tests.mockedData import fake_users_db
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
@@ -17,7 +17,7 @@ router = APIRouter(prefix="/token", tags=["token"])
 @router.post("/")
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-    settings: settingsDep,
+    settings: SettingsDep,
 ) -> Token:
     user = authenticate_user(fake_users_db, form_data.username, form_data.password)
     if not user:

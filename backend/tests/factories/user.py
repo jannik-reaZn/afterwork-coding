@@ -13,4 +13,6 @@ class UserFactory(SQLAlchemyModelFactory):
 
     username = factory.Faker("name")
     email = factory.Faker("email")
-    password = factory.Faker("password")
+    hashed_password = factory.LazyFunction(
+        lambda: User.hash_password(str(factory.Faker("password")))
+    )

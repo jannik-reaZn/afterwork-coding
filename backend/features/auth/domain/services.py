@@ -5,15 +5,16 @@ import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
+from sqlmodel import select
 
-from backend.common.config import Settings, settingsDep
+from backend.common.config import SettingsDep
+from backend.database import SessionDep
 from backend.features.auth.domain.models import TokenData
 from backend.features.user.repositories.entity.user_entity import User
 from backend.features.user.repositories.user_repository import get_user
-from backend.tests.mockedData import fake_users_db
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-oauth2_scheme_dep = Annotated[str, Depends(oauth2_scheme)]
+Oauth2SchemeDep = Annotated[str, Depends(oauth2_scheme)]
 
 
 def authenticate_user(fake_db, username: str, password: str):
@@ -26,7 +27,9 @@ def authenticate_user(fake_db, username: str, password: str):
 
 
 def create_access_token(
-    settings: Settings, data: dict, expires_delta: timedelta | None = None
+    settings: SettingsDep,
+    data: dict,
+    expires_delta: timedelta | None = None,
 ) -> str:
     to_encode = data.copy()
     if expires_delta:
@@ -42,7 +45,7 @@ def fake_decode_token(token):
     return User(username=token + "fakedecoded", email="john@example.com", full_name="John Doe")
 
 
-async def get_current_user(token: oauth2_scheme_dep, settings: settingsDep):
+async def get_current_user(token: Oauth2SchemeDep, settings: SettingsDep, session: SessionDep):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -56,7 +59,9 @@ async def get_current_user(token: oauth2_scheme_dep, settings: settingsDep):
         token_data = TokenData(username=username)
     except jwt.exceptions.InvalidTokenError:
         raise credentials_exception
-    user = get_user(fake_users_db, username=token_data.username)
+
+    statement = select(User).where(User.username == token_data.username)
+    user = session.exec(statement).first()
     if user is None:
         raise credentials_exception
     return user

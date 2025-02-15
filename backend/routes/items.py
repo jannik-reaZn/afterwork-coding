@@ -1,7 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import Session
+from fastapi import APIRouter, HTTPException, status
 
-from backend.database import get_db
+from backend.database import SessionDep
 from backend.db import Item
 
 router = APIRouter(prefix="/items", tags=["items"])
@@ -14,7 +13,7 @@ router = APIRouter(prefix="/items", tags=["items"])
     summary="Create an item",
     description="Create an item with information id, name, description, price and is_available.",
 )
-def create_item(item: Item, session: Session = Depends(get_db)):
+def create_item(item: Item, session: SessionDep):
     session.add(item)
     session.commit()
     session.refresh(item)
@@ -22,7 +21,7 @@ def create_item(item: Item, session: Session = Depends(get_db)):
 
 
 @router.get("/{item_id}", status_code=status.HTTP_200_OK, response_model=Item)
-def read_item(item_id: int, session: Session = Depends(get_db)):
+def read_item(item_id: int, session: SessionDep):
     item = session.get(Item, item_id)
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")

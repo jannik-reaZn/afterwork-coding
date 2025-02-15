@@ -1,6 +1,9 @@
 from typing import Optional
 
+from passlib.context import CryptContext
 from sqlmodel import Field, SQLModel
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class User(SQLModel, table=True):
@@ -8,7 +11,8 @@ class User(SQLModel, table=True):
     username: str
     full_name: str | None = None
     email: str
-
-
-class UserInDB(User):
     hashed_password: str
+
+    @classmethod
+    def hash_password(cls, password: str) -> str:
+        return pwd_context.hash(password)
