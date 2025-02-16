@@ -5,11 +5,10 @@ import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
-from sqlmodel import select
 
 from backend.common.config import SettingsDep
-from backend.database import SessionDep
 from backend.features.auth.domain.models import TokenData
+from backend.features.auth.repositories.auth_repository import AuthRepository
 from backend.features.user.repositories.entity.user_entity import User
 from backend.features.user.repositories.user_repository import get_user
 
@@ -19,13 +18,14 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class AuthService:
-    def __init__(self, settings: SettingsDep):
+    def __init__(self, settings: SettingsDep, auth_repo: AuthRepository):
         self.settings = settings
+        self.auth_repo = auth_repo
 
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         return pwd_context.verify(plain_password, hashed_password)
 
-    def authenticate_user(self, fake_db, username: str, password: str):
+    def authenticate_user(self, fake_db, username: str, password: str) -> User | bool:
         user = get_user(fake_db, username)
         if not user or not self.verify_password(password, user.hashed_password):
             return False
@@ -45,7 +45,7 @@ class AuthService:
             algorithm=self.settings.algorithm_jwt,
         )
 
-    async def get_current_user(self, token: Oauth2SchemeDep, session: SessionDep):
+    async def get_current_user(self, token: Oauth2SchemeDep) -> User:
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
@@ -62,8 +62,7 @@ class AuthService:
         except jwt.exceptions.InvalidTokenError:
             raise credentials_exception
 
-        statement = select(User).where(User.username == token_data.username)
-        user = session.exec(statement).first()
+        user = await self.auth_repo.get_user_by_username(username=token_data.username)
         if user is None:
             raise credentials_exception
         return user
