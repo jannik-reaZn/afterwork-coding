@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from backend.features.auth.domain.services import create_access_token
+from backend.features.auth.domain.services import AuthService
 from backend.features.user.repositories.entity.user_entity import User
 from backend.tests.factories import UserFactory
 
@@ -19,6 +19,9 @@ def test_create_user(test_client):
 
 
 def test_protected_route(test_client, db_session, test_settings):
+    # Create auth service
+    auth_service = AuthService(settings=test_settings)
+
     # Create payload
     user_data = UserFactory.build()
 
@@ -27,8 +30,7 @@ def test_protected_route(test_client, db_session, test_settings):
     db_session.commit()
 
     # Create token
-    token = create_access_token(
-        settings=test_settings,
+    token = auth_service.create_access_token(
         data={"sub": user_data.username},
         expires_delta=timedelta(minutes=30),
     )
