@@ -4,6 +4,12 @@ import vue from "@vitejs/plugin-vue";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
+// Hot Reloads Changes
+  server: {
+    watch: {
+      usePolling: true
+    }
+  },
   resolve: {
     alias: {
       "@": "/src",
