@@ -1,6 +1,5 @@
 <template>
-  <div class="card">
-    <LogIn />
+  <div>
     <Button label="Create User" @click="createUser" />
     <button type="button" @click="increment">
       count is {{ counterStore.count }}
@@ -16,7 +15,6 @@ import { ref } from "vue";
 import { useCounterStore } from "@/store/counter";
 import { useItemStore } from "@/store/item";
 import { useToast } from "primevue/usetoast";
-import LogIn from "@/components/LogIn.vue";
 
 const counterStore = useCounterStore();
 const itemStore = useItemStore();
