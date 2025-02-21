@@ -9,7 +9,7 @@ from passlib.context import CryptContext
 from backend.common.config import SettingsDep
 from backend.features.auth.domain.models import TokenData
 from backend.features.auth.repositories.auth_repository import AuthRepository
-from backend.features.user.repositories.entity.user_entity import User
+from backend.features.user.repositories.sql.entities.user_entity import User
 from backend.features.user.repositories.user_repository import get_user
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")

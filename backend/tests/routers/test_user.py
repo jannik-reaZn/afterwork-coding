@@ -1,4 +1,4 @@
-from backend.features.user.repositories.entity.user_entity import User
+from backend.features.user.repositories.sql.entities.user_entity import User
 from backend.tests.factories import UserFactory
 
 

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from backend.features.user.repositories.entity.user_entity import User
+from backend.features.user.repositories.sql.entities.user_entity import User
 
 
 class AuthRepository(ABC):
