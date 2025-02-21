@@ -10,4 +10,4 @@ class UserService:
         self.user_repo = user_repo
 
     def create_user(self, user: UserSqlEntity) -> UserSqlEntity:
-        return self.user_repo.create_user(user)
+        return self.user_repo.create(user)
