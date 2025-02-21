@@ -1,9 +1,11 @@
 from fastapi import APIRouter, status
 
+from backend.common.route.enums.api_routes import ApiRoutes
+from backend.common.route.enums.api_tags import ApiTags
 from backend.database import SessionDep
 from backend.features.user.repositories.entity.user_entity import User
 
-router = APIRouter(prefix="/user", tags=["user"])
+router = APIRouter(prefix=f"/{ApiRoutes.USER.value}", tags=[ApiTags.USER])
 
 
 @router.post(

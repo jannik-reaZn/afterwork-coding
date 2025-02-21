@@ -1,12 +1,13 @@
 from fastapi import APIRouter, FastAPI
 
+from backend.common.route.constants.api_prefix import API_PREFIX
 from backend.features.auth.routes import auth_router
 from backend.features.user.routes import user_router
 from backend.routes import items_router
 
 
 def register_routers(app: FastAPI):
-    api_router = APIRouter(prefix="/api")
+    api_router = APIRouter(prefix=API_PREFIX)
 
     api_router.include_router(items_router)
     api_router.include_router(user_router)
