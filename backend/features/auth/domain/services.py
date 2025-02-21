@@ -9,7 +9,7 @@ from passlib.context import CryptContext
 from backend.common.config import SettingsDep
 from backend.features.auth.domain.models import TokenData
 from backend.features.auth.repositories.auth_repository import AuthRepository
-from backend.features.user.repositories.sql.entities.user_entity import User
+from backend.features.user.repositories.sql.entities.user_entity import UserSqlEntity
 from backend.features.user.repositories.user_repository import get_user
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -25,7 +25,7 @@ class AuthService:
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         return pwd_context.verify(plain_password, hashed_password)
 
-    def authenticate_user(self, fake_db, username: str, password: str) -> User | bool:
+    def authenticate_user(self, fake_db, username: str, password: str) -> UserSqlEntity | bool:
         user = get_user(fake_db, username)
         if not user or not self.verify_password(password, user.hashed_password):
             return False
@@ -45,7 +45,7 @@ class AuthService:
             algorithm=self.settings.algorithm_jwt,
         )
 
-    async def get_current_user(self, token: Oauth2SchemeDep) -> User:
+    async def get_current_user(self, token: Oauth2SchemeDep) -> UserSqlEntity:
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",

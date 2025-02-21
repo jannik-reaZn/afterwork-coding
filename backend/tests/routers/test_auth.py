@@ -1,13 +1,13 @@
 from datetime import timedelta
 
 from backend.features.auth.domain.services import AuthService
-from backend.features.user.repositories.sql.entities.user_entity import User
+from backend.features.user.repositories.sql.entities.user_entity import UserSqlEntity
 from backend.tests.factories import UserFactory
 
 
 class MockAuthRepository:
     async def get_user_by_username(self, username: str):
-        return User(username=username, email="test@example.com")
+        return UserSqlEntity(username=username, email="test@example.com")
 
 
 def test_protected_route(test_client, db_session, test_settings):

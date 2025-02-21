@@ -1,19 +1,14 @@
 from abc import ABC, abstractmethod
 
 from backend.common.repository.base_repository import BaseRepository
-from backend.features.user.repositories.sql.entities.user_entity import User
+from backend.features.user.repositories.sql.entities.user_entity import UserSqlEntity
 
 
 class UserRepository(BaseRepository, ABC):
     @abstractmethod
-    def create_user(self, user: User) -> User:
+    def create_user(self, user: UserSqlEntity) -> UserSqlEntity:
         raise NotImplementedError
 
-    def get_user(self, username: str) -> User:
+    @abstractmethod
+    def get_user(self, username: str) -> UserSqlEntity:
         raise NotImplementedError
-
-
-def get_user(db, username: str):
-    if username in db:
-        user_dict = db[username]
-        return User(**user_dict)
