@@ -24,4 +24,4 @@ def get_settings() -> Settings:
 
 
 settings = get_settings()
-SettingsDep = Annotated[Settings, Depends(get_settings)]
+SettingsDependency = Annotated[Settings, Depends(get_settings)]

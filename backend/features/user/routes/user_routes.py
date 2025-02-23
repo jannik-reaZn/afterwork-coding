@@ -14,5 +14,7 @@ router = APIRouter(prefix=f"/{ApiRoutes.USER.value}", tags=[ApiTags.USER])
     response_model=UserSqlEntity,
     summary="Create new user",
 )
-async def create_user(user: UserSqlEntity, user_service: UserService = Depends(UserService)):
+async def create_user(
+    user: UserSqlEntity, user_service: UserService = Depends(UserService)
+) -> UserSqlEntity:
     return user_service.create_user(user)

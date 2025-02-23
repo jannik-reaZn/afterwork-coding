@@ -3,30 +3,34 @@ from typing import Annotated
 
 import jwt
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
 
-from backend.common.config import SettingsDep
-from backend.features.auth.domain.models import TokenData
+from backend.common.config import SettingsDependency
+from backend.features.auth.domain.constants import ACCESS_TOKEN_EXPIRE_MINUTES
+from backend.features.auth.domain.models import Token, TokenData
 from backend.features.auth.repositories.auth_repository import AuthRepository
+from backend.features.auth.repositories.sql.auth_repository_sql import AuthRepositorySQL
 from backend.features.user.repositories.sql.entities.user_entity import UserSqlEntity
-from backend.features.user.repositories.user_repository import get_user
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 Oauth2SchemeDep = Annotated[str, Depends(oauth2_scheme)]
+OAuth2PasswordRequestFormDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class AuthService:
-    def __init__(self, settings: SettingsDep, auth_repo: AuthRepository):
+    def __init__(
+        self, settings: SettingsDependency, auth_repo: AuthRepository = Depends(AuthRepositorySQL)
+    ):
         self.settings = settings
         self.auth_repo = auth_repo
 
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         return pwd_context.verify(plain_password, hashed_password)
 
-    def authenticate_user(self, fake_db, username: str, password: str) -> UserSqlEntity | bool:
-        user = get_user(fake_db, username)
+    async def authenticate_user(self, username: str, password: str) -> UserSqlEntity | bool:
+        user = await self.auth_repo.get_user_by_username(username=username)
         if not user or not self.verify_password(password, user.hashed_password):
             return False
         return user
@@ -66,3 +70,22 @@ class AuthService:
         if user is None:
             raise credentials_exception
         return user
+
+    async def login(
+        self,
+        form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    ) -> Token:
+        user = await self.authenticate_user(
+            username=form_data.username, password=form_data.password
+        )
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Incorrect username or password",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token = self.create_access_token(
+            data={"sub": user.username}, expires_delta=access_token_expires
+        )
+        return Token(access_token=access_token, token_type="bearer")

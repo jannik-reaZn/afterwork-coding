@@ -1,3 +1,5 @@
+from typing import Generator
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import sessionmaker
@@ -21,7 +23,7 @@ def setup_test_db():
 
 
 @pytest.fixture(scope="function")
-def db_session():
+def db_session() -> Generator[Session, None, None]:
     """Create a new database session with a rollback at the end of the test."""
     try:
         db = TestingSessionLocal()
@@ -31,7 +33,7 @@ def db_session():
 
 
 @pytest.fixture(scope="function")
-def test_settings():
+def test_settings() -> Settings:
     """Override the settings for tests."""
     return Settings(
         app_name="Test App",
@@ -43,7 +45,7 @@ def test_settings():
 
 
 @pytest.fixture(scope="function", autouse=True)
-def override_settings(test_settings):
+def override_settings(test_settings: Settings):
     """Override FastAPI settings dependency for all tests."""
     app.dependency_overrides[get_settings] = lambda: test_settings
     yield
