@@ -101,3 +101,11 @@ def test_delete_user(test_client):
 
     # Assert response
     assert response.status_code == 204
+
+
+def test_delete_user_not_found(test_client):
+    # Delete user
+    response = test_client.delete("api/user/100")
+
+    # Assert response
+    assert response.status_code == 204
