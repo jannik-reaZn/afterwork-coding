@@ -42,3 +42,12 @@ class UserService:
             UserSqlEntity: The user entity matching the provided identifier.
         """
         return self.user_repo.get_by_id(user_id)
+
+    def delete_user(self, user_id: int) -> None:
+        """
+        Delete a user by their unique identifier.
+
+        Args:
+            user_id (int): The unique identifier for the user.
+        """
+        return self.user_repo.delete(user_id)

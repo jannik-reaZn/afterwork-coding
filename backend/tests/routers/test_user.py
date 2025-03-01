@@ -79,3 +79,25 @@ def test_get_user(test_client):
     assert response.json()["id"] == user.user_create.id
     assert response.json()["username"] == user.user_create.username
     assert response.json()["email"] == user.user_create.email
+
+
+def test_get_user_not_found(test_client):
+    from fastapi.exceptions import ResponseValidationError
+
+    # Get user and assert ResponseValidationError is raised
+    with pytest.raises(ResponseValidationError):
+        test_client.get("api/user/100")
+
+
+def test_delete_user(test_client):
+    # Create payload
+    user = UserCreateRequestFactory.build()
+
+    # Create user
+    response = test_client.post("api/user", json=user.model_dump())
+
+    # Delete user
+    response = test_client.delete(f"api/user/{user.user_create.id}")
+
+    # Assert response
+    assert response.status_code == 204

@@ -1,9 +1,11 @@
 from typing import Generic, Optional, Type, TypeVar
 
 from pydantic import BaseModel
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from backend.common.repository.entities.base_sql_entity import BaseSqlEntity
+from backend.common.repository.query_builder import QueryBuilderSql
+from backend.common.repository.types import FindWhereCondition
 
 DomainModel = TypeVar("DomainModel", bound=BaseModel)
 SqlEntityModel = TypeVar("SqlEntityModel", bound=BaseSqlEntity)
@@ -18,16 +20,16 @@ class BaseRepositorySql(Generic[SqlEntityModel]):
 
     Args:
         session (Session): The SQLAlchemy session used for database interactions.
-        entity_cls (Type[SqlEntityModel]): The class of the SQL entity being managed by the
+        entity_class (Type[SqlEntityModel]): The class of the SQL entity being managed by the
         repository.
     """
 
-    def __init__(self, session: Session, entity_cls: Type[SqlEntityModel]):
+    def __init__(self, session: Session, entity_class: Type[SqlEntityModel]):
         """
         Initialize the repository with the provided session and entity class.
         """
         self.session = session
-        self.entity_cls = entity_cls
+        self.entity_class = entity_class
 
     def create(self, create_model: CreateModel):
         """
@@ -39,7 +41,7 @@ class BaseRepositorySql(Generic[SqlEntityModel]):
         Returns:
             DomainModel: The created entity converted to its domain representation.
         """
-        model: CreateModel = self.entity_cls.from_create_model(create_model)
+        model: CreateModel = self.entity_class.from_create_model(create_model)
         entity: SqlEntityModel = self._create(model)
         return BaseRepositorySql.to_domain(entity)
 
@@ -54,8 +56,19 @@ class BaseRepositorySql(Generic[SqlEntityModel]):
             Optional[DomainModel]: The entity matching the provided identifier, or None if no entity
             was found.
         """
-        entity: Optional[SqlEntityModel] = self.session.get(self.entity_cls, id)
+        entity: Optional[SqlEntityModel] = self._get_one_by(condition={"id": id})
         return BaseRepositorySql.to_domain(entity)
+
+    def delete(self, id: int) -> None:
+        """
+        Delete an entity by its unique identifier.
+
+        Args:
+            id (int): The unique identifier of the entity to delete.
+        """
+        entity: Optional[SqlEntityModel] = self._get_one_by(condition={"id": id})
+        if entity:
+            self.session.delete(entity)
 
     def _create(self, entity: SqlEntityModel) -> SqlEntityModel:
         """
@@ -71,6 +84,25 @@ class BaseRepositorySql(Generic[SqlEntityModel]):
         self.session.add(entity)
         self.session.commit()
         self.session.refresh(entity)
+        return entity
+
+    def _get_one_by(self, condition: FindWhereCondition) -> Optional[SqlEntityModel]:
+        """
+        Retrieve a single entity from the database that matches the given condition.
+
+        Args:
+            condition (FindWhereCondition): The condition to filter the query.
+
+        Returns:
+            Optional[SqlEntityModel]: The entity that matches the condition, or None if no match is
+            found.
+        """
+        statement = (
+            QueryBuilderSql(entity_class=self.entity_class, statement=select(self.entity_class))
+            .set_filter(condition)
+            .get()
+        )
+        entity = self.session.exec(statement).first()
         return entity
 
     @staticmethod

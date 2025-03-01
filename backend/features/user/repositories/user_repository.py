@@ -12,3 +12,7 @@ class UserRepository(BaseRepository, ABC):
     @abstractmethod
     def get_by_id(self, id: int) -> User:
         raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, id: int) -> None:
+        raise NotImplementedError

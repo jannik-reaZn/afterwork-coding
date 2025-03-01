@@ -15,4 +15,4 @@ class UserRepositorySql(BaseRepositorySql[UserSqlEntity]):
     """
 
     def __init__(self, session: SessionDependency):
-        super().__init__(session=session, entity_cls=UserSqlEntity)
+        super().__init__(session=session, entity_class=UserSqlEntity)
