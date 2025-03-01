@@ -55,3 +55,10 @@ def test_create_user_with_invalid_data(test_client, invalid_data, expected_error
 
     # Assert response
     assert response.status_code == 422
+    assert response.json() == {
+        "title": "ValidationError",
+        "description": (
+            "The server was unable to process the request, because it contains invalid data."
+        ),
+        "code": 422,
+    }
