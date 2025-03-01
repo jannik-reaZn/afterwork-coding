@@ -29,3 +29,16 @@ async def create_user(
 ) -> User:
     user_create_model: UserCreate = user_create_request.to_create_model()
     return user_service.create_user(user_create_model)
+
+
+@router.get(
+    "/{user_id}",
+    summary="Get user by id",
+    response_model=User,
+    status_code=status.HTTP_200_OK,
+)
+async def get_user(
+    user_id: int,
+    user_service: UserService = Depends(UserService),
+) -> User:
+    return user_service.get_user(user_id)

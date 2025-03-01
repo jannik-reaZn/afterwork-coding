@@ -30,3 +30,15 @@ class UserService:
             UserSqlEntity: The created user entity.
         """
         return self.user_repo.create(user_create_model)
+
+    def get_user(self, user_id: int) -> User:
+        """
+        Retrieve a user by their unique identifier.
+
+        Args:
+            user_id (int): The unique identifier for the user.
+
+        Returns:
+            UserSqlEntity: The user entity matching the provided identifier.
+        """
+        return self.user_repo.get_by_id(user_id)

@@ -62,3 +62,20 @@ def test_create_user_with_invalid_data(test_client, invalid_data, expected_error
         ),
         "code": 422,
     }
+
+
+def test_get_user(test_client):
+    # Create payload
+    user = UserCreateRequestFactory.build()
+
+    # Create user
+    response = test_client.post("api/user", json=user.model_dump())
+
+    # Get user
+    response = test_client.get(f"api/user/{user.user_create.id}")
+
+    # Assert response
+    assert response.status_code == 200
+    assert response.json()["id"] == user.user_create.id
+    assert response.json()["username"] == user.user_create.username
+    assert response.json()["email"] == user.user_create.email
