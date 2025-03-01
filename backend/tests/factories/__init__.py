@@ -1,1 +1,2 @@
-from backend.tests.factories.user import UserFactory
+from .user_create_request_body_factory import UserCreateRequestBodyFactory
+from .user_create_request_factory import UserCreateRequestFactory

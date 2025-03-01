@@ -1,8 +1,8 @@
 from fastapi import Depends
 
+from backend.features.user.domain.models import User, UserCreate
 from backend.features.user.repositories import UserRepository
 from backend.features.user.repositories.sql import UserRepositorySql
-from backend.features.user.repositories.sql.entities import UserSqlEntity
 
 
 class UserService:
@@ -19,7 +19,7 @@ class UserService:
     def __init__(self, user_repo: UserRepository = Depends(UserRepositorySql)):
         self.user_repo = user_repo
 
-    def create_user(self, user: UserSqlEntity) -> UserSqlEntity:
+    def create_user(self, user_create_model: UserCreate) -> User:
         """
         Create a new user in the database.
 
@@ -29,4 +29,4 @@ class UserService:
         Returns:
             UserSqlEntity: The created user entity.
         """
-        return self.user_repo.create(user)
+        return self.user_repo.create(user_create_model)

@@ -1,10 +1,13 @@
-from typing import Generic, Type, TypeVar
+from typing import Generic, Optional, Type, TypeVar
 
+from pydantic import BaseModel
 from sqlmodel import Session
 
 from backend.common.repository.entities.base_sql_entity import BaseSqlEntity
 
+DomainModel = TypeVar("DomainModel", bound=BaseModel)
 SqlEntityModel = TypeVar("SqlEntityModel", bound=BaseSqlEntity)
+CreateModel = TypeVar("CreateModel", bound=BaseModel)
 
 
 class BaseRepositorySql(Generic[SqlEntityModel]):
@@ -23,7 +26,12 @@ class BaseRepositorySql(Generic[SqlEntityModel]):
         self.session = session
         self.entity_cls = entity_cls
 
-    def create(self, entity: SqlEntityModel) -> SqlEntityModel:
+    def create(self, create_model: CreateModel):
+        model: CreateModel = self.entity_cls.from_create_model(create_model)
+        entity: SqlEntityModel = self._create(model)
+        return BaseRepositorySql.to_domain(entity)
+
+    def _create(self, entity: SqlEntityModel) -> SqlEntityModel:
         """
         Create a new entity in the database.
 
@@ -38,3 +46,7 @@ class BaseRepositorySql(Generic[SqlEntityModel]):
         self.session.commit()
         self.session.refresh(entity)
         return entity
+
+    @staticmethod
+    def to_domain(entity: Optional[SqlEntityModel]) -> Optional[DomainModel]:
+        return entity.to_domain() if entity else None

@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
-class UserCreate(BaseModel):
+class User(BaseModel):
     id: Optional[int]
     username: str = Field(min_length=1, example="John Doe")
     full_name: str | None = Field(default=None, example="John Doe")
