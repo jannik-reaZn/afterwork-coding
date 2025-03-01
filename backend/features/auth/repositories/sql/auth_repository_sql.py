@@ -2,7 +2,7 @@ from sqlmodel import select
 
 from backend.database import SessionDep
 from backend.features.auth.repositories.auth_repository import AuthRepository
-from backend.features.user.repositories.sql.entities.user_entity import UserSqlEntity
+from backend.features.user.repositories.sql.entities import UserSqlEntity
 
 
 class AuthRepositorySQL(AuthRepository):

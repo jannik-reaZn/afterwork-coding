@@ -1,6 +1,6 @@
 from backend.common.repository.base_repository_sql import BaseRepositorySql
 from backend.database import SessionDep
-from backend.features.user.repositories.sql.entities.user_entity import UserSqlEntity
+from backend.features.user.repositories.sql.entities import UserSqlEntity
 
 
 class UserRepositorySql(BaseRepositorySql[UserSqlEntity]):

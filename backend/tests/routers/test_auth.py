@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 
 from backend.common.config import Settings
 from backend.features.auth.domain.services import AuthService
-from backend.features.user.repositories.sql.entities.user_entity import UserSqlEntity
+from backend.features.user.repositories.sql.entities import UserSqlEntity
 from backend.tests.factories import UserFactory
 
 

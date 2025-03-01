@@ -1,8 +1,8 @@
 from fastapi import Depends
 
 from backend.features.user.repositories import UserRepository
-from backend.features.user.repositories.sql.entities.user_entity import UserSqlEntity
-from backend.features.user.repositories.sql.user_repository_sql import UserRepositorySql
+from backend.features.user.repositories.sql import UserRepositorySql
+from backend.features.user.repositories.sql.entities import UserSqlEntity
 
 
 class UserService:

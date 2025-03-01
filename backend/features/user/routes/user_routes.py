@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, status
 from backend.common.route.enums.api_routes import ApiRoutes
 from backend.common.route.enums.api_tags import ApiTags
 from backend.features.user.domain.services.user_service import UserService
-from backend.features.user.repositories.sql.entities.user_entity import UserSqlEntity
+from backend.features.user.repositories.sql.entities import UserSqlEntity
 
 router = APIRouter(prefix=f"/{ApiRoutes.USER.value}", tags=[ApiTags.USER])
 

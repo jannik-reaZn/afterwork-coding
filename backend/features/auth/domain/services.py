@@ -11,7 +11,7 @@ from backend.features.auth.domain.constants import ACCESS_TOKEN_EXPIRE_MINUTES
 from backend.features.auth.domain.models import Token, TokenData
 from backend.features.auth.repositories.auth_repository import AuthRepository
 from backend.features.auth.repositories.sql.auth_repository_sql import AuthRepositorySQL
-from backend.features.user.repositories.sql.entities.user_entity import UserSqlEntity
+from backend.features.user.repositories.sql.entities import UserSqlEntity
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 Oauth2SchemeDep = Annotated[str, Depends(oauth2_scheme)]
