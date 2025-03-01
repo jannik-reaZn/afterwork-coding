@@ -1,10 +1,12 @@
+from http import HTTPStatus
+
 from fastapi import APIRouter, Body, Depends, status
 
 from backend.common.route.enums.api_routes import ApiRoutes
 from backend.common.route.enums.api_tags import ApiTags
+from backend.common.route.responses import OK, UnprocessableEntity
 from backend.features.user.domain.models import User, UserCreate
 from backend.features.user.domain.services.user_service import UserService
-from backend.features.user.repositories.sql.entities import UserSqlEntity
 from backend.features.user.routes.requests import UserCreateRequest
 
 router = APIRouter(prefix=f"/{ApiRoutes.USER.value}", tags=[ApiTags.USER])
@@ -13,14 +15,12 @@ router = APIRouter(prefix=f"/{ApiRoutes.USER.value}", tags=[ApiTags.USER])
 @router.post(
     "/",
     responses={
-        status.HTTP_201_CREATED: {
-            "description": "User successfully created",
-            "model": User,
-        }
+        HTTPStatus.OK: OK.to_example(model=User),
+        HTTPStatus.UNPROCESSABLE_ENTITY: UnprocessableEntity.to_example(),
     },
-    status_code=status.HTTP_201_CREATED,
-    response_model=User,
     summary="Create new user",
+    response_model=User,
+    status_code=status.HTTP_201_CREATED,
 )
 async def create_user(
     user_create_request: UserCreateRequest = Body(...),

@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from typing import Any, Optional, Type
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class HttpResponseBase(BaseModel):
@@ -9,11 +9,33 @@ class HttpResponseBase(BaseModel):
     description: str
     code: HTTPStatus = Field(description="All HTTPStatus Codes")
 
+    model_config = ConfigDict(
+        use_enum_values=True,
+    )
+
     @staticmethod
     def to_default_example(
-        httpsStatus: HTTPStatus,
+        httpStatus: HTTPStatus,
         model: Type[BaseModel],
         description: Optional[str] = None,
         example: Optional[Any] = None,
     ):
-        pass
+        return {
+            "model": model,
+            "description": (description if description is not None else httpStatus.phrase),
+            "content": {
+                "application/json": {
+                    "example": (
+                        example
+                        if example is not None
+                        else {
+                            "title": httpStatus.phrase,
+                            "description": (
+                                description if description is not None else httpStatus.description
+                            ),
+                            "code": httpStatus.value,
+                        }
+                    ),
+                }
+            },
+        }

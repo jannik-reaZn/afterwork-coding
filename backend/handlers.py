@@ -7,11 +7,9 @@ from pydantic import ValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from backend.common.route.responses import HttpResponseBase
-from backend.logger import logger
 
 
 async def global_exception_handler(request: Request, exc: Exception) -> JSONResponse:
-    logger.error(f"Server Error: {exc} | URL: {request.url}", exc_info=True)
     response_model = HttpResponseBase(
         title="Internal Server Error",
         description="Something went wrong.",
@@ -25,7 +23,6 @@ async def global_exception_handler(request: Request, exc: Exception) -> JSONResp
 
 
 async def http_exception_handler(request: Request, exc: StarletteHTTPException) -> JSONResponse:
-    logger.error(f"HTTP Error {exc.status_code}: {exc.detail} | URL: {request.url}")
     response_model = HttpResponseBase(
         title=str(exc.__class__.__name__),
         description=str(exc.detail),
