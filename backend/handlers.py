@@ -3,7 +3,6 @@ from http import HTTPStatus
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from pydantic import ValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from backend.common.route.responses import HttpResponseBase
@@ -52,4 +51,3 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(Exception, global_exception_handler)
     app.add_exception_handler(StarletteHTTPException, http_exception_handler)
     app.add_exception_handler(RequestValidationError, request_validation_exception_handler)
-    app.add_exception_handler(ValidationError, request_validation_exception_handler)

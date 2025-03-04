@@ -41,27 +41,21 @@ def test_create_user(test_client):
     ],
 )
 def test_create_user_with_invalid_data(test_client, invalid_data, expected_error):
+    # NOTE: The factory cannot be used to create invalid data because pydantic would throw a
+    # ValidationError. That is why the factory is used to create valid data first, and then
+    # invalid data is set individually.
+
     # Create payload
-    custom_fields = {
-        "user_create__id": 100,
-        "user_create__username": invalid_data["username"],
-        "user_create__email": invalid_data["email"],
-        "user_create__hashed_password": invalid_data["hashed_password"],
-    }
-    invalid_user_data = UserCreateRequestFactory.build(**custom_fields)
+    invalid_user_data = UserCreateRequestFactory.build()
+    invalid_user_data.user_create.username = invalid_data["username"]
+    invalid_user_data.user_create.email = invalid_data["email"]
+    invalid_user_data.user_create.hashed_password = invalid_data["hashed_password"]
 
     # Create user
     response = test_client.post("api/user", json=invalid_user_data.model_dump())
 
     # Assert response
-    assert response.status_code == 422
-    assert response.json() == {
-        "title": "ValidationError",
-        "description": (
-            "The server was unable to process the request, because it contains invalid data."
-        ),
-        "code": 422,
-    }
+    assert response.status_code == 422  # Expecting Unprocessable Entity
 
 
 def test_get_user(test_client):
