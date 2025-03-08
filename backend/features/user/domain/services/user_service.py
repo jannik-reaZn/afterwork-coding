@@ -43,6 +43,18 @@ class UserService:
         """
         return self.user_repo.get_by_id(user_id)
 
+    def get_user_by_username(self, username: str) -> User:
+        """
+        Retrieve a user by their username.
+
+        Args:
+            username (str): The username for the user.
+
+        Returns:
+            UserSqlEntity: The user entity matching the provided username.
+        """
+        return self.user_repo.get_user_by_username(username)
+
     def delete_user(self, user_id: int) -> None:
         """
         Delete a user by their unique identifier.

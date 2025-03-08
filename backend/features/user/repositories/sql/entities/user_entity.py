@@ -16,7 +16,7 @@ class UserSqlEntity(BaseSqlEntity, table=True):
     username: str = Field(min_length=1, unique=True)
     full_name: str | None = None
     email: str = Field(min_length=1)
-    hashed_password: str = Field(min_length=1)
+    hashed_password: str
 
     @classmethod
     def hash_password(cls, password: str) -> str:

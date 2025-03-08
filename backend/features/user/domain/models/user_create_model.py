@@ -8,4 +8,6 @@ class UserCreate(BaseModel):
     username: str = Field(min_length=1, example="John Doe")
     full_name: str | None = Field(default=None, example="John Doe")
     email: str = Field(min_length=1, example="john.doe@example.com")
-    hashed_password: str = Field(min_length=1, example="my_secure_password")
+    hashed_password: str = Field(
+        min_length=1, example="my_secure_password"
+    )  # FIXME: The hashed password should not be stored incluced here
