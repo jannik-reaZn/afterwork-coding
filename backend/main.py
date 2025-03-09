@@ -1,24 +1,12 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+
+from backend.handlers import register_exception_handlers
+from backend.middlewares import register_middlewares
+from backend.routers import register_routers
 
 app = FastAPI()
 
 
-# NOTE This is bad practice and should be revisited!
-# origins = ["http://localhost:5173/"]
-origins = ["*"]
-
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
-@app.get("/")
-def read_root():
-    return JSONResponse(content={"message": "Welcome to FastAPI with Conda!"})
+register_middlewares(app)
+register_exception_handlers(app)
+register_routers(app)

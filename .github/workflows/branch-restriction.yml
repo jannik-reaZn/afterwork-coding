@@ -1,0 +1,17 @@
+name: Restrict Non-Feature Branch Merges
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  restrict-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Source Branch Name
+        run: |
+          if [[ ! ${{ github.head_ref }} =~ ^feature/ ]]; then
+            echo "Only feature branches (starting with 'feature/') can be merged into develop."
+            exit 1
+          fi
