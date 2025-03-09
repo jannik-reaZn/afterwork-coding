@@ -1,23 +1,71 @@
 # About
 
-# Frontend
+This project contains multiple singleplayer and multiplayer mini games.
 
-The frontend setup is made with [Vite](https://vite.dev/guide/).
+# Development Setup
 
-In Vue werden Websites in Komponenten zerlegt, welche jeweils HTML-Block, Style und Script in einer Datei vereinen. Diese werden anschließend in der übergelagerten `App.vue` importiert und ergeben die eigentliche Website. Komponenten sind im Ordner `src\components` gespeichert.
+## Requirements
 
-Werden verschiedene Ansichten der Website
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [Node.js (LTS)](https://nodejs.org/en)
+- [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/main)
+- Optional: [Linux subsystem for windows](https://learn.microsoft.com/en-us/windows/wsl/install) with WSL2
 
-### Node
+## VSCode
+
+For coding the coding editor Visual Studio Code is recommended as this project already sets up extensions and a debugging environment.
+
+- Download VSCode from the official [website](https://code.visualstudio.com/)
+- Install it following the instructions for your operating system
+- Install the extensions for the project that VSCode recommends. They can be inspected in `Extensions` tab under `Recommended`.
+- Optional: Install WSL2 for linux subsystem
+
+## Linux Subsystem
+
+For this project a unix based environment is not a must have but recommended. On a windows operation sytem, developers can access the power of both Windows and Linux at the same time on a Windows machine. The Windows Subsystem for Linux (WSL) lets developers install a Linux distribution such as Ubuntu and use Linux applications, utilities, and Bash command-line tools directly on Windows, unmodified, without the overhead of a traditional virtual machine or dualboot setup.
+
+For installation follow the instruction steps on the [offical microsoft website](https://learn.microsoft.com/en-us/windows/wsl/install).
+
+If you encounter problem while the installation process, have a look into the [troubleshooting guide](https://learn.microsoft.com/en-us/windows/wsl/troubleshooting).
+
+## Miniconda
+
+### Windows
+
+Follow the [instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html) for installing miniconda on windows.
+
+### Linux
+
+- Download the latest 64-bit version of the miniconda installer
+
+```
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+```
+
+- Install conda
+
+```
+bash ./Miniconda3-latest-Linux-x86_64.sh
+```
+
+## Node
 
 Node.js is a JavaScript runtime built on Chrome's V8 engine, designed for executing JavaScript code server-side.Its package ecosystem, npm (Node Package Manager), provides access to a vast collection of libraries and tools, enabling rapid development and scalability.
 
-Install the latest version of [node](https://nodejs.org/en/download). Download the .msi isntaller for windows. Follow the instructions in the installer.
+### Windows
 
-Verify wether node is installed via `node -v`.
-Verify wether npm is installed via `npm -v`.
+- Install the latest version of [node](https://nodejs.org/en/download). Download the .msi isntaller for windows and follow the instructions in the installer.
+- Verify node installation via `node -v` and npm is installed via `npm -v`.
 
-### Setup
+### Linux
+
+- Install node with nvm `nvm install 22.1.0`
+- Check the current node version `node --version`
+- Switch between node version by using `nvm use <node_version>`
+
+# Getting Started
+
+## Frontend
 
 - To run the frontend locally go into the frontend directory via `cd frontend`. Install
 - Install the frontend dependencies with `npm install`
@@ -26,7 +74,20 @@ Verify wether npm is installed via `npm -v`.
 
 Während der Entwicklung wird das Frontend in einer speziellen Konfiguration geladen. Diese ist näher in der Datei `package.json` spezifizert. Außerdem finden sich dort auch die weiteren Möglichkeiten, das Frontend zu starten.
 
-### UI Framework
+## Backend
+
+- Create conda environment in the terminal by executing `conda env create -f environment.yml`
+- Afterwards activate the environment `conda activate afterwork-coding`
+- Within VSCode the installed python version needs to be selected as a interpreter. Open any .py file. In the bottom right corner of VSCode the interpreter can be selected. Select the one for `afterwork-coding`.
+- Run the backend in debug mode by selecting the `Run and Debug` icon in the left panel of VSCode
+- Select `Python: FastApi (afterwork coding)`
+- Open the server `http://127.0.0.1:8000`
+
+# Frontend
+
+The frontend setup is made with [Vite](https://vite.dev/guide/).
+
+## UI Framework
 
 In this project [PrimeVue](https://primevue.org/) is used as an UI framework. PrimeVue is a rich component library for Vue.js, offering a wide range of pre-built UI components, including forms, tables, charts, and interactive widgets. It supports modern features like themes, customizable styling, and accessibility compliance. It includes
 
@@ -67,15 +128,15 @@ The installed components can be used within vue components directly without any 
 <style scoped></style>
 ```
 
-### Router
+## Router
 
 For routing in a Vue application the library [Vue Router](https://router.vuejs.org/) is used.
 
-### Pinia Store
+## Pinia Store
 
 [Pinia](https://pinia.vuejs.org/) is a store library for Vue, it allows you to share a state across components/pages. For pinia the [setup stores](https://pinia.vuejs.org/core-concepts/#Setup-Stores) should be used to keep as close to Vue Composition API's setup function.
 
-### Testing
+## Testing
 
 For testing [Vitest](https://vitest.dev/) is used. Each test should be located in the `frontend/tests` folder. Each test needs to include `<name>.test.ts`. To run tests for the frontend, follow these steps:
 
@@ -86,7 +147,7 @@ For testing [Vitest](https://vitest.dev/) is used. Each test should be located i
 
 [FastApi](https://fastapi.tiangolo.com/) is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
 
-### Routing
+## Routing
 
 The project backend is built using FastAPI, and `APIRouter` is utilized to organize and modularize the API endpoints. APIRouter allows you to group routes based on functionality or features, making the application more maintainable and scalable.
 
@@ -129,7 +190,7 @@ app = FastAPI()
 app.include_router(users_router)
 ```
 
-### Database
+## Database
 
 In this project all CRUD operations (create, read, update, delete) are made on a relational database, more specifically SQLite. The creation of the database connection and the SQLite setting are within the `database.py`. For local development and testing SQLite is fine, but in a production environment more robust databases such as PostgreSQL, MySQL or MariaDB should be considered.
 
@@ -154,7 +215,7 @@ def get_db():
         yield session
 ```
 
-### Database Table Definitions
+## Database Table Definitions
 
 The database table definitions are stored in the `db` folder. It relys on `SQLModel`, is built on top of `SQLAlchemy` and `Pydantic` for data validation. The `Item` class is very similar to a Pydantic model, altough `table=True` tells SQLModel that this is a table model, it should represent a table in the SQL database, it's not just a data model. `Field(default=None, primary_key=True)` tells SQLModel that the id is the primary key in the SQL database. SQLModel knows that how to handle pythons string and int types into the respective database types (e.g. TEXT or VARCHAR).
 
@@ -167,7 +228,7 @@ class Item(SQLModel, table=True):
     name: str
 ```
 
-### Testing
+## Testing
 
 [Pytest](https://docs.pytest.org/en/stable/) is a powerful testing framework for Python. It simplifies the process of writing and running tests, supports a wide range of test types, and provides a rich ecosystem of plugins.
 
@@ -195,7 +256,7 @@ def test_example():
 
 Before writing any tests, they should be keept isolated, independent and repeatable. This means tests can run in any order. This means tests can run in any order. It is best practice to abstract the implementation detail. To handle all of this, Pytest offers `fixtures` for setup and teardown functions. For testing, a separate test database in SQLite is created to avoid using the real database and causing side effects. That setup is part of the `conftest.py` file. It created a test database in SQLite and sets up the test client for the FastAPI app. The test client is used in the tests to make requests to the app endpoints and test its CRUD operations.
 
-### HTTP Response Codes
+## HTTP Response Codes
 
 Every http request has a response with a status code that indicate the state of the response. Responses are grouped in five classes and can be viewed in detail [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
 
@@ -205,20 +266,9 @@ Every http request has a response with a status code that indicate the state of 
 - Client error responses (400–499)
 - Server error responses (500–599)
 
-### Swagger and OpenAPI
+## Swagger and OpenAPI
 
 For endpoint documentation FastApi provides API documentation, so called `Swagger UI`, which can be found under `http://127.0.0.1:8000/docs`.
-
-### Conda
-
-The project setup is done with conda. Follow the [instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html) for installing conda on windows.
-
-- Create conda environment in the terminal by executing `conda env create -f environment.yml`
-- Afterwards activate the environment `conda activate afterwork-coding`
-- Within VSCode the installed python version needs to be selected as a interpreter. Open any .py file. In the bottom right corner of VSCode the interpreter can be selected. Select the one for `afterwork-coding`.
-- Run the backend in debug mode by selecting the `Run and Debug` icon in the left panel of VSCode
-- Select `Python: FastApi (afterwork coding)`
-- Open the server `http://127.0.0.1:8000`
 
 # Git Commands
 
@@ -246,12 +296,15 @@ Alternatively run `git add .`, `git commit -m "message..."` and `git push`
 # GitHub
 
 ## Kanban Board
+
 The Kanban board is used to track the progress of tasks, issues, and features in this project. It provides a visual workflow to organize work efficiently.
 
 ### How Issues Relate to Board Items
+
 Each item on the board represents a GitHub issue or pull request. When an issue is created, it can be assigned to a column based on its status. Moving an issue across columns reflects its progress in the development cycle.
 
 ### Board Columns
+
 Use the board to prioritize tasks, track development flow, and ensure smooth progress.
 
 - **Backlog**: Holds all created PBIs (Product Backlog Items).
@@ -261,13 +314,14 @@ Use the board to prioritize tasks, track development flow, and ensure smooth pro
 - **Done** – Completed tasks that are ready for deployment or have been merged.
 
 ### How to Create a Backlog item
+
 - Open the Kanban Board and click on `Add Item` in the column for `Backlog`
 - Click on the `+` symbol and click `Create new issue`
 - Add a meaningful `title` and `description` and click `Create`
 - Afterwards an `Assignee` can be assigned to the ticket and `labels` (optional)
 
-
 ### Create a Feature Branch
+
 - Most importantly branches can be created by clicking on the `Create a branch` button
 - Make sure to add `feature` as a prefix of the branch name, e.g. `feature/1-example-issue`. This is important for merging to develop later since branches in pull requests need to have `feature/` in the branch name!
 - Set the `Branch source` to develop and create the branch

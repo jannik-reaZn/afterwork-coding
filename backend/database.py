@@ -5,7 +5,7 @@ from fastapi import Depends
 from sqlalchemy.orm import sessionmaker
 from sqlmodel import Session, SQLModel, create_engine
 
-from backend.config import settings
+from backend.common.config import settings
 
 SQLITE_DATABASE_URL = "sqlite:///backend/development.db"
 
@@ -26,4 +26,4 @@ def get_db() -> Generator[Session, None, None]:
         yield session
 
 
-SessionDep = Annotated[Session, Depends(get_db)]
+SessionDependency = Annotated[Session, Depends(get_db)]
