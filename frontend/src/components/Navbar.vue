@@ -1,9 +1,5 @@
-<!-- Home vue -> Komponenten aufsplitten -> App.vue -->
-
 <template>
-  <!-- layout -->
   <div id="layout" class="flex-column align-items-center">
-    <!-- Top Banner -->
     <div id="topBanner" class="flex p-0 m-0 top-0 left-0">
       <div
         class="flex flex-row align-items-center justify-content-between flex-grow-1"
@@ -18,7 +14,7 @@
             placeholder="Search"
             class="w-full"
           />
-          <!-- w-full nimmt die volle Breite des Parents ein -->
+          <!-- w-full extends element to full screen width -->
         </div>
         <div class="flex-initial m-4">
           <Button
