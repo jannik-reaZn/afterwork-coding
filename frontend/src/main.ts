@@ -14,8 +14,8 @@ import Menubar from "primevue/menubar";
 import Menu from "primevue/menu";
 import Toast from "primevue/toast";
 import ToastService from "primevue/toastservice";
-import Card from 'primevue/card';
-
+import Card from "primevue/card";
+import Dialog from "primevue/dialog";
 
 import { customTheme } from "./style/theme";
 import "./style.css"; //Loaded last, because it overwrites PrimeVues default styles
@@ -39,6 +39,6 @@ app.component("Toast", Toast);
 app.component("InputText", InputText);
 app.component("Menu", Menu);
 app.component("Card", Card);
-app.component("InputText", InputText);
+app.component("Dialog", Dialog);
 app.use(ToastService);
 app.mount("#app");
