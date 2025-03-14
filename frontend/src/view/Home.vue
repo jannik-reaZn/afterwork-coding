@@ -1,6 +1,6 @@
 <template>
   <div class="grid gap-4 pb-8 m-2 auto-fit-grid">
-    <GameCard :navigateTo="'/hangman'" :show-button="true" class="custom-card">
+    <GameCard :navigateTo="'/hangman'" :show-button="true">
       <template #title> Hangman </template>
       <template #content>
         Hangman is a guessing game one player. A word, phrase, or sentence is
@@ -8,7 +8,7 @@
         letters or numbers within a certain number of guesses.
       </template>
     </GameCard>
-    <GameCard :show-button="false" class="custom-card">
+    <GameCard :show-button="false">
       <template #title> More games </template>
       <template #content> More games to come! </template>
     </GameCard>
