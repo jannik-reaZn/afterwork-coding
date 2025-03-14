@@ -1,7 +1,12 @@
 <template>
   <div class="text-center">
     <h1>Hangman</h1>
-    <Button label="Show" @click="showDialog = true" />
+    <Button
+      class="bg-white border-black-alpha-90"
+      icon="pi pi-question"
+      rounded
+      @click="showDialog = true"
+    />
     <HangmanHelpDialog v-model="showDialog" />
 
     <div v-if="store.game">
