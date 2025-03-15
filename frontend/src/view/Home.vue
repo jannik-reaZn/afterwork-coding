@@ -1,54 +1,27 @@
 <template>
-  <div>
-    <Button label="Create User" @click="createUser" />
-    <button type="button" @click="increment">
-      count is {{ counterStore.count }}
-    </button>
-  </div>
-  <div>
-    <RouterLink to="/example">Go to Example View</RouterLink>
+  <div class="grid gap-4 pb-8 m-2 auto-fit-grid">
+    <GameCard :navigateTo="'/hangman'" :show-button="true">
+      <template #title> Hangman </template>
+      <template #content>
+        Hangman is a guessing game one player. A word, phrase, or sentence is
+        randomly generated and the player tries to guess it by suggesting
+        letters or numbers within a certain number of guesses.
+      </template>
+    </GameCard>
+    <GameCard :show-button="false">
+      <template #title> More games </template>
+      <template #content> More games to come! </template>
+    </GameCard>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useCounterStore } from "@/store/counter";
-import { useItemStore } from "@/store/item";
-import { useToast } from "primevue/usetoast";
-
-const counterStore = useCounterStore();
-const itemStore = useItemStore();
-const toast = useToast();
-
-const increment = () => {
-  counterStore.increment();
-};
-
-const item = ref({
-  name: "Test Item",
-  description: "This is a test item",
-  price: 10.99,
-  is_available: true,
-});
-
-const createUser = async () => {
-  try {
-    await itemStore.addItem(item.value);
-    toast.add({
-      severity: "info",
-      summary: "Info",
-      detail: "Successfully created user",
-      life: 3000,
-    });
-  } catch (error) {
-    toast.add({
-      severity: "error",
-      summary: "Info",
-      detail: "An error occured while creating a user",
-      life: 3000,
-    });
-  }
-};
+import GameCard from "@/components/GameCard.vue";
 </script>
 
-<style scoped></style>
+<style scoped>
+.auto-fit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+</style>
