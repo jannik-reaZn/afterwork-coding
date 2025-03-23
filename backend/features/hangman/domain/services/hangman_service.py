@@ -5,8 +5,15 @@ class Hangman:
         self.random_word: str = self.generate_random_word()
         self.guessed_letters: list[str] = []
 
+    def return_values(self):
+        return {
+            "random_word": self.random_word,
+            "total_tries": self.total_tries,
+            "guessed_letters": self.guessed_letters,
+        }
+
     def initiate_game(self):
-        return self.random_word, self.total_tries
+        return self.return_values()
 
     def generate_random_word(self) -> str:
         return "house"
@@ -23,12 +30,17 @@ class Hangman:
             self.guessed_letters.append(guessed_letter)
             if guessed_letter not in self.random_word:
                 self.total_tries -= 1
+
+            return self.return_values()
         else:
-            # returne to TitlePage
-            pass
+            return self.return_values()
 
 
 hangman = Hangman()
-random_word, total_tries = hangman.initiate_game()
-print(random_word)
-print(total_tries)
+
+hangman_status = hangman.initiate_game()
+print("Initiate Game: ", hangman_status)
+print()
+
+hangman_status = hangman.update_game(guessed_letter="a")
+print("Update Game: ", hangman_status)
