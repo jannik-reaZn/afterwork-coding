@@ -1,1 +1,1 @@
-from .hangman_models import HangmanStatus
+from .hangman_models import HangmanLanguages, HangmanStatus

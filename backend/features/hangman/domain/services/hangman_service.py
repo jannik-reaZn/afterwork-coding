@@ -1,11 +1,14 @@
-from backend.features.hangman.domain.models import HangmanStatus
+from faker import Faker
+
+from backend.features.hangman.domain.models import HangmanLanguages, HangmanStatus
 
 
 class Hangman:
     # TODO: remove total_tries Number
-    def __init__(self, total_tries: int = 6):
+    def __init__(self, language: str, total_tries: int = 6):
         self.total_tries: int = total_tries
-        self.random_word: str = self.generate_random_word()
+        self.language: str = language
+        self.random_word: str = self.generate_random_word(language)
         self.guessed_letters: set[str] = set()
         self.is_game_won_status = False
 
@@ -20,18 +23,15 @@ class Hangman:
     def initiate_game(self):
         return self.return_values()
 
-    def generate_random_word(self) -> str:
-        return "house"
+    def generate_random_word(self, language) -> str:
+        fake = Faker(language)
+        return fake.word()
 
     def is_game_won(self) -> bool:
         return True if self.guessed_letters == set(self.random_word) else False
 
     def is_game_lost(self) -> bool:
         return True if self.total_tries <= 0 else False
-
-    #    if self.total_tries <= 0:
-    #       return True
-    #   return False
 
     def update_game(self, guessed_letter: str):
 
@@ -50,7 +50,7 @@ class Hangman:
         return self.return_values()
 
 
-hangman = Hangman()
+hangman = Hangman(language=HangmanLanguages.ENGLISH.value)
 
 hangman_status = hangman.initiate_game()
 print("Initiate Game: ", hangman_status)
