@@ -1,3 +1,6 @@
+from backend.features.hangman.domain.models import HangmanStatus
+
+
 class Hangman:
     # TODO: remove total_tries Number
     def __init__(self, total_tries: int = 6):
@@ -5,12 +8,12 @@ class Hangman:
         self.random_word: str = self.generate_random_word()
         self.guessed_letters: set[str] = set()
 
-    def return_values(self):
-        return {
-            "random_word": self.random_word,
-            "total_tries": self.total_tries,
-            "guessed_letters": self.guessed_letters,
-        }
+    def return_values(self) -> HangmanStatus:
+        return HangmanStatus(
+            random_word=self.random_word,
+            total_tries=self.total_tries,
+            guessed_letters=self.guessed_letters,
+        )
 
     def initiate_game(self):
         return self.return_values()
