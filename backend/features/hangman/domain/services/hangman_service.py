@@ -1,5 +1,6 @@
 from backend.features.hangman.domain.constants import DEFAULT_HANGMAN_TOTAL_TRIES
-from backend.features.hangman.domain.models import HangmanStatus
+from backend.features.hangman.domain.models import HangmanLanguages, HangmanStatus
+from backend.features.hangman.domain.services.word_provider import WordProviderFaker
 from backend.features.hangman.domain.services.word_provider.interface import WordProviderInterface
 
 
@@ -39,3 +40,8 @@ class HangmanService:
 
     def is_game_lost(self, hangman_status: HangmanStatus) -> bool:
         return True if hangman_status.total_tries == 0 else False
+
+
+def get_hangman_service() -> HangmanService:
+    word_provider = WordProviderFaker(language=HangmanLanguages.ENGLISH.value)
+    return HangmanService(word_provider=word_provider)

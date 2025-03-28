@@ -2,17 +2,11 @@ from fastapi import APIRouter, Body, Depends, status
 
 from backend.common.route.enums.api_routes import ApiRoutes
 from backend.common.route.enums.api_tags import ApiTags
-from backend.features.hangman.domain.models import HangmanLanguages, HangmanStatus
-from backend.features.hangman.domain.services import HangmanService
-from backend.features.hangman.domain.services.word_provider import WordProviderFaker
+from backend.features.hangman.domain.models import HangmanStatus
+from backend.features.hangman.domain.services import HangmanService, get_hangman_service
 from backend.features.hangman.routes.requests import HangmanRequest
 
 router = APIRouter(prefix=f"/{ApiRoutes.HANGMAN.value}", tags=[ApiTags.HANGMAN])
-
-
-def get_hangman_service() -> HangmanService:
-    word_provider = WordProviderFaker(language=HangmanLanguages.ENGLISH.value)
-    return HangmanService(word_provider=word_provider)
 
 
 @router.get(
