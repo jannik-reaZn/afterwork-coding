@@ -1,0 +1,1 @@
+from .hangman_tries import DEFAULT_HANGMAN_TOTAL_TRIES

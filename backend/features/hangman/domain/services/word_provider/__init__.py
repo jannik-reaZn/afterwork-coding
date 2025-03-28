@@ -1,0 +1,2 @@
+from .word_provider_faker import WordProviderFaker
+from .word_provider_static import WordProviderStatic

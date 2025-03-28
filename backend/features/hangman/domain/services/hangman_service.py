@@ -1,72 +1,37 @@
-from faker import Faker
+from backend.features.hangman.domain.constants import DEFAULT_HANGMAN_TOTAL_TRIES
+from backend.features.hangman.domain.models import HangmanStatus
+from backend.features.hangman.domain.services.word_provider.interface import WordProviderInterface
 
-from backend.features.hangman.domain.models import HangmanLanguages, HangmanStatus
 
+class HangmanService:
+    def __init__(self, word_provider: WordProviderInterface):
+        self.word_provider: str = word_provider
 
-class Hangman:
-    # TODO: remove total_tries Number
-    def __init__(self, language: str, total_tries: int = 6):
-        self.total_tries: int = total_tries
-        self.language: str = language
-        self.random_word: str = self.generate_random_word(language)
-        self.guessed_letters: set[str] = set()
-        self.is_game_won_status = False
-
-    def return_values(self) -> HangmanStatus:
+    def start_game(self, total_tries: int = DEFAULT_HANGMAN_TOTAL_TRIES) -> HangmanStatus:
+        random_word: str = self.word_provider.get_random_word()
         return HangmanStatus(
-            random_word=self.random_word,
-            total_tries=self.total_tries,
-            guessed_letters=self.guessed_letters,
-            is_game_won_status=self.is_game_won_status,
+            random_word=random_word,
+            total_tries=total_tries,
+            guessed_letters=set(),
+            is_game_won_status=False,
         )
 
-    def initiate_game(self):
-        return self.return_values()
+    def update_game(self, hangman_status: HangmanStatus, guessed_letter: str):
+        if self.is_game_lost(hangman_status):
+            return hangman_status
 
-    def generate_random_word(self, language) -> str:
-        fake = Faker(language)
-        return fake.word()
+        if guessed_letter not in hangman_status.guessed_letters:
+            hangman_status.guessed_letters.add(guessed_letter)
+            if guessed_letter not in hangman_status.random_word:
+                hangman_status.total_tries -= 1
 
-    def is_game_won(self) -> bool:
-        return True if self.guessed_letters == set(self.random_word) else False
+        if self.is_game_won(hangman_status):
+            hangman_status.is_game_won_status = True
 
-    def is_game_lost(self) -> bool:
-        return True if self.total_tries <= 0 else False
+        return hangman_status
 
-    def update_game(self, guessed_letter: str):
+    def is_game_won(self, hangman_status: HangmanStatus) -> bool:
+        return True if hangman_status.guessed_letters == set(hangman_status.random_word) else False
 
-        if self.is_game_lost():
-            return self.return_values()
-
-        if guessed_letter not in self.guessed_letters:
-            self.guessed_letters.add(guessed_letter)
-            if guessed_letter not in self.random_word:
-                self.total_tries -= 1
-
-        if self.is_game_won():
-            self.is_game_won_status = True
-            return self.return_values()
-
-        return self.return_values()
-
-
-hangman = Hangman(language=HangmanLanguages.ENGLISH.value)
-
-hangman_status = hangman.initiate_game()
-print("Initiate Game: ", hangman_status)
-print()
-
-hangman_status = hangman.update_game(guessed_letter="h")
-print("Update Game: ", hangman_status)
-
-hangman_status = hangman.update_game(guessed_letter="o")
-print("Update Game: ", hangman_status)
-
-hangman_status = hangman.update_game(guessed_letter="u")
-print("Update Game: ", hangman_status)
-
-hangman_status = hangman.update_game(guessed_letter="s")
-print("Update Game: ", hangman_status)
-
-hangman_status = hangman.update_game(guessed_letter="e")
-print("Update Game: ", hangman_status)
+    def is_game_lost(self, hangman_status: HangmanStatus) -> bool:
+        return True if hangman_status.total_tries == 0 else False
