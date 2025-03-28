@@ -5,7 +5,7 @@ from backend.features.hangman.domain.services.word_provider.interface import Wor
 
 class HangmanService:
     def __init__(self, word_provider: WordProviderInterface):
-        self.word_provider: str = word_provider
+        self.word_provider: WordProviderInterface = word_provider
 
     def start_game(self, total_tries: int = DEFAULT_HANGMAN_TOTAL_TRIES) -> HangmanStatus:
         random_word: str = self.word_provider.get_random_word()
@@ -16,7 +16,7 @@ class HangmanService:
             is_game_won_status=False,
         )
 
-    def update_game(self, hangman_status: HangmanStatus, guessed_letter: str):
+    def guess_letter(self, hangman_status: HangmanStatus, guessed_letter: str) -> HangmanStatus:
         if self.is_game_lost(hangman_status):
             return hangman_status
 
@@ -31,7 +31,11 @@ class HangmanService:
         return hangman_status
 
     def is_game_won(self, hangman_status: HangmanStatus) -> bool:
-        return True if hangman_status.guessed_letters == set(hangman_status.random_word) else False
+        return (
+            True
+            if set(hangman_status.random_word).issubset(hangman_status.guessed_letters)
+            else False
+        )
 
     def is_game_lost(self, hangman_status: HangmanStatus) -> bool:
         return True if hangman_status.total_tries == 0 else False

@@ -1,4 +1,5 @@
 from enum import StrEnum
+from typing import Set
 
 from pydantic import BaseModel, Field
 
@@ -12,7 +13,7 @@ class HangmanStatus(BaseModel):
         default=DEFAULT_HANGMAN_TOTAL_TRIES,
         description="These are the total tries for the hangman game.",
     )
-    guessed_letters: set[str]
+    guessed_letters: Set[str]
     is_game_won_status: bool = False
 
 

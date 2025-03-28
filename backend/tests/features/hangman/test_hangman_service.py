@@ -48,16 +48,16 @@ class TestHangmanGameLogic:
         self.hangman = hangman_game
         self.initial_status = hangman_game.start_game(total_tries=self.total_tries)
 
-    def test_update_game_correct_guess(self):
-        updated_status = self.hangman.update_game(self.initial_status, "h")
+    def test_guess_letter_correct_guess(self):
+        updated_status = self.hangman.guess_letter(self.initial_status, "h")
 
         # Assert
         assert updated_status.total_tries == self.total_tries
         assert "h" in updated_status.guessed_letters
         assert updated_status.is_game_won_status is False
 
-    def test_update_game_incorrect_guess(self):
-        updated_status = self.hangman.update_game(self.initial_status, "x")
+    def test_guess_letter_incorrect_guess(self):
+        updated_status = self.hangman.guess_letter(self.initial_status, "x")
 
         # Assert
         assert updated_status.total_tries == self.total_tries - 1
@@ -69,7 +69,7 @@ class TestHangmanGameLogic:
 
         # Pretend that all letters were guessed correctly
         for letter in "hangman":
-            status = self.hangman.update_game(status, letter)
+            status = self.hangman.guess_letter(status, letter)
 
         # Act & Assert
         assert self.hangman.is_game_won(status) is True
@@ -87,6 +87,6 @@ class TestHangmanGameLogic:
         status = self.initial_status
 
         for letter in guessed_letters:
-            status = self.hangman.update_game(status, letter)
+            status = self.hangman.guess_letter(status, letter)
 
         assert self.hangman.is_game_lost(status) == expected
