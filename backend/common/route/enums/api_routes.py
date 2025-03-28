@@ -1,6 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class ApiRoutes(str, Enum):
+class ApiRoutes(StrEnum):
     USER = "user"
     AUTH = "auth"
+    HANGMAN = "hangman"

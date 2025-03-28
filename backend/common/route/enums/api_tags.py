@@ -1,6 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class ApiTags(str, Enum):
+class ApiTags(StrEnum):
     USER = "user"
     AUTH = "auth"
+    HANGMAN = "hangman"

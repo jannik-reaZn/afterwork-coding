@@ -9,7 +9,7 @@ from backend.features.auth.domain.services.auth_service import (
 )
 from backend.features.auth.models.auth_models import Token
 
-router = APIRouter(prefix=f"/{ApiRoutes.AUTH.value}", tags=[ApiTags.AUTH])
+router = APIRouter(prefix=f"/{ApiRoutes.AUTH.value}", tags=[ApiTags.AUTH.value])
 
 
 @router.post("/token")

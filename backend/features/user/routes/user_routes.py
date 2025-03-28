@@ -10,7 +10,7 @@ from backend.features.user.domain.models import User, UserCreate
 from backend.features.user.domain.services.user_service import UserService
 from backend.features.user.routes.requests import UserCreateRequest
 
-router = APIRouter(prefix=f"/{ApiRoutes.USER.value}", tags=[ApiTags.USER])
+router = APIRouter(prefix=f"/{ApiRoutes.USER.value}", tags=[ApiTags.USER.value])
 
 
 @router.post(
