@@ -49,27 +49,30 @@ const store = useHangmanStore();
 import HangmanHelpDialog from "@/components/hangman/HangmanHelpDialog.vue";
 
 // Assets
-import hangman0 from "@/assets/hangman-0.svg";
 import hangman1 from "@/assets/hangman-1.svg";
 import hangman2 from "@/assets/hangman-2.svg";
 import hangman3 from "@/assets/hangman-3.svg";
 import hangman4 from "@/assets/hangman-4.svg";
 import hangman5 from "@/assets/hangman-5.svg";
 import hangman6 from "@/assets/hangman-6.svg";
+import hangman7 from "@/assets/hangman-7.svg";
+import hangman8 from "@/assets/hangman-8.svg";
+import hangman9 from "@/assets/hangman-9.svg";
+import hangman10 from "@/assets/hangman-10.svg";
 
 const emit = defineEmits(["game-over"]);
 
-// TODO remove as soon as the backend is implemented
-const NUMBER_OF_TRIES = 6;
-
 const hangmanImages = [
-  hangman0,
   hangman1,
   hangman2,
   hangman3,
   hangman4,
   hangman5,
   hangman6,
+  hangman7,
+  hangman8,
+  hangman9,
+  hangman10,
 ];
 
 /**
@@ -82,9 +85,8 @@ const hangmanImages = [
  * It then returns the image at that index from the hangmanImages array.
  */
 const currentHangmanImage = computed(() => {
-  const triesLeft = store.game?.total_tries ?? NUMBER_OF_TRIES;
-  const numberOfTotalTries = NUMBER_OF_TRIES; // TODO remove NUMBER_OF_TRIES as soon as the backend is implemented
-  const index = Math.abs(numberOfTotalTries - triesLeft);
+  const triesLeft = store.game?.total_tries;
+  const index = hangmanImages.length - triesLeft - 1;
   return hangmanImages[index];
 });
 

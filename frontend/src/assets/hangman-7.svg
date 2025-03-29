@@ -88,14 +88,56 @@
             <g
                id="g52">
               <path
+                 d="m 50023,41815 v 0 c 0,-6266.223 5079.777,-11346 11346,-11346 v 0 c 3009.145,0 5895.05,1195.379 8022.836,3323.168 C 71519.625,35919.953 72715,38805.855 72715,41815 v 0 c 0,6266.223 -5079.77,11346 -11346,11346 v 0 c -6266.223,0 -11346,-5079.777 -11346,-11346 z"
+                 style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+                 id="path54" />
+            </g>
+            <path
+               d="m 50023,41815 v 0 c 0,-6266.223 5079.777,-11346 11346,-11346 v 0 c 3009.145,0 5895.05,1195.379 8022.836,3323.168 C 71519.625,35919.953 72715,38805.855 72715,41815 v 0 c 0,6266.223 -5079.77,11346 -11346,11346 v 0 c -6266.223,0 -11346,-5079.777 -11346,-11346 z"
+               style="fill:none;stroke:#000000;stroke-width:3048;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+               id="path56" />
+          </g>
+          <g
+             id="g58">
+            <g
+               id="g60">
+              <path
                  d="M 60127,30469 V 6805 h 2472 v 23664 z"
                  style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-                 id="path54" />
+                 id="path62" />
             </g>
             <path
                d="M 60127,30469 V 6805 h 2472 v 23664 z"
                style="fill:none;stroke:#000000;stroke-width:381;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
-               id="path56" />
+               id="path64" />
+          </g>
+          <g
+             id="g66">
+            <g
+               id="g68">
+              <path
+                 d="M 60133,90152 V 53156 h 2472 v 36996 z"
+                 style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+                 id="path70" />
+            </g>
+            <path
+               d="M 60133,90152 V 53156 h 2472 v 36996 z"
+               style="fill:none;stroke:#000000;stroke-width:381;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+               id="path72" />
+          </g>
+          <g
+             id="g74">
+            <g
+               id="g76">
+              <path
+                 d="m 60853.266,71641.32 -16740,-16716 1752,-1752 16740,16716 z"
+                 style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+                 id="path78" />
+            </g>
+            <path
+               d="m 60853.266,71641.32 -16740,-16716 1752,-1752 16740,16716 z"
+               style="fill:none;stroke:#000000;stroke-width:381;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+               id="path80" />
           </g>
         </g>
       </g>
