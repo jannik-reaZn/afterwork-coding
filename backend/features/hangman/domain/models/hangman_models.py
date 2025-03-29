@@ -18,5 +18,5 @@ class HangmanStatus(BaseModel):
 
 
 class HangmanLanguages(StrEnum):
-    ENGLISH = "en_US"
-    GERMAN = "de_DE"
+    AMERICAN = "american"
+    GERMAN = "german"

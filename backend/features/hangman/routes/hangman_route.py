@@ -20,7 +20,7 @@ async def start_hangman(
     language: str = Query(...),
     hangman_service: HangmanService = Depends(get_hangman_service),
 ) -> HangmanStatus:
-    return hangman_service.start_game()
+    return hangman_service.start_game(total_tries=tries, language=language)
 
 
 @router.post(

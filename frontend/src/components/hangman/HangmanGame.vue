@@ -1,30 +1,43 @@
 <template>
   <div class="text-center">
-    <h1>Hangman</h1>
-    <Button
-      class="border-black-alpha-90 bg-white"
-      icon="pi pi-question"
-      rounded
-      @click="showDialog = true"
-    />
-    <HangmanHelpDialog v-model="showDialog" />
+    <div v-if="store.game?.total_tries === 0 || store.game?.is_game_won_status">
+      <h1
+        :class="
+          store.game?.is_game_won_status ? 'text-green-500' : 'text-red-500'
+        "
+      >
+        {{ store.game?.is_game_won_status ? "You Won!" : "Game Over" }}
+      </h1>
+      <p>The word was: {{ store.game?.random_word }}</p>
+      <Button label="Play Again" @click="emit('game-over')" />
+    </div>
+    <div v-else>
+      <h1>Hangman</h1>
+      {{ store.game }}
+      <Button
+        class="border-black-alpha-90 bg-white"
+        icon="pi pi-question"
+        rounded
+        @click="showDialog = true"
+      />
+      <HangmanHelpDialog v-model="showDialog" />
 
-    {{ store.game }}
-    <img class="mx-auto size-80" :src="currentHangmanImage" alt="Hangman" />
+      <img class="mx-auto size-80" :src="currentHangmanImage" alt="Hangman" />
 
-    <span v-for="(letter, index) in store.game?.random_word" :key="index">
-      {{ store.game?.guessed_letters.includes(letter) ? letter : "_" }}
-    </span>
+      <span v-for="(letter, index) in store.game?.random_word" :key="index">
+        {{ store.game?.guessed_letters.includes(letter) ? letter : "_" }}
+      </span>
 
-    <p>Number of tries left: {{ store.game?.total_tries }}</p>
-    <Button
-      v-for="letter in alphabet"
-      :key="letter"
-      :label="letter"
-      :disabled="store.game?.guessed_letters.includes(letter)"
-      class="p-2"
-      @click="store.guessLetter(letter)"
-    />
+      <p>Number of tries left: {{ store.game?.total_tries }}</p>
+      <Button
+        v-for="letter in alphabet"
+        :key="letter"
+        :label="letter"
+        :disabled="store.game?.guessed_letters.includes(letter)"
+        class="p-2"
+        @click="store.guessLetter(letter)"
+      />
+    </div>
   </div>
 </template>
 
@@ -44,6 +57,8 @@ import hangman3 from "@/assets/hangman-3.svg";
 import hangman4 from "@/assets/hangman-4.svg";
 import hangman5 from "@/assets/hangman-5.svg";
 import hangman6 from "@/assets/hangman-6.svg";
+
+const emit = defineEmits(["game-over"]);
 
 // TODO remove as soon as the backend is implemented
 const NUMBER_OF_TRIES = 6;

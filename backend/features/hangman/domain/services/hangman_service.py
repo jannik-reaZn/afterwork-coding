@@ -1,3 +1,5 @@
+from typing import Callable
+
 from backend.features.hangman.domain.constants import DEFAULT_HANGMAN_TOTAL_TRIES
 from backend.features.hangman.domain.models import HangmanLanguages, HangmanStatus
 from backend.features.hangman.domain.services.word_provider import WordProviderFaker
@@ -5,11 +7,16 @@ from backend.features.hangman.domain.services.word_provider.interface import Wor
 
 
 class HangmanService:
-    def __init__(self, word_provider: WordProviderInterface):
-        self.word_provider: WordProviderInterface = word_provider
+    def __init__(self, word_provider_factory: Callable[[str], WordProviderInterface]):
+        self.word_provider_factory = word_provider_factory
 
-    def start_game(self, total_tries: int = DEFAULT_HANGMAN_TOTAL_TRIES) -> HangmanStatus:
-        random_word: str = self.word_provider.get_random_word()
+    def start_game(
+        self,
+        total_tries: int = DEFAULT_HANGMAN_TOTAL_TRIES,
+        language: str = HangmanLanguages.AMERICAN.value,
+    ) -> HangmanStatus:
+        word_provider = self.word_provider_factory(language)
+        random_word = word_provider.get_random_word()
         return HangmanStatus(
             random_word=random_word,
             total_tries=total_tries,
@@ -43,5 +50,7 @@ class HangmanService:
 
 
 def get_hangman_service() -> HangmanService:
-    word_provider_faker = WordProviderFaker(language=HangmanLanguages.ENGLISH.value)
-    return HangmanService(word_provider=word_provider_faker)
+    def word_provider_factory(language: str) -> WordProviderInterface:
+        return WordProviderFaker(language=language)
+
+    return HangmanService(word_provider_factory=word_provider_factory)

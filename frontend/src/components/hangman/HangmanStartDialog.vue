@@ -62,9 +62,9 @@ const tries = ref([
   { name: 9, tries: 9 },
 ]);
 
-const selectedLanguage = ref<string>("English");
+const selectedLanguage = ref<string>("American");
 const languages = ref([
-  { name: "English", language: "English" },
+  { name: "American", language: "American" },
   { name: "German", language: "German" },
 ]);
 
