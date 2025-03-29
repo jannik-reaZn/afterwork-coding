@@ -12,21 +12,19 @@ export async function startHangmanGame(
   };
   try {
     const response = await axiosInstance.get(path, { params });
-    return {
-      ...response.data,
-      guessed_letters: new Set(response.data.guessed_letters),
-    };
+    return response.data;
   } catch (error: any) {
     throw error;
   }
 }
 
 export async function guessLetterHangmanGame(
-  guessedLetter: string
+  guessedLetter: string,
+  gameState: HangmanGame
 ): Promise<HangmanGame> {
   const path = `/hangman/guess/${guessedLetter}`;
   try {
-    const response = await axiosInstance.post(path);
+    const response = await axiosInstance.post(path, gameState);
     return response.data;
   } catch (error: any) {
     throw error;

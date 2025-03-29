@@ -22,7 +22,7 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
     }
 
     try {
-      const response = await guessLetterHangmanGame(guessedLetter);
+      const response = await guessLetterHangmanGame(guessedLetter, game.value);
       game.value = response as HangmanGame;
     } catch (error: any) {
       return error;

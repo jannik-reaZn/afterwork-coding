@@ -34,4 +34,6 @@ async def guess_letter(
     hangman_request: HangmanRequest = Body(...),
     hangman_service: HangmanService = Depends(get_hangman_service),
 ) -> HangmanStatus:
-    return hangman_service.guess_letter(hangman_status=hangman_request, guessed_letter=letter)
+    return hangman_service.guess_letter(
+        hangman_status=hangman_request, guessed_letter=letter.lower()
+    )

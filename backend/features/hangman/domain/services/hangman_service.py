@@ -13,7 +13,7 @@ class HangmanService:
         return HangmanStatus(
             random_word=random_word,
             total_tries=total_tries,
-            guessed_letters=set(),
+            guessed_letters=[],
             is_game_won_status=False,
         )
 
@@ -22,7 +22,7 @@ class HangmanService:
             return hangman_status
 
         if guessed_letter not in hangman_status.guessed_letters:
-            hangman_status.guessed_letters.add(guessed_letter)
+            hangman_status.guessed_letters.append(guessed_letter)
             if guessed_letter not in hangman_status.random_word:
                 hangman_status.total_tries -= 1
 
@@ -34,7 +34,7 @@ class HangmanService:
     def is_game_won(self, hangman_status: HangmanStatus) -> bool:
         return (
             True
-            if set(hangman_status.random_word).issubset(hangman_status.guessed_letters)
+            if set(hangman_status.random_word).issubset(set(hangman_status.guessed_letters))
             else False
         )
 
