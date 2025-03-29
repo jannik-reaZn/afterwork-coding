@@ -3,6 +3,7 @@ import pytest
 from backend.features.hangman.domain.constants import DEFAULT_HANGMAN_TOTAL_TRIES
 from backend.features.hangman.domain.services.hangman_service import HangmanService
 from backend.features.hangman.domain.services.word_provider import WordProviderStatic
+from backend.features.hangman.domain.services.word_provider.interface import WordProviderInterface
 
 
 @pytest.fixture
@@ -11,25 +12,22 @@ def word_provider_static():
 
 
 @pytest.fixture
-def hangman_game(word_provider_static):
-    return HangmanService(word_provider=word_provider_static)
+def word_provider_factory(word_provider_static):
+    def factory(_: str) -> WordProviderInterface:
+        return word_provider_static
+
+    return factory
 
 
-class TestHangmanInit:
-    @pytest.fixture(autouse=True)
-    def _start_hangman_game(self, word_provider_static, hangman_game):
-        self.word_provider_static = word_provider_static
-        self.hangman = hangman_game
-
-    def test_init_with_valid_word_provider(self):
-        assert self.hangman.word_provider == self.word_provider_static
+@pytest.fixture
+def hangman_game(word_provider_factory):
+    return HangmanService(word_provider_factory=word_provider_factory)
 
 
 class TestHangmanStartGame:
     @pytest.fixture(autouse=True)
-    def _start_hangman_game(self):
-        self.word_provider_static = WordProviderStatic("hangman")
-        self.hangman = HangmanService(word_provider=self.word_provider_static)
+    def _start_hangman_game(self, word_provider_factory):
+        self.hangman = HangmanService(word_provider_factory=word_provider_factory)
 
     def test_start_game_with_default_tries(self):
         hangman_status = self.hangman.start_game()
@@ -37,16 +35,16 @@ class TestHangmanStartGame:
         # Assert
         assert hangman_status.random_word == "hangman"
         assert hangman_status.total_tries == DEFAULT_HANGMAN_TOTAL_TRIES
-        assert hangman_status.guessed_letters == set()
+        assert hangman_status.guessed_letters == []
         assert hangman_status.is_game_won_status is False
 
 
 class TestHangmanGameLogic:
     @pytest.fixture(autouse=True)
-    def _start_hangman_game(self, hangman_game):
+    def _start_hangman_game(self, word_provider_factory):
         self.total_tries = DEFAULT_HANGMAN_TOTAL_TRIES
-        self.hangman = hangman_game
-        self.initial_status = hangman_game.start_game(total_tries=self.total_tries)
+        self.hangman = HangmanService(word_provider_factory=word_provider_factory)
+        self.initial_status = self.hangman.start_game(total_tries=self.total_tries)
 
     def test_guess_letter_correct_guess(self):
         updated_status = self.hangman.guess_letter(self.initial_status, "h")
