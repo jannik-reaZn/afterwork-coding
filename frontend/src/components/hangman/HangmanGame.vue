@@ -24,7 +24,7 @@
       <img class="mx-auto size-80" :src="currentHangmanImage" alt="Hangman" />
 
       <span v-for="(letter, index) in store.game?.random_word" :key="index">
-        {{ store.game?.guessed_letters.includes(letter) ? letter : "_" }}
+        {{ store.game?.guessed_letters.includes(letter) ? `${letter} ` : "_ " }}
       </span>
 
       <p>Number of tries left: {{ store.game?.total_tries }}</p>
