@@ -12,8 +12,7 @@
       <Button label="Play Again" @click="emit('game-over')" />
     </div>
     <div v-else>
-      <h1>Hangman</h1>
-      {{ store.game }}
+      <h1 class="mb-8 text-3xl font-bold">Hangman</h1>
       <Button
         class="border-black-alpha-90 bg-white"
         icon="pi pi-question"
