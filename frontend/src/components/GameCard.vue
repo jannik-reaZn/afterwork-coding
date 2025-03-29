@@ -6,7 +6,7 @@
       </h2>
     </template>
     <template #content>
-      <p class="p-card-content text-gray-600 text-center">
+      <p class="p-card-content text-center text-gray-600">
         <slot name="content">
           Try to guess the word before you run out of attempts!
         </slot>
@@ -15,7 +15,7 @@
     <template #footer v-if="props.showButton">
       <div class="p-card-footer">
         <Button
-          class="px-4 py-2 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+          class="rounded-lg px-4 py-2 text-white shadow-md transition duration-200 hover:bg-blue-600"
           @click="openGame"
           >Open Game
         </Button>
@@ -28,7 +28,7 @@
 import { useRouter } from "vue-router";
 
 const props = defineProps<{
-  navigateTo?: string;
+  navigateTo?: string | null;
   showButton?: boolean;
 }>();
 

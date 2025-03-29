@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, Depends, status
+from fastapi import APIRouter, Body, Depends, Query, status
 
 from backend.common.route.enums.api_routes import ApiRoutes
 from backend.common.route.enums.api_tags import ApiTags
@@ -16,6 +16,8 @@ router = APIRouter(prefix=f"/{ApiRoutes.HANGMAN.value}", tags=[ApiTags.HANGMAN])
     description="Start a new game of Hangman",
 )
 async def start_hangman(
+    tries: int = Query(...),
+    language: str = Query(...),
     hangman_service: HangmanService = Depends(get_hangman_service),
 ) -> HangmanStatus:
     return hangman_service.start_game()

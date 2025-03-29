@@ -1,22 +1,38 @@
 <template>
-  <div class="grid gap-4 pb-8 m-2 auto-fit-grid">
-    <GameCard :navigateTo="'/hangman'" :show-button="true">
-      <template #title> Hangman </template>
-      <template #content>
-        Hangman is a guessing game one player. A word, phrase, or sentence is
-        randomly generated and the player tries to guess it by suggesting
-        letters or numbers within a certain number of guesses.
-      </template>
-    </GameCard>
-    <GameCard :show-button="false">
-      <template #title> More games </template>
-      <template #content> More games to come! </template>
+  <div class="auto-fit-grid m-2 grid gap-4 pb-8">
+    <GameCard
+      v-for="game in games"
+      :key="game.id"
+      :navigateTo="game.navigateTo"
+      :show-button="game.showButton"
+    >
+      <template #title> {{ game.title }} </template>
+      <template #content> {{ game.content }} </template>
     </GameCard>
   </div>
 </template>
 
 <script setup lang="ts">
 import GameCard from "@/components/GameCard.vue";
+
+// TODO: This data should be fetched from backend
+const games = [
+  {
+    id: 1,
+    title: "Hangman",
+    content:
+      "Hangman is a guessing game one player. A word, phrase, or sentence is randomly generated and the player tries to guess it by suggesting letters or numbers within a certain number of guesses.",
+    navigateTo: "/hangman",
+    showButton: true,
+  },
+  {
+    id: 2,
+    title: "More games",
+    content: "More games to come!",
+    navigateTo: null,
+    showButton: false,
+  },
+];
 </script>
 
 <style scoped>

@@ -1,15 +1,15 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { startHangmanGame, updateHangmanGame } from "@/api/hangmanApi";
+import { startHangmanGame, guessLetterHangmanGame } from "@/api/hangmanApi";
 import { HangmanGame } from "@/models/hangmanModel";
 
 export const useHangmanStore = defineStore("hangmanStore", () => {
   const game = ref<HangmanGame | null>(null);
 
-  async function startGame() {
+  async function startGame(tries: number, language: string) {
     try {
-      const response = await startHangmanGame();
+      const response = await startHangmanGame(tries, language);
       game.value = response as HangmanGame;
     } catch (error: any) {
       return error;
@@ -21,13 +21,8 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
       return;
     }
 
-    const payload = {
-      gameId: game.value.gameId,
-      guessedLetter,
-    };
-
     try {
-      const response = await updateHangmanGame(payload);
+      const response = await guessLetterHangmanGame(guessedLetter);
       game.value = response as HangmanGame;
     } catch (error: any) {
       return error;

@@ -43,5 +43,5 @@ class HangmanService:
 
 
 def get_hangman_service() -> HangmanService:
-    word_provider = WordProviderFaker(language=HangmanLanguages.ENGLISH.value)
-    return HangmanService(word_provider=word_provider)
+    word_provider_faker = WordProviderFaker(language=HangmanLanguages.ENGLISH.value)
+    return HangmanService(word_provider=word_provider_faker)
