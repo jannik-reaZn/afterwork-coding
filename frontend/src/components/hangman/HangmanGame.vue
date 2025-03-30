@@ -32,7 +32,7 @@
         v-for="letter in alphabet"
         :key="letter"
         :label="letter"
-        :disabled="store.game?.guessed_letters.includes(letter.toLowerCase())"
+        :disabled="store.game?.guessed_letters.includes(letter)"
         class="p-2"
         @click="store.guessLetter(letter)"
       />

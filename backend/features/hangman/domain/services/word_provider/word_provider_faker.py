@@ -9,4 +9,4 @@ class WordProviderFaker(WordProviderInterface):
         self.fake = Faker(language)
 
     def get_random_word(self) -> str:
-        return self.fake.word()
+        return self.fake.word().upper()
