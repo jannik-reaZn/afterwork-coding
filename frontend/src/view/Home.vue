@@ -20,7 +20,7 @@ const games = [
     id: 1,
     title: "Hangman",
     content:
-      "Hangman is a guessing game one player. A word, phrase, or sentence is randomly generated and the player tries to guess it by suggesting letters or numbers within a certain number of guesses.",
+      "Hangman is a guessing game one player. A word is randomly generated and the player tries to guess it by suggesting letters or numbers within a certain number of guesses.",
     navigateTo: "/hangman",
     showButton: true,
   },

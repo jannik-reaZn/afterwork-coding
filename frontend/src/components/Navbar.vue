@@ -49,6 +49,7 @@ const toggle = (event: Event) => {
 
 const search = ref(null);
 </script>
+
 <style scoped>
 img {
   width: 8vh;

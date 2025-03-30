@@ -9,7 +9,6 @@
     :dismissableMask="false"
     :draggable="false"
   >
-    <span class="text-surface-500 mb-4 block">Select game options.</span>
     <div class="grid grid-cols-2 gap-4">
       <label for="tries" class="text-surface-500">Number of tries</label>
       <Select

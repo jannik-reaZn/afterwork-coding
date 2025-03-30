@@ -1,39 +1,60 @@
 <template>
-  <div class="text-center">
-    <div v-if="store.game?.total_tries === 0 || store.game?.is_game_won_status">
+  <div class="flex flex-1 text-center">
+    <div
+      class="flex flex-1 flex-col items-center justify-center"
+      v-if="store.game?.total_tries === 0 || store.game?.is_game_won_status"
+    >
       <h1
         :class="
-          store.game?.is_game_won_status ? 'text-green-500' : 'text-red-500'
+          store.game?.is_game_won_status ? 'text-green-700' : 'text-red-500'
         "
+        class="mb-8 text-3xl font-bold"
       >
         {{ store.game?.is_game_won_status ? "You Won!" : "Game Over" }}
       </h1>
-      <p>The word was: {{ store.game?.random_word }}</p>
-      <Button label="Play Again" @click="emit('game-over')" />
-    </div>
-    <div v-else>
-      <h1 class="mb-8 text-3xl font-bold">Hangman</h1>
+      <p>The word was:</p>
+      <p class="text-2xl">{{ store.game?.random_word }}</p>
       <Button
-        class="border-black-alpha-90 bg-white"
-        icon="pi pi-question"
-        rounded
-        @click="showDialog = true"
+        label="Play Again"
+        class="mt-5"
+        @click="emit('game-over')"
+        size="small"
       />
-      <HangmanHelpDialog v-model="showDialog" />
+    </div>
+    <div v-else class="w-full">
+      <div class="my-4 flex items-center">
+        <div class="flex-1"></div>
+        <h1 class="flex-1 text-center text-3xl font-bold">Hangman</h1>
+        <div class="flex-1 px-2 text-right">
+          <Button
+            class="border-black-alpha-90 bg-white"
+            icon="pi pi-question"
+            size="small"
+            rounded
+            @click="showDialog = true"
+          />
+        </div>
+        <HangmanHelpDialog v-model="showDialog" />
+      </div>
 
-      <img class="mx-auto size-80" :src="currentHangmanImage" alt="Hangman" />
+      <img class="mx-auto" :src="currentHangmanImage" alt="Hangman" />
 
-      <span v-for="(letter, index) in store.game?.random_word" :key="index">
+      <span
+        v-for="(letter, index) in store.game?.random_word"
+        :key="index"
+        class="text-4xl"
+      >
         {{ store.game?.guessed_letters.includes(letter) ? `${letter} ` : "_ " }}
       </span>
 
-      <p>Number of tries left: {{ store.game?.total_tries }}</p>
+      <p class="my-3">Number of tries left: {{ store.game?.total_tries }}</p>
       <Button
         v-for="letter in alphabet"
         :key="letter"
         :label="letter"
         :disabled="store.game?.guessed_letters.includes(letter)"
-        class="p-2"
+        size="small"
+        class="m-1"
         @click="store.guessLetter(letter)"
       />
     </div>
