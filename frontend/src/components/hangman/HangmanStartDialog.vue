@@ -51,10 +51,11 @@ const store = useHangmanStore();
 
 const showHangmanModal = defineModel<boolean>({ required: true });
 
-// TODO remove as soon as the backend is implemented
 const NUMBER_OF_TRIES = 6;
 
 const selectedTry = ref<number>(NUMBER_OF_TRIES);
+
+// TODO This should be fetched from the backend
 const tries = ref([
   { name: NUMBER_OF_TRIES, tries: 6 },
   { name: 7, tries: 7 },

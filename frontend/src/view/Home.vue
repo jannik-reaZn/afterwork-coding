@@ -15,7 +15,6 @@
 <script setup lang="ts">
 import GameCard from "@/components/GameCard.vue";
 
-// TODO: This data should be fetched from backend
 const games = [
   {
     id: 1,
