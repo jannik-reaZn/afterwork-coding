@@ -1,9 +1,13 @@
-from fastapi import APIRouter, Body, Depends, Query, status
+from fastapi import APIRouter, Body, Query, status
 
 from backend.common.route.enums.api_routes import ApiRoutes
 from backend.common.route.enums.api_tags import ApiTags
 from backend.features.hangman.domain.models import HangmanStatus
-from backend.features.hangman.domain.services import HangmanService, get_hangman_service
+from backend.features.hangman.domain.use_cases import (
+    GuessHangmanLetterUseCase,
+    StartHangmanGameUseCase,
+)
+from backend.features.hangman.domain.word_provider import get_word_provider_factory
 from backend.features.hangman.routes.requests import HangmanRequest
 
 router = APIRouter(prefix=f"/{ApiRoutes.HANGMAN.value}", tags=[ApiTags.HANGMAN])
@@ -18,9 +22,10 @@ router = APIRouter(prefix=f"/{ApiRoutes.HANGMAN.value}", tags=[ApiTags.HANGMAN])
 async def start_hangman(
     tries: int = Query(...),
     language: str = Query(...),
-    hangman_service: HangmanService = Depends(get_hangman_service),
 ) -> HangmanStatus:
-    return hangman_service.start_game(total_tries=tries, language=language)
+    return StartHangmanGameUseCase(get_word_provider_factory())(
+        total_tries=tries, language=language
+    )
 
 
 @router.post(
@@ -32,6 +37,5 @@ async def start_hangman(
 async def guess_letter(
     letter: str,
     hangman_request: HangmanRequest = Body(...),
-    hangman_service: HangmanService = Depends(get_hangman_service),
 ) -> HangmanStatus:
-    return hangman_service.guess_letter(hangman_status=hangman_request, guessed_letter=letter)
+    return GuessHangmanLetterUseCase()(hangman_status=hangman_request, guessed_letter=letter)
