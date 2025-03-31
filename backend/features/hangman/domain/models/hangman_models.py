@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 from backend.features.hangman.domain.constants import DEFAULT_HANGMAN_TOTAL_TRIES
 
 
-class HangmanStatus(BaseModel):
+class HangmanGame(BaseModel):
     random_word: str
     total_tries: int = Field(
         ge=0,

@@ -1,6 +1,6 @@
 import pytest
 
-from backend.features.hangman.domain.models import HangmanStatus
+from backend.features.hangman.domain.models import HangmanGame
 from backend.features.hangman.domain.use_cases import GuessHangmanLetterUseCase
 
 
@@ -11,7 +11,7 @@ def guess_letter_use_case():
 
 def test_correct_guess(guess_letter_use_case):
     total_tries = 5
-    status = HangmanStatus(
+    status = HangmanGame(
         random_word="PYTHON", total_tries=total_tries, guessed_letters=[], is_game_won_status=False
     )
 
@@ -24,7 +24,7 @@ def test_correct_guess(guess_letter_use_case):
 
 def test_incorrect_guess(guess_letter_use_case):
     total_tries = 5
-    status = HangmanStatus(
+    status = HangmanGame(
         random_word="PYTHON", total_tries=total_tries, guessed_letters=[], is_game_won_status=False
     )
 
@@ -36,7 +36,7 @@ def test_incorrect_guess(guess_letter_use_case):
 
 
 def test_game_won(guess_letter_use_case):
-    status = HangmanStatus(
+    status = HangmanGame(
         random_word="HI", total_tries=5, guessed_letters=["H"], is_game_won_status=False
     )
 
@@ -47,7 +47,7 @@ def test_game_won(guess_letter_use_case):
 
 
 def test_no_op_when_game_lost(guess_letter_use_case):
-    status = HangmanStatus(
+    status = HangmanGame(
         random_word="HI", total_tries=0, guessed_letters=[], is_game_won_status=False
     )
 
