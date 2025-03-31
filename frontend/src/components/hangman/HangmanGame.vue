@@ -37,7 +37,7 @@
         <HangmanHelpDialog v-model="showDialog" />
       </div>
 
-      <img class="mx-auto" :src="currentHangmanImage" alt="Hangman" />
+      <img class="mx-auto size-100" :src="currentHangmanImage" alt="Hangman" />
 
       <span
         v-for="(letter, index) in store.game?.random_word"
