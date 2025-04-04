@@ -1,11 +1,12 @@
 from typing import List
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
+from backend.common.domain.models import DomainModel
 from backend.features.hangman.domain.constants import DEFAULT_HANGMAN_TOTAL_TRIES
 
 
-class HangmanGame(BaseModel):
+class HangmanGame(DomainModel):
     random_word: str = Field(
         min_length=1,
         description="This is the random word for the hangman game.",

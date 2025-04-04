@@ -1,7 +1,7 @@
 from enum import StrEnum
 from typing import Dict, List
 
-from pydantic import BaseModel
+from backend.common.domain.models import DomainModel
 
 
 class HangmanLanguage(StrEnum):
@@ -17,5 +17,5 @@ LANGUAGE_ALPHABETS: Dict[HangmanLanguage, List[str]] = {
 
 
 # Pydantic model for response
-class HangmanAlphabet(BaseModel):
+class HangmanAlphabet(DomainModel):
     alphabet: List[str]

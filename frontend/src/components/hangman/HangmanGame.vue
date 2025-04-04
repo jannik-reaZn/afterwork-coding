@@ -2,18 +2,16 @@
   <div class="flex flex-1 text-center">
     <div
       class="flex flex-1 flex-col items-center justify-center"
-      v-if="store.game?.total_tries === 0 || store.game?.is_game_won_status"
+      v-if="store.game?.totalTries === 0 || store.game?.isGameWonStatus"
     >
       <h1
-        :class="
-          store.game?.is_game_won_status ? 'text-green-700' : 'text-red-500'
-        "
+        :class="store.game?.isGameWonStatus ? 'text-green-700' : 'text-red-500'"
         class="mb-8 text-3xl font-bold"
       >
-        {{ store.game?.is_game_won_status ? "You Won!" : "Game Over" }}
+        {{ store.game?.isGameWonStatus ? "You Won!" : "Game Over" }}
       </h1>
       <p>The word was:</p>
-      <p class="text-2xl">{{ store.game?.random_word }}</p>
+      <p class="text-2xl">{{ store.game?.randomWord }}</p>
       <Button
         label="Play Again"
         class="mt-5"
@@ -40,19 +38,19 @@
       <img class="mx-auto size-100" :src="currentHangmanImage" alt="Hangman" />
 
       <span
-        v-for="(letter, index) in store.game?.random_word"
+        v-for="(letter, index) in store.game?.randomWord"
         :key="index"
         class="text-4xl"
       >
-        {{ store.game?.guessed_letters.includes(letter) ? `${letter} ` : "_ " }}
+        {{ store.game?.guessedLetters.includes(letter) ? `${letter} ` : "_ " }}
       </span>
 
-      <p class="my-3">Number of tries left: {{ store.game?.total_tries }}</p>
+      <p class="my-3">Number of tries left: {{ store.game?.totalTries }}</p>
       <Button
         v-for="letter in store.alphabet"
         :key="letter"
         :label="letter"
-        :disabled="store.game?.guessed_letters.includes(letter)"
+        :disabled="store.game?.guessedLetters.includes(letter)"
         size="small"
         class="m-1"
         @click="store.guessLetter(letter)"
@@ -106,7 +104,7 @@ const hangmanImages = [
  * It then returns the image at that index from the hangmanImages array.
  */
 const currentHangmanImage = computed(() => {
-  const triesLeft = store.game?.total_tries;
+  const triesLeft = store.game?.totalTries;
   const index = hangmanImages.length - triesLeft - 1;
   return hangmanImages[index];
 });

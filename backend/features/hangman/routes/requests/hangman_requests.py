@@ -1,9 +1,9 @@
 from typing import List
 
-from pydantic import BaseModel
+from backend.common.domain.models import DomainModel
 
 
-class HangmanRequest(BaseModel):
+class HangmanRequest(DomainModel):
     random_word: str
     total_tries: int
     guessed_letters: List[str]

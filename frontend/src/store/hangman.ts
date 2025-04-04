@@ -47,6 +47,7 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
       resetCurrentLanguage();
       currentLanguage.value = language.toLowerCase();
       game.value = await startHangmanGame(tries, language.toLowerCase());
+      console.log("Game started", game.value);
     } catch (error: any) {
       return error;
     }
@@ -81,10 +82,10 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
   function checkGameCompletion() {
     if (!game.value) return;
 
-    if (game.value.total_tries === 0 || game.value.is_game_won_status) {
+    if (game.value.totalTries === 0 || game.value.isGameWonStatus) {
       lastGameResult.value = {
-        word: game.value.random_word,
-        won: game.value.is_game_won_status,
+        word: game.value.randomWord,
+        won: game.value.isGameWonStatus,
       };
     }
   }
