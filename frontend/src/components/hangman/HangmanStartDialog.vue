@@ -13,7 +13,7 @@
       <label for="tries" class="text-surface-500">Number of tries</label>
       <Select
         v-model="selectedTry"
-        :options="tries"
+        :options="triesOptions"
         optionLabel="name"
         optionValue="tries"
         size="small"
@@ -24,7 +24,7 @@
       <label for="language" class="text-surface-500">Language</label>
       <Select
         v-model="selectedLanguage"
-        :options="languages"
+        :options="languageOptions"
         optionLabel="name"
         optionValue="language"
         size="small"
@@ -37,41 +37,45 @@
       class="mt-2 w-full"
       size="small"
       @click="startGame"
-    ></Button>
+    />
   </Dialog>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { useHangmanSettings } from "@/composables/useHangmanSettings";
+import { capitalizeFirstLetter } from "@/utils/utils";
 
 // Store
 import { useHangmanStore } from "@/store/hangman";
 const store = useHangmanStore();
 
+// Props/Model
 const showHangmanModal = defineModel<boolean>({ required: true });
 
-const NUMBER_OF_TRIES = 6;
+// Composables
+const {
+  triesOptions,
+  languageOptions,
+  defaultTry,
+  defaultLanguage,
+  loadSettings,
+} = useHangmanSettings();
 
-const selectedTry = ref<number>(NUMBER_OF_TRIES);
+// Selections
+const selectedTry = ref<number>();
+const selectedLanguage = ref<string>();
 
-// TODO This should be fetched from the backend
-const tries = ref([
-  { name: NUMBER_OF_TRIES, tries: 6 },
-  { name: 7, tries: 7 },
-  { name: 8, tries: 8 },
-  { name: 9, tries: 9 },
-]);
+// Initialize settings
+onMounted(async () => {
+  await loadSettings();
+  selectedTry.value = defaultTry.value;
+  selectedLanguage.value = defaultLanguage.value;
+});
 
-const selectedLanguage = ref<string>("American");
-const languages = ref([
-  { name: "American", language: "American" },
-  { name: "German", language: "German" },
-]);
-
+// Actions
 function startGame() {
   showHangmanModal.value = false;
   store.startGame(selectedTry.value, selectedLanguage.value);
 }
 </script>
-
-<style scoped></style>

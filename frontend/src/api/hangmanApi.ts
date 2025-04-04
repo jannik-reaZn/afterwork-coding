@@ -1,5 +1,29 @@
 import axiosInstance from "./axiosInstance";
 import { HangmanGame } from "@/models/hangmanModel";
+import { HangmanSettings } from "@/models/hangmanSettings";
+
+export async function getHangmanSettings(): Promise<HangmanSettings> {
+  const path = "/hangman/settings";
+  try {
+    const response = await axiosInstance.get(path);
+    return response.data as HangmanSettings;
+  } catch (error: any) {
+    throw error;
+  }
+}
+
+export async function getHangmanGameAlphabet(language: string) {
+  const path = "/hangman/alphabet";
+  try {
+    const params = {
+      language,
+    };
+    const response = await axiosInstance.get(path, { params });
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+}
 
 export async function startHangmanGame(
   tries: number,

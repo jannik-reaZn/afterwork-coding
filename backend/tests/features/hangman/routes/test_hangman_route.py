@@ -1,5 +1,6 @@
 import pytest
 
+from backend.features.hangman.domain.models import HangmanLanguage
 from backend.features.hangman.domain.word_provider import (
     WordProviderStatic,
     get_word_provider_factory,
@@ -19,7 +20,9 @@ def override_word_provider():
 
 
 def test_start_game_endpoint(test_client):
-    response = test_client.get("api/hangman/start", params={"tries": 7, "language": "american"})
+    response = test_client.get(
+        "api/hangman/start", params={"tries": 7, "language": HangmanLanguage.AMERICAN.value}
+    )
 
     assert response.status_code == 200
     data = response.json()
@@ -32,7 +35,9 @@ def test_start_game_endpoint(test_client):
 
 def test_guess_letter_correct(test_client):
     # Start a game first
-    start_response = test_client.get("api/hangman/start", params={"tries": 5, "language": "en_US"})
+    start_response = test_client.get(
+        "api/hangman/start", params={"tries": 5, "language": HangmanLanguage.AMERICAN.value}
+    )
     game_state = start_response.json()
 
     # Guess a letter that exists
@@ -48,7 +53,9 @@ def test_guess_letter_correct(test_client):
 
 def test_guess_letter_incorrect(test_client):
     # Start a game first
-    start_response = test_client.get("api/hangman/start", params={"tries": 5, "language": "en_US"})
+    start_response = test_client.get(
+        "api/hangman/start", params={"tries": 5, "language": HangmanLanguage.AMERICAN.value}
+    )
     game_state = start_response.json()
 
     # Guess a letter that does not exist

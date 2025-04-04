@@ -1,6 +1,6 @@
 <template>
   <HangmanStartDialog v-model="showSetupDialog" />
-  <HangmanGame v-show="!showSetupDialog" @game-over="handleGameOver" />
+  <HangmanGame v-if="!showSetupDialog" @game-over="handleGameOver" />
 </template>
 
 <script setup lang="ts">

@@ -49,7 +49,7 @@
 
       <p class="my-3">Number of tries left: {{ store.game?.total_tries }}</p>
       <Button
-        v-for="letter in alphabet"
+        v-for="letter in store.alphabet"
         :key="letter"
         :label="letter"
         :disabled="store.game?.guessed_letters.includes(letter)"
@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useHangmanStore } from "@/store/hangman";
 const store = useHangmanStore();
 
@@ -113,7 +113,9 @@ const currentHangmanImage = computed(() => {
 
 const showDialog = ref(false);
 
-const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+onMounted(async () => {
+  await store.getAlphabet();
+});
 </script>
 
 <style scoped></style>

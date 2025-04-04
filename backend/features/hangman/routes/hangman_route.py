@@ -4,7 +4,13 @@ from fastapi import APIRouter, Body, Depends, Query, status
 
 from backend.common.route.enums.api_routes import ApiRoutes
 from backend.common.route.enums.api_tags import ApiTags
-from backend.features.hangman.domain.models import HangmanGame
+from backend.features.hangman.domain.models import (
+    LANGUAGE_ALPHABETS,
+    HangmanAlphabet,
+    HangmanGame,
+    HangmanLanguage,
+    HangmanSettings,
+)
 from backend.features.hangman.domain.use_cases import (
     GuessHangmanLetterUseCase,
     StartHangmanGameUseCase,
@@ -17,6 +23,28 @@ router = APIRouter(prefix=f"/{ApiRoutes.HANGMAN.value}", tags=[ApiTags.HANGMAN])
 
 
 @router.get(
+    "/settings",
+    response_model=HangmanSettings,
+    status_code=status.HTTP_200_OK,
+    description="Retrieval of Hangman settings",
+)
+async def get_settings(hangman_settings=Depends(HangmanSettings)) -> dict:
+    return hangman_settings.model_dump()
+
+
+@router.get(
+    "/alphabet",
+    response_model=HangmanAlphabet,
+    status_code=status.HTTP_200_OK,
+    description="Retrieval of alphabet based on the language",
+)
+async def get_alphabet(
+    language: HangmanLanguage = Query(..., description="Language for alphabet")
+) -> HangmanAlphabet:
+    return HangmanAlphabet(alphabet=LANGUAGE_ALPHABETS[language])
+
+
+@router.get(
     "/start",
     response_model=HangmanGame,
     status_code=status.HTTP_200_OK,
@@ -24,7 +52,7 @@ router = APIRouter(prefix=f"/{ApiRoutes.HANGMAN.value}", tags=[ApiTags.HANGMAN])
 )
 async def start_hangman(
     tries: int = Query(...),
-    language: str = Query(...),
+    language: HangmanLanguage = Query(...),
     word_provider_factory: Callable[[str], WordProviderInterface] = Depends(
         get_word_provider_factory
     ),
