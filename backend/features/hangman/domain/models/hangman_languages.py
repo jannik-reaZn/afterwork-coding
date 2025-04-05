@@ -1,12 +1,12 @@
-from enum import StrEnum
+from enum import StrEnum, auto
 from typing import Dict, List
 
 from backend.common.domain.models import DomainModel
 
 
 class HangmanLanguage(StrEnum):
-    AMERICAN = "american"
-    GERMAN = "german"
+    AMERICAN = auto()
+    GERMAN = auto()
 
 
 # Language-specific alphabets
