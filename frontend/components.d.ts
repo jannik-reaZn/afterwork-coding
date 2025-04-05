@@ -8,12 +8,18 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Button: typeof import('primevue/button')['default']
+    Card: typeof import('primevue/card')['default']
+    Dialog: typeof import('primevue/dialog')['default']
     GameCard: typeof import('./src/components/GameCard.vue')['default']
     HangmanGame: typeof import('./src/components/hangman/HangmanGame.vue')['default']
     HangmanHelpDialog: typeof import('./src/components/hangman/HangmanHelpDialog.vue')['default']
     HangmanStartDialog: typeof import('./src/components/hangman/HangmanStartDialog.vue')['default']
+    InputText: typeof import('primevue/inputtext')['default']
+    Menu: typeof import('primevue/menu')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Select: typeof import('primevue/select')['default']
   }
 }
