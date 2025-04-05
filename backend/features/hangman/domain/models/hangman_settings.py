@@ -16,6 +16,6 @@ class HangmanSettings(DomainModel):
         description="Possible languages to choose from",
     )
     tries: List[int] = Field(
-        default=range(DEFAULT_HANGMAN_TOTAL_TRIES, MAX_HANGMAN_TOTAL_TRIES + 1),
+        default=list(range(DEFAULT_HANGMAN_TOTAL_TRIES, MAX_HANGMAN_TOTAL_TRIES + 1)),
         description="List of tries to choose from",
     )

@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Any, Callable
 
 from fastapi import APIRouter, Body, Depends, Query, status
 
@@ -28,7 +28,9 @@ router = APIRouter(prefix=f"/{ApiRoutes.HANGMAN.value}", tags=[ApiTags.HANGMAN])
     status_code=status.HTTP_200_OK,
     description="Retrieval of Hangman settings",
 )
-async def get_settings(hangman_settings=Depends(HangmanSettings)) -> dict:
+async def get_settings(
+    hangman_settings: HangmanSettings = Depends(HangmanSettings),
+) -> dict[str, Any]:
     return hangman_settings.model_dump()
 
 
@@ -70,4 +72,5 @@ async def guess_letter(
     letter: str,
     hangman_request: HangmanRequest = Body(...),
 ) -> HangmanGame:
-    return GuessHangmanLetterUseCase()(hangman_status=hangman_request, guessed_letter=letter)
+    hangman_game = HangmanGame(**hangman_request.model_dump())
+    return GuessHangmanLetterUseCase()(hangman_status=hangman_game, guessed_letter=letter)
