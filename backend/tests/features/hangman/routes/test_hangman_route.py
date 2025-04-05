@@ -41,7 +41,7 @@ def test_guess_letter_correct(test_client):
     game_state = start_response.json()
 
     # Guess a letter that exists
-    guess_response = test_client.post(f"api/hangman/guess/S", json=game_state)
+    guess_response = test_client.post("api/hangman/guess/S", json=game_state)
 
     assert guess_response.status_code == 200
     data = guess_response.json()
@@ -59,7 +59,7 @@ def test_guess_letter_incorrect(test_client):
     game_state = start_response.json()
 
     # Guess a letter that does not exist
-    guess_response = test_client.post(f"api/hangman/guess/Z", json=game_state)
+    guess_response = test_client.post("api/hangman/guess/Z", json=game_state)
 
     assert guess_response.status_code == 200
     data = guess_response.json()
