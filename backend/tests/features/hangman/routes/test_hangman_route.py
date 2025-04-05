@@ -21,7 +21,7 @@ def override_word_provider():
     app.dependency_overrides.clear()
 
 
-def test_get_settings_endpoint(test_client):
+def test_get_settings(test_client):
     response = test_client.get(f"{HANGMAN_ROUTE}/settings")
     data = response.json()
 
@@ -37,7 +37,7 @@ def test_get_settings_endpoint(test_client):
         (HangmanLanguage.GERMAN, LANGUAGE_ALPHABETS[HangmanLanguage.GERMAN]),
     ],
 )
-def test_get_alphabet_endpoint(test_client, language, alphabet):
+def test_get_alphabet(test_client, language, alphabet):
     response = test_client.get(f"{HANGMAN_ROUTE}/alphabet", params={"language": language})
     data = response.json()
 
@@ -45,7 +45,7 @@ def test_get_alphabet_endpoint(test_client, language, alphabet):
     assert data["alphabet"] == alphabet
 
 
-def test_start_game_endpoint(test_client):
+def test_start_game(test_client):
     response = test_client.get(
         f"{HANGMAN_ROUTE}/start", params={"tries": 7, "language": HangmanLanguage.AMERICAN}
     )
