@@ -1,12 +1,5 @@
-import { createWebHistory, createRouter } from "vue-router";
-
-import Home from "@/view/Home.vue";
-import Hangman from "@/view/Hangman.vue";
-
-const routes = [
-  { path: "/", component: Home },
-  { path: "/hangman", component: Hangman },
-];
+import { createRouter, createWebHistory } from "vue-router";
+import { routes } from "vue-router/auto-routes";
 
 const router = createRouter({
   history: createWebHistory(),
