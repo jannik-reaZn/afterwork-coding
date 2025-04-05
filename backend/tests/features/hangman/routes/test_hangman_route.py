@@ -21,22 +21,22 @@ def override_word_provider():
 
 def test_start_game_endpoint(test_client):
     response = test_client.get(
-        "api/hangman/start", params={"tries": 7, "language": HangmanLanguage.AMERICAN.value}
+        "api/hangman/start", params={"tries": 7, "language": HangmanLanguage.AMERICAN}
     )
 
     assert response.status_code == 200
     data = response.json()
 
-    assert data["random_word"] == "STATICWORD"
-    assert data["total_tries"] == 7
-    assert data["guessed_letters"] == []
-    assert data["is_game_won_status"] is False
+    assert data["randomWord"] == "STATICWORD"
+    assert data["totalTries"] == 7
+    assert data["guessedLetters"] == []
+    assert data["isGameWonStatus"] is False
 
 
 def test_guess_letter_correct(test_client):
     # Start a game first
     start_response = test_client.get(
-        "api/hangman/start", params={"tries": 5, "language": HangmanLanguage.AMERICAN.value}
+        "api/hangman/start", params={"tries": 5, "language": HangmanLanguage.AMERICAN}
     )
     game_state = start_response.json()
 
@@ -46,15 +46,15 @@ def test_guess_letter_correct(test_client):
     assert guess_response.status_code == 200
     data = guess_response.json()
 
-    assert "S" in data["guessed_letters"]
-    assert data["total_tries"] == 5  # no penalty
-    assert data["is_game_won_status"] is False
+    assert "S" in data["guessedLetters"]
+    assert data["totalTries"] == 5  # no penalty
+    assert data["isGameWonStatus"] is False
 
 
 def test_guess_letter_incorrect(test_client):
     # Start a game first
     start_response = test_client.get(
-        "api/hangman/start", params={"tries": 5, "language": HangmanLanguage.AMERICAN.value}
+        "api/hangman/start", params={"tries": 5, "language": HangmanLanguage.AMERICAN}
     )
     game_state = start_response.json()
 
@@ -64,18 +64,18 @@ def test_guess_letter_incorrect(test_client):
     assert guess_response.status_code == 200
     data = guess_response.json()
 
-    assert "Z" in data["guessed_letters"]
-    assert data["total_tries"] == 4  # penalty for wrong guess
-    assert data["is_game_won_status"] is False
+    assert "Z" in data["guessedLetters"]
+    assert data["totalTries"] == 4  # penalty for wrong guess
+    assert data["isGameWonStatus"] is False
 
 
 def test_game_win(test_client):
     # Setup game with only one letter missing
     state = {
-        "random_word": "HI",
-        "total_tries": 5,
-        "guessed_letters": ["H"],
-        "is_game_won_status": False,
+        "randomWord": "HI",
+        "totalTries": 5,
+        "guessedLetters": ["H"],
+        "isGameWonStatus": False,
     }
 
     guess_response = test_client.post("api/hangman/guess/I", json=state)
@@ -83,5 +83,5 @@ def test_game_win(test_client):
     assert guess_response.status_code == 200
     data = guess_response.json()
 
-    assert "I" in data["guessed_letters"]
-    assert data["is_game_won_status"] is True
+    assert "I" in data["guessedLetters"]
+    assert data["isGameWonStatus"] is True
