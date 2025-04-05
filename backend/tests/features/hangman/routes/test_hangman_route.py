@@ -1,12 +1,14 @@
 import pytest
 
-from backend.features.hangman.domain.models import HangmanLanguage
+from backend.features.hangman.domain.models import LANGUAGE_ALPHABETS, HangmanLanguage
 from backend.features.hangman.domain.word_provider import (
     WordProviderStatic,
     get_word_provider_factory,
 )
 from backend.features.hangman.domain.word_provider.interface import WordProviderInterface
 from backend.main import app
+
+HANGMAN_ROUTE = "api/hangman"
 
 
 @pytest.fixture(autouse=True)
@@ -19,14 +21,37 @@ def override_word_provider():
     app.dependency_overrides.clear()
 
 
-def test_start_game_endpoint(test_client):
-    response = test_client.get(
-        "api/hangman/start", params={"tries": 7, "language": HangmanLanguage.AMERICAN}
-    )
-
-    assert response.status_code == 200
+def test_get_settings_endpoint(test_client):
+    response = test_client.get(f"{HANGMAN_ROUTE}/settings")
     data = response.json()
 
+    assert response.status_code == 200
+    assert data["languages"] == ["american", "german"]
+    assert data["tries"] == [6, 7, 8, 9]
+
+
+@pytest.mark.parametrize(
+    "language, alphabet",
+    [
+        (HangmanLanguage.AMERICAN, LANGUAGE_ALPHABETS[HangmanLanguage.AMERICAN]),
+        (HangmanLanguage.GERMAN, LANGUAGE_ALPHABETS[HangmanLanguage.GERMAN]),
+    ],
+)
+def test_get_alphabet_endpoint(test_client, language, alphabet):
+    response = test_client.get(f"{HANGMAN_ROUTE}/alphabet", params={"language": language})
+    data = response.json()
+
+    assert response.status_code == 200
+    assert data["alphabet"] == alphabet
+
+
+def test_start_game_endpoint(test_client):
+    response = test_client.get(
+        f"{HANGMAN_ROUTE}/start", params={"tries": 7, "language": HangmanLanguage.AMERICAN}
+    )
+    data = response.json()
+
+    assert response.status_code == 200
     assert data["randomWord"] == "STATICWORD"
     assert data["totalTries"] == 7
     assert data["guessedLetters"] == []
@@ -36,16 +61,15 @@ def test_start_game_endpoint(test_client):
 def test_guess_letter_correct(test_client):
     # Start a game first
     start_response = test_client.get(
-        "api/hangman/start", params={"tries": 5, "language": HangmanLanguage.AMERICAN}
+        f"{HANGMAN_ROUTE}/start", params={"tries": 5, "language": HangmanLanguage.AMERICAN}
     )
     game_state = start_response.json()
 
     # Guess a letter that exists
-    guess_response = test_client.post("api/hangman/guess/S", json=game_state)
-
-    assert guess_response.status_code == 200
+    guess_response = test_client.post(f"{HANGMAN_ROUTE}/guess/S", json=game_state)
     data = guess_response.json()
 
+    assert guess_response.status_code == 200
     assert "S" in data["guessedLetters"]
     assert data["totalTries"] == 5  # no penalty
     assert data["isGameWonStatus"] is False
@@ -54,16 +78,15 @@ def test_guess_letter_correct(test_client):
 def test_guess_letter_incorrect(test_client):
     # Start a game first
     start_response = test_client.get(
-        "api/hangman/start", params={"tries": 5, "language": HangmanLanguage.AMERICAN}
+        f"{HANGMAN_ROUTE}/start", params={"tries": 5, "language": HangmanLanguage.AMERICAN}
     )
     game_state = start_response.json()
 
     # Guess a letter that does not exist
-    guess_response = test_client.post("api/hangman/guess/Z", json=game_state)
-
-    assert guess_response.status_code == 200
+    guess_response = test_client.post(f"{HANGMAN_ROUTE}/guess/Z", json=game_state)
     data = guess_response.json()
 
+    assert guess_response.status_code == 200
     assert "Z" in data["guessedLetters"]
     assert data["totalTries"] == 4  # penalty for wrong guess
     assert data["isGameWonStatus"] is False
@@ -78,10 +101,9 @@ def test_game_win(test_client):
         "isGameWonStatus": False,
     }
 
-    guess_response = test_client.post("api/hangman/guess/I", json=state)
-
-    assert guess_response.status_code == 200
+    guess_response = test_client.post(f"{HANGMAN_ROUTE}/guess/I", json=state)
     data = guess_response.json()
 
+    assert guess_response.status_code == 200
     assert "I" in data["guessedLetters"]
     assert data["isGameWonStatus"] is True
