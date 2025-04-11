@@ -42,9 +42,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useHangmanSettings } from "@/composables/useHangmanSettings";
-import { capitalizeFirstLetter } from "@/utils/utils";
+import { DEFAULT_NUMBER_OF_TRIES, DEFAULT_LANGUAGE } from "@/constants/hangman";
 
 // Store
 import { useHangmanStore } from "@/store/hangman";
@@ -76,6 +76,8 @@ onMounted(async () => {
 // Actions
 function startGame() {
   showHangmanModal.value = false;
-  store.startGame(selectedTry.value, selectedLanguage.value);
+  const tries = selectedTry.value ?? DEFAULT_NUMBER_OF_TRIES;
+  const language = selectedLanguage.value ?? DEFAULT_LANGUAGE;
+  store.startGame(tries, language);
 }
 </script>

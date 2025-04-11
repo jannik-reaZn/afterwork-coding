@@ -104,7 +104,7 @@ const hangmanImages = [
  * It then returns the image at that index from the hangmanImages array.
  */
 const currentHangmanImage = computed(() => {
-  const triesLeft = store.game?.totalTries;
+  const triesLeft = store.game?.totalTries ?? 0;
   const index = hangmanImages.length - triesLeft - 1;
   return hangmanImages[index];
 });
