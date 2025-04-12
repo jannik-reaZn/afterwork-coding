@@ -1,31 +1,36 @@
 <template>
   <div class="flex flex-1 text-center">
-    <div
-      v-if="isGameOver"
-      class="flex flex-1 flex-col items-center justify-center"
-    >
-      <HangmanGameOver @game-over="emit('game-over')" />
-    </div>
+    <template v-if="isGameOver">
+      <div class="flex flex-1 flex-col items-center justify-center">
+        <HangmanGameOver @game-over="handleGameOver" />
+      </div>
+    </template>
 
-    <div v-else class="w-full">
-      <HeaderSection @help-click="showDialog = true" />
-      <HangmanHelpDialog v-model="showDialog" />
+    <template v-else>
+      <div class="w-full">
+        <HeaderSection @help-click="showDialog = true" />
+        <HangmanHelpDialog v-model="showDialog" />
 
-      <img class="mx-auto size-100" :src="currentHangmanImage" alt="Hangman" />
+        <img
+          class="mx-auto size-100"
+          :src="currentHangmanImage"
+          :alt="`Hangman progress: ${store.game?.totalTries} tries left`"
+        />
 
-      <WordDisplay
-        :randomWord="store.game?.randomWord"
-        :guessedLetters="store.game?.guessedLetters"
-      />
+        <WordDisplay
+          :random-word="store.game?.randomWord"
+          :guessed-letters="store.game?.guessedLetters"
+        />
 
-      <p class="my-3">Number of tries left: {{ store.game?.totalTries }}</p>
+        <p class="my-3">Number of tries left: {{ store.game?.totalTries }}</p>
 
-      <LetterButtons
-        :alphabet="store.alphabet"
-        :guessedLetters="store.game?.guessedLetters"
-        @guess="store.guessLetter"
-      />
-    </div>
+        <LetterButtons
+          :alphabet="store.alphabet"
+          :guessed-letters="store.game?.guessedLetters"
+          @guess="store.guessLetter"
+        />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -64,7 +69,16 @@ const hangmanImages = [
 ];
 
 // Emit to notify the parent component when the game is over.
-const emit = defineEmits(["game-over"]);
+interface Emits {
+  (e: "game-over"): void;
+}
+const emit = defineEmits<Emits>();
+
+const handleGameOver = () => {
+  emit("game-over");
+};
+
+// Props
 const showDialog = ref(false);
 
 const store = useHangmanStore();
@@ -77,7 +91,8 @@ const isGameOver = computed(
 // Computes the current hangman image based on the number of tries left.
 const currentHangmanImage = computed(() => {
   const triesLeft = store.game?.totalTries ?? 0;
-  const index = hangmanImages.length - triesLeft - 1;
+  const maxIndex = hangmanImages.length - 1;
+  const index = Math.min(maxIndex, Math.max(0, maxIndex - triesLeft));
   return hangmanImages[index];
 });
 
