@@ -45,9 +45,9 @@
 import { ref, onMounted } from "vue";
 import { useHangmanSettings } from "@/composables/useHangmanSettings";
 import { DEFAULT_NUMBER_OF_TRIES, DEFAULT_LANGUAGE } from "@/constants/hangman";
+import { useHangmanStore } from "@/store/hangman";
 
 // Store
-import { useHangmanStore } from "@/store/hangman";
 const store = useHangmanStore();
 
 // Props/Model
@@ -62,18 +62,18 @@ const {
   loadSettings,
 } = useHangmanSettings();
 
-// Selections
+// State
 const selectedTry = ref<number>();
 const selectedLanguage = ref<string>();
 
-// Initialize settings
+// Lifecycle
 onMounted(async () => {
   await loadSettings();
   selectedTry.value = defaultTry.value;
   selectedLanguage.value = defaultLanguage.value;
 });
 
-// Actions
+// Methods
 function startGame() {
   showHangmanModal.value = false;
   const tries = selectedTry.value ?? DEFAULT_NUMBER_OF_TRIES;

@@ -1,59 +1,29 @@
 <template>
   <div class="flex flex-1 text-center">
     <div
+      v-if="isGameOver"
       class="flex flex-1 flex-col items-center justify-center"
-      v-if="store.game?.totalTries === 0 || store.game?.isGameWonStatus"
     >
-      <h1
-        :class="store.game?.isGameWonStatus ? 'text-green-700' : 'text-red-500'"
-        class="mb-8 text-3xl font-bold"
-      >
-        {{ store.game?.isGameWonStatus ? "You Won!" : "Game Over" }}
-      </h1>
-      <p>The word was:</p>
-      <p class="text-2xl">{{ store.game?.randomWord }}</p>
-      <Button
-        label="Play Again"
-        class="mt-5"
-        @click="emit('game-over')"
-        size="small"
-      />
+      <HangmanGameOver @game-over="emit('game-over')" />
     </div>
+
     <div v-else class="w-full">
-      <div class="my-4 flex items-center">
-        <div class="flex-1"></div>
-        <h1 class="flex-1 text-center text-3xl font-bold">Hangman</h1>
-        <div class="flex-1 px-2 text-right">
-          <Button
-            class="border-black-alpha-90 bg-white"
-            icon="pi pi-question"
-            size="small"
-            rounded
-            @click="showDialog = true"
-          />
-        </div>
-        <HangmanHelpDialog v-model="showDialog" />
-      </div>
+      <HeaderSection @help-click="showDialog = true" />
+      <HangmanHelpDialog v-model="showDialog" />
 
       <img class="mx-auto size-100" :src="currentHangmanImage" alt="Hangman" />
 
-      <span
-        v-for="(letter, index) in store.game?.randomWord"
-        :key="index"
-        class="text-4xl"
-      >
-        {{ store.game?.guessedLetters.includes(letter) ? `${letter} ` : "_ " }}
-      </span>
+      <WordDisplay
+        :randomWord="store.game?.randomWord"
+        :guessedLetters="store.game?.guessedLetters"
+      />
 
       <p class="my-3">Number of tries left: {{ store.game?.totalTries }}</p>
-      <Button
-        v-for="letter in store.alphabet"
-        :key="letter"
-        :label="letter"
-        :disabled="store.game?.guessedLetters.includes(letter)"
-        size="small"
-        class="m-1"
-        @click="store.guessLetter(letter)"
+
+      <LetterButtons
+        :alphabet="store.alphabet"
+        :guessedLetters="store.game?.guessedLetters"
+        @guess="store.guessLetter"
       />
     </div>
   </div>
@@ -62,10 +32,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useHangmanStore } from "@/store/hangman";
-const store = useHangmanStore();
-
-// Components
+import HangmanGameOver from "@/components/hangman/HangmanGameOver.vue";
 import HangmanHelpDialog from "@/components/hangman/HangmanHelpDialog.vue";
+import HeaderSection from "@/components/hangman/HeaderSection.vue";
+import WordDisplay from "@/components/hangman/WordDisplay.vue";
+import LetterButtons from "@/components/hangman/LetterButtons.vue";
 
 // Assets
 import hangman1 from "@/assets/hangman-1.svg";
@@ -78,8 +49,6 @@ import hangman7 from "@/assets/hangman-7.svg";
 import hangman8 from "@/assets/hangman-8.svg";
 import hangman9 from "@/assets/hangman-9.svg";
 import hangman10 from "@/assets/hangman-10.svg";
-
-const emit = defineEmits(["game-over"]);
 
 const hangmanImages = [
   hangman1,
@@ -94,23 +63,25 @@ const hangmanImages = [
   hangman10,
 ];
 
-/**
- * Computes the current hangman image based on the number of tries left.
- *
- * @returns {string} The URL or path of the current hangman image.
- *
- * The function calculates the index of the hangman image to display by
- * subtracting the remaining tries from the total number of tries.
- * It then returns the image at that index from the hangmanImages array.
- */
+// Emit to notify the parent component when the game is over.
+const emit = defineEmits(["game-over"]);
+const showDialog = ref(false);
+
+const store = useHangmanStore();
+
+// Computed property to check if the game is over.
+const isGameOver = computed(
+  () => store.game?.totalTries === 0 || store.game?.isGameWonStatus
+);
+
+// Computes the current hangman image based on the number of tries left.
 const currentHangmanImage = computed(() => {
   const triesLeft = store.game?.totalTries ?? 0;
   const index = hangmanImages.length - triesLeft - 1;
   return hangmanImages[index];
 });
 
-const showDialog = ref(false);
-
+// Fetches the alphabet when the component is mounted.
 onMounted(async () => {
   await store.getAlphabet();
 });
