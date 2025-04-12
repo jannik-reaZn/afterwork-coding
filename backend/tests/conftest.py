@@ -53,7 +53,7 @@ def override_settings(test_settings: Settings):
 
 
 @pytest.fixture(scope="function")
-def test_client(db_session):
+def test_client(db_session: Generator[Session, None, None]):
     """Create a test client that uses the override_get_db fixture to return a session."""
 
     def override_get_db():

@@ -29,7 +29,9 @@ def auth_repo():
 
 
 @pytest.fixture
-def auth_service(settings, auth_repo, user_service):
+def auth_service(
+    settings: SettingsDependency, auth_repo: AuthRepository, user_service: UserService
+):
     return AuthService(settings=settings, auth_repo=auth_repo, user_service=user_service)
 
 
@@ -39,14 +41,16 @@ def user_repo():
 
 
 @pytest.fixture
-def user_service(user_repo):
+def user_service(user_repo: UserRepository):
     return AsyncMock(spec=UserService, user_repo=user_repo)
 
 
 @pytest.mark.asyncio
-async def test_authenticate_user_success(auth_service, user_service):
+async def test_authenticate_user_success(auth_service: AuthService, user_service: UserService):
     # GIVEN
-    user = UserSqlEntity(username="testuser", hashed_password=pwd_context.hash("testpassword"))
+    user = UserSqlEntity(
+        username="testuser", hashed_password=pwd_context.hash("testpassword"), email="test@test.com"
+    )
     user_service.get_user_by_username = AsyncMock(return_value=user)
 
     # WHEN
@@ -57,7 +61,7 @@ async def test_authenticate_user_success(auth_service, user_service):
 
 
 @pytest.mark.asyncio
-async def test_authenticate_user_failure(auth_service, user_service):
+async def test_authenticate_user_failure(auth_service: AuthService, user_service: UserService):
     # GIVEN
     user_service.get_user_by_username = AsyncMock(return_value=None)
 
@@ -68,7 +72,7 @@ async def test_authenticate_user_failure(auth_service, user_service):
     assert authenticated_user is False
 
 
-def test_create_access_token(auth_service):
+def test_create_access_token(auth_service: AuthService):
     # GIVEN
     data = {"sub": "testuser"}
 
@@ -80,9 +84,11 @@ def test_create_access_token(auth_service):
 
 
 @pytest.mark.asyncio
-async def test_get_current_user_success(auth_service, user_service):
+async def test_get_current_user_success(auth_service: AuthService, user_service: UserService):
     # GIVEN
-    user = UserSqlEntity(username="testuser", hashed_password="hashedpassword")
+    user = UserSqlEntity(
+        username="testuser", hashed_password="hashedpassword", email="test@test.com"
+    )
     user_service.get_user_by_username = AsyncMock(return_value=user)
 
     # WHEN
@@ -94,7 +100,7 @@ async def test_get_current_user_success(auth_service, user_service):
 
 
 @pytest.mark.asyncio
-async def test_get_current_user_failure(auth_service, user_service):
+async def test_get_current_user_failure(auth_service: AuthService, user_service: UserService):
     # GIVEN
     user_service.get_user_by_username = AsyncMock(return_value=None)
 
@@ -108,9 +114,11 @@ async def test_get_current_user_failure(auth_service, user_service):
 
 
 @pytest.mark.asyncio
-async def test_login_success(auth_service, user_service):
+async def test_login_success(auth_service: AuthService, user_service: UserService):
     # GIVEN
-    user = UserSqlEntity(username="testuser", hashed_password=pwd_context.hash("testpassword"))
+    user = UserSqlEntity(
+        username="testuser", hashed_password=pwd_context.hash("testpassword"), email="test@test.com"
+    )
     user_service.get_user_by_username = AsyncMock(return_value=user)
 
     form_data = MagicMock()
@@ -126,7 +134,7 @@ async def test_login_success(auth_service, user_service):
 
 
 @pytest.mark.asyncio
-async def test_login_failure(auth_service, user_service):
+async def test_login_failure(auth_service: AuthService, user_service: UserService):
     # GIVEN
     user_service.get_user_by_username = AsyncMock(return_value=None)
 
