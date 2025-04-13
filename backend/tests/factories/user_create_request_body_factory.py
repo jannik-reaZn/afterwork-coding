@@ -5,7 +5,7 @@ from backend.features.user.routes.requests import UserCreateRequestBody
 
 
 class UserCreateRequestBodyFactory(factory.Factory[UserCreateRequestBody]):
-    class Meta(factory.Factory.Meta):
+    class Meta:
         model = UserCreateRequestBody
 
     id = factory.Sequence(lambda n: int(n))  # type: ignore[arg-type]
