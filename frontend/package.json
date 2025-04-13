@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@primevue/auto-import-resolver": "^4.3.3",
+    "@types/node": "^22.14.1",
     "@typescript-eslint/eslint-plugin": "^8.26.1",
     "@typescript-eslint/parser": "^8.26.1",
     "@vitejs/plugin-vue": "^5.2.1",
