@@ -26,7 +26,8 @@ jobs:
         with:
           auto-update-conda: true
           python-version: 3.12.8
-          channels: defaults,conda-forge
+          channels: conda-forge
+          miniforge-version: latest
           environment-file: backend/environment.yml
           activate-environment: afterwork-coding
 
