@@ -11,7 +11,7 @@
         <HeaderSection @help-click="showDialog = true" />
 
         <img
-          class="mx-auto size-100"
+          class="mx-auto size-60 sm:size-100"
           :src="currentHangmanImage"
           :alt="`Hangman progress: ${store.game?.totalTries} tries left`"
         />
