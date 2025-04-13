@@ -11,6 +11,14 @@ from backend.features.hangman.domain.models import HangmanLanguage
 
 
 class HangmanSettings(DomainModel):
+    """
+    Represents the settings for the Hangman game.
+
+    Attributes:
+        languages: A list of possible languages to choose from.
+        tries: A list of possible numbers of tries to choose from.
+    """
+
     languages: List[HangmanLanguage] = Field(
         default=list(HangmanLanguage),
         description="Possible languages to choose from",

@@ -5,7 +5,6 @@ import router from "./router";
 
 // PrimeVue
 import PrimeVue from "primevue/config";
-// import Aura from "@primeuix/themes/aura";
 import "primeicons/primeicons.css";
 
 // PrimeVue Components
