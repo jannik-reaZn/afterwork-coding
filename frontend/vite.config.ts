@@ -1,14 +1,24 @@
 import { defineConfig } from "vite";
+import VueRouter from "unplugin-vue-router/vite";
 import vue from "@vitejs/plugin-vue";
+import tailwindcss from "@tailwindcss/vite";
+// auto import of PrimeVue components
+import Components from "unplugin-vue-components/vite";
+import { PrimeVueResolver } from "@primevue/auto-import-resolver";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue()],
-// Hot Reloads Changes
+  plugins: [
+    VueRouter(),
+    vue(),
+    tailwindcss(),
+    Components({
+      resolvers: [PrimeVueResolver()],
+    }),
+  ],
   server: {
     watch: {
-      usePolling: true
-    }
+      usePolling: true,
+    },
   },
   resolve: {
     alias: {

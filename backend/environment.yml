@@ -1,6 +1,5 @@
 name: afterwork-coding
 channels:
-  - defaults
   - conda-forge
 dependencies:
   - python=3.12.8
@@ -18,3 +17,4 @@ dependencies:
       - pydantic-settings==2.7.1
       - fastapi[standard]==0.115.6
       - sqlmodel==0.0.22
+      - pyright==1.1.399

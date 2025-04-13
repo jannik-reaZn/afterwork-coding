@@ -26,7 +26,8 @@ jobs:
         with:
           auto-update-conda: true
           python-version: 3.12.8
-          channels: defaults,conda-forge
+          channels: conda-forge
+          miniforge-version: latest
           environment-file: backend/environment.yml
           activate-environment: afterwork-coding
 
@@ -58,7 +59,7 @@ jobs:
           node-version: 22.13.1
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci --legacy-peer-deps
 
       - name: Run Vitest
         run: npm run test

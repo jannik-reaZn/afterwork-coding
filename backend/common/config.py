@@ -8,7 +8,7 @@ from pydantic_settings import BaseSettings  # , SettingsConfigDict
 
 class Settings(BaseSettings):
     app_name: str = Field(default="Afterwork Coding")
-    cors_origins: list = ["http://127.0.0.1:5173", "http://localhost:5173"]
+    cors_origins: list[str] = ["http://127.0.0.1:5173", "http://localhost:5173"]
 
     # Read from environment variables
     secret_key_jwt: str = Field(default="test_secret")

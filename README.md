@@ -8,7 +8,7 @@ This project contains multiple singleplayer and multiplayer mini games.
 
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Node.js (LTS)](https://nodejs.org/en)
-- [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/main)
+- [Miniforge](https://github.com/conda-forge/miniforge)
 - Optional: [Linux subsystem for windows](https://learn.microsoft.com/en-us/windows/wsl/install) with WSL2
 
 ## VSCode
@@ -28,24 +28,22 @@ For installation follow the instruction steps on the [offical microsoft website]
 
 If you encounter problem while the installation process, have a look into the [troubleshooting guide](https://learn.microsoft.com/en-us/windows/wsl/troubleshooting).
 
-## Miniconda
+## Miniforge
 
-### Windows
-
-Follow the [instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html) for installing miniconda on windows.
+Follow the [instructions](https://github.com/conda-forge/miniforge) for installing miniforge on windows.
 
 ### Linux
 
-- Download the latest 64-bit version of the miniconda installer
+- Download the latest 64-bit version of the miniforge installer
 
 ```
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 ```
 
 - Install conda
 
 ```
-bash ./Miniconda3-latest-Linux-x86_64.sh
+bash Miniforge3-$(uname)-$(uname -m).sh
 ```
 
 ## Node
