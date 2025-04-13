@@ -2,7 +2,13 @@
   <header class="bg-footer sticky top-0 z-20 shadow-lg">
     <nav class="py-4 text-white">
       <div class="flex items-center justify-between gap-1 px-2">
-        <img src="../style/buttman.webp" alt="logo" loading="lazy" />
+        <img
+          src="../style/buttman.webp"
+          alt="logo"
+          loading="lazy"
+          @click="navigateToHome"
+          class="cursor-pointer"
+        />
         <InputText
           type="text"
           class="w-full"
@@ -25,6 +31,9 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const menu = ref();
 const items = ref([
@@ -48,6 +57,10 @@ const toggle = (event: Event) => {
 };
 
 const search = ref(null);
+
+const navigateToHome = () => {
+  router.push("/");
+};
 </script>
 
 <style scoped>
