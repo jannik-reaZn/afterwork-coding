@@ -3,7 +3,7 @@
     v-model:visible="showHangmanModal"
     modal
     header="Hangman Game"
-    class="w-1/3"
+    class="xxl:w-1/4 w-5/6 sm:w-1/2 xl:w-1/3"
     :closable="false"
     :closeOnEscape="false"
     :dismissableMask="false"
