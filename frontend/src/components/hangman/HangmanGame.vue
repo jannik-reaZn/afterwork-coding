@@ -9,7 +9,6 @@
     <template v-else>
       <div class="w-full">
         <HeaderSection @help-click="showDialog = true" />
-        <HangmanHelpDialog v-model="showDialog" />
 
         <img
           class="mx-auto size-100"
@@ -38,7 +37,6 @@
 import { ref, computed, onMounted } from "vue";
 import { useHangmanStore } from "@/store/hangman";
 import HangmanGameOver from "@/components/hangman/HangmanGameOver.vue";
-import HangmanHelpDialog from "@/components/hangman/HangmanHelpDialog.vue";
 import HeaderSection from "@/components/hangman/HeaderSection.vue";
 import WordDisplay from "@/components/hangman/WordDisplay.vue";
 import LetterButtons from "@/components/hangman/LetterButtons.vue";
