@@ -19,5 +19,7 @@
   "flake8.args": ["--config", "${workspaceFolder}/backend/.flake8"],
   "python.testing.pytestArgs": ["backend"],
   "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true
+  "python.testing.pytestEnabled": true,
+  "vue.format.script.initialIndent": true,
+  "vue.format.style.initialIndent": true
 }
