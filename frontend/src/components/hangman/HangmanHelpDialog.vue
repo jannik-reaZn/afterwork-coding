@@ -3,6 +3,8 @@
     v-model:visible="showDialog"
     modal
     header="Game Rules"
+    class="xxl:w-1/4 w-5/6 sm:w-1/2 xl:w-1/3"
+    :dismissableMask="true"
     :draggable="false"
   >
     <ul class="list-disc pl-5">
