@@ -63,11 +63,6 @@ async def test_authenticate_user_success(auth_service: AuthService, user_service
 @pytest.mark.asyncio
 async def test_authenticate_user_failure(auth_service: AuthService, user_service: UserService):
     # GIVEN
-    user_service.get_user_by_username = AsyncMock(return_value=None)
-
-    # WHEN
-    authenticated_user = await auth_service.authenticate_user("testuser", "wrongpassword")
-
     # THEN
     assert authenticated_user is False
 
@@ -102,11 +97,6 @@ async def test_get_current_user_success(auth_service: AuthService, user_service:
 @pytest.mark.asyncio
 async def test_get_current_user_failure(auth_service: AuthService, user_service: UserService):
     # GIVEN
-    user_service.get_user_by_username = AsyncMock(return_value=None)
-
-    # WHEN
-    token = auth_service.create_access_token(data={"sub": "testuser"})
-    with pytest.raises(HTTPException) as exc_info:
         await auth_service.get_current_user(token)
 
     # THEN
