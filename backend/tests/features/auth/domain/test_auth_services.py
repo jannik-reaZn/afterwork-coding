@@ -109,8 +109,8 @@ async def test_get_current_user_failure(auth_service: AuthService, user_service:
     with pytest.raises(HTTPException) as exc_info:
         await auth_service.get_current_user(token)
 
-        # THEN
-        assert exc_info.value.status_code == status.HTTP_404_NOT_FOUND
+    # THEN
+    assert exc_info.value.status_code == status.HTTP_404_NOT_FOUND
 
 
 @pytest.mark.asyncio
