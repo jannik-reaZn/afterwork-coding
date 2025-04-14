@@ -6,7 +6,7 @@
       </h2>
     </template>
     <template #content>
-      <p class="p-card-content text-center text-gray-600">
+      <p class="p-card-content text-center">
         <slot name="content">
           Try to guess the word before you run out of attempts!
         </slot>
@@ -14,9 +14,7 @@
     </template>
     <template #footer v-if="props.showButton">
       <div class="p-card-footer">
-        <Button
-          class="rounded-lg px-4 py-2 text-white shadow-md transition duration-200 hover:bg-blue-600"
-          @click="openGame"
+        <Button class="rounded-lg px-4 py-2" @click="openGame"
           >Open Game
         </Button>
       </div>
@@ -41,9 +39,7 @@ const openGame = () => {
 
 <style scoped>
 .custom-card {
-  --p-card-background: white;
   --p-card-border-radius: 1rem;
-  --p-card-color: black;
   border: 2px solid lightgrey;
 }
 

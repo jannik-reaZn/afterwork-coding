@@ -10,7 +10,7 @@
     :draggable="false"
   >
     <div class="grid grid-cols-2 gap-4">
-      <label for="tries" class="text-surface-500">Number of tries</label>
+      <label for="tries">Number of tries</label>
       <Select
         v-model="selectedTry"
         :options="triesOptions"
@@ -21,7 +21,7 @@
     </div>
 
     <div class="grid grid-cols-2 gap-4">
-      <label for="language" class="text-surface-500">Language</label>
+      <label for="language">Language</label>
       <Select
         v-model="selectedLanguage"
         :options="languageOptions"
