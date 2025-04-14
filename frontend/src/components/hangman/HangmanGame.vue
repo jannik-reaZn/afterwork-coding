@@ -9,25 +9,15 @@
     <template v-else>
       <div class="w-full">
         <HeaderSection @help-click="showDialog = true" />
-
         <img
           class="mx-auto size-60 sm:size-100"
+          :class="{ 'inverted-svg': themeStore.isDarkMode }"
           :src="currentHangmanImage"
           :alt="`Hangman progress: ${store.game?.totalTries} tries left`"
         />
-
-        <WordDisplay
-          :random-word="store.game?.randomWord"
-          :guessed-letters="store.game?.guessedLetters"
-        />
-
+        <WordDisplay />
         <p class="my-3">Number of tries left: {{ store.game?.totalTries }}</p>
-
-        <LetterButtons
-          :alphabet="store.alphabet"
-          :guessed-letters="store.game?.guessedLetters"
-          @guess="store.guessLetter"
-        />
+        <LetterButtons />
       </div>
     </template>
   </div>
@@ -40,6 +30,9 @@ import HangmanGameOver from "@/components/hangman/HangmanGameOver.vue";
 import HeaderSection from "@/components/hangman/HeaderSection.vue";
 import WordDisplay from "@/components/hangman/WordDisplay.vue";
 import LetterButtons from "@/components/hangman/LetterButtons.vue";
+
+import { useThemeStore } from "@/store/theme";
+const themeStore = useThemeStore();
 
 // Assets
 import hangman1 from "@/assets/hangman-1.svg";
@@ -100,4 +93,10 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Note: The brightness value of 0.93 matches with PrimeVue's dark mode background.
+  If the dark mode background color changes, this value should be updated accordingly. */
+.inverted-svg {
+  filter: brightness(0.93) invert(1) hue-rotate(180deg);
+}
+</style>

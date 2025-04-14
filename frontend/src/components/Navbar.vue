@@ -1,6 +1,12 @@
 <template>
-  <header class="bg-footer sticky top-0 z-20 shadow-lg">
-    <nav class="py-4 text-white">
+  <header
+    class="bg-footer sticky top-0 z-20 shadow-lg"
+    :class="{
+      'shadow-[#18181B]': themeStore.isDarkMode,
+      'shadow-gray-300': !themeStore.isDarkMode,
+    }"
+  >
+    <nav class="py-4">
       <div class="flex items-center justify-between gap-1 px-2">
         <img
           src="../style/buttman.webp"
@@ -16,8 +22,16 @@
           placeholder="Search"
         />
         <Button
+          :icon="themeStore.isDarkMode ? 'pi pi-moon' : 'pi pi-sun'"
+          @click="themeStore.toggleDarkMode"
+          class="p-button-outlined"
+          aria-label="Dark Mode"
+          aria-haspopup="true"
+          aria-controls="dark_mode"
+        />
+        <Button
           type="button"
-          icon="pi pi-ellipsis-v"
+          icon="pi pi-cog"
           @click="toggle"
           aria-haspopup="true"
           aria-controls="overlay_menu"
@@ -32,6 +46,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+
+import { useThemeStore } from "@/store/theme";
+const themeStore = useThemeStore();
 
 const router = useRouter();
 
