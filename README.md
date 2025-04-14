@@ -291,6 +291,14 @@ Alternatively run `git pull` in the terminal.
 
 Alternatively run `git add .`, `git commit -m "message..."` and `git push`
 
+### Delete remote branches
+
+Delete local branches that have been deleted on the remote (origin).
+
+```bash
+git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+```
+
 # GitHub
 
 ## Kanban Board
@@ -351,3 +359,68 @@ Use the board to prioritize tasks, track development flow, and ensure smooth pro
 
 - **Block force pushes**
   Prevent users with push access from force pushing to refs.
+
+# Deployment
+
+The application is hosted on [render.com](render.com). It simplifies the deployment and hosting of web web applications and static sites. It offers static sites, which is perfect for hosting frontend application with Vue.js, and web services, which is perfect for the backend part with python and FastApi. That means that the frontend and backend are hosted as separate services.
+
+## Frontend
+
+The frontend is hosted as a static site. On render it is documented how to setup a [static site](https://render.com/docs/static-sites) and [Vue.js applications](https://render.com/docs/deploy-vue-js).
+
+### Static Site
+
+The static site service by renders offers a `settings` section to setup everything for the application in different steps:
+
+1. General
+   - A unique of the static site. That name will also be part of the URL like that `https://<name>.onrender.com`
+2. Build & Deploy
+
+- **Repository:** The repository used for the static site. Public repositories can be directly linked
+- **Branch:** The Git branch to build and deploy, typically this is the `main` branch.
+- **Root Directory:** For monorepos, which is the case in this project, the root directory needs to be specified. Since the frontend should be served as a static site, `frontend` needs to be set.
+- **Build Command:** The command that render runs to build the app before each deploy. In this case it `npm install` and `npm run build`
+- **Publish Directory:** The relative path of the directory containing built assets to publish. In this case it is `dist`
+
+It is also possible to include Render as a [github action](https://render.com/docs/deploy-hooks#using-with-github-actions) the CICD pipeline. The `deploy hook url` is needed for that.
+
+### Client-Side Routing
+
+A static site with Vue.js and Vue Router also needs a [setup for client side routing](https://render.com/docs/deploy-vue-js#using-client-side-routing). Without a proper server configuration, the users will get a 404 error if they access subdomains, e.g. `https://example.com/user/id`
+
+To solve that issue, all all routing requests needs to be directed to `index.html` so they can be handled by the routing library, in this case Vue Router.
+
+This can be done in the `Rewrite Rule` section for static sites. A rule with values for source path, destination path and action needs to be added as stated in the documentation:
+
+| Name             | Value       |
+| ---------------- | ----------- |
+| Source Path      | /\*         |
+| Destination Path | /index.html |
+| Action           | Rewrite     |
+
+### Environment Variables
+
+In the section for `Environment` secrets can be set. In this project, a variable for setting the connection to the backend and the axios port is needed. The environment variables names are the following and needs to be set accordingly:
+
+| Name                  | Value                       | Explanation                              |
+| --------------------- | --------------------------- | ---------------------------------------- |
+| VITE_AXIOS_BACKENDURL | https://<name>/onrender.com | URL of the web service (backend)         |
+| VITE_PORT             | ...                         | Port number of the web service (backend) |
+
+## Backend
+
+The backend is hosted as a web service. On render it is documented how to setup a [web service](https://render.com/docs/web-services) and [FastAPI applications](https://render.com/docs/deploy-fastapi).
+
+### Web Service
+
+The steps for setting up a web service are similar to static sites:
+
+1. General
+   - A unique of the web service. That name will also be part of the URL like that `https://<name>.onrender.com`. This URL is needed as an environment variable `VITE_AXIOS_BACKENDURL` in the static site.
+2. Build & Deploy
+
+- **Repository:** The repository used for the static site. Public repositories can be directly linked
+- **Branch:** The Git branch to build and deploy, typically this is the `main` branch.
+- **Root Directory:** For monorepos, which is the case in this project, the root directory needs to be specified. Normally this should be `backend`. But since the import paths in the python files are absolute and start with `import backend...`, the root directory needs to be kept empty!
+- **Build Command:** The command that render runs to build the app before each deploy. In this case it `pip install -r backend/requirements.txt`. Notice that `backend/` needs to be set since the root directory is empty.
+- **Start Command:** The command that render runs to start the app with each deploy. In this case it `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`. Notice that `backend/` needs to be set since the root directory is empty.
