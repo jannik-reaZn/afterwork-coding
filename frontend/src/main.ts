@@ -22,7 +22,7 @@ app.use(PrimeVue, {
   theme: {
     preset: customTheme,
     options: {
-      darkModeSelector: false,
+      darkModeSelector: ".dark-mode",
     },
   },
 });
