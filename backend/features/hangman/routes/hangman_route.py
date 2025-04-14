@@ -6,6 +6,7 @@ from backend.common.route.enums.api_routes import ApiRoutes
 from backend.common.route.enums.api_tags import ApiTags
 from backend.features.hangman.domain.models import (
     LANGUAGE_ALPHABETS,
+    LANGUAGE_KEYBOARD_LAYOUTS,
     HangmanAlphabet,
     HangmanGame,
     HangmanLanguage,
@@ -43,7 +44,9 @@ async def get_settings(
 async def get_alphabet(
     language: HangmanLanguage = Query(..., description="Language for alphabet")
 ) -> HangmanAlphabet:
-    return HangmanAlphabet(alphabet=LANGUAGE_ALPHABETS[language])
+    return HangmanAlphabet(
+        alphabet=LANGUAGE_ALPHABETS[language], layout_hints=LANGUAGE_KEYBOARD_LAYOUTS[language]
+    )
 
 
 @router.get(

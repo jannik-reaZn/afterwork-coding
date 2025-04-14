@@ -10,6 +10,7 @@ import {
 import { HangmanGame } from "@/models/hangmanModel";
 import { HangmanSettings } from "@/models/hangmanSettings";
 import { GameResult } from "@/models/hangmanGameResult";
+import { AlphabetSettings } from "@/models/hangmanAlphabet";
 
 export const useHangmanStore = defineStore("hangmanStore", () => {
   // State
@@ -17,7 +18,7 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
   const settings = ref<HangmanSettings>();
   const game = ref<HangmanGame>();
   const lastGameResult = ref<GameResult | null>(null);
-  const alphabet = ref<string[]>([]);
+  const alphabetSettings = ref<AlphabetSettings | null>(null);
 
   // Actions
   async function getSettings() {
@@ -33,8 +34,9 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
       return;
     }
     try {
-      const response = await getHangmanGameAlphabet(currentLanguage.value);
-      alphabet.value = response.alphabet;
+      alphabetSettings.value = await getHangmanGameAlphabet(
+        currentLanguage.value
+      );
     } catch (error: any) {
       return error;
     }
@@ -47,7 +49,6 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
       resetCurrentLanguage();
       currentLanguage.value = language.toLowerCase();
       game.value = await startHangmanGame(tries, language.toLowerCase());
-      console.log("Game started", game.value);
     } catch (error: any) {
       return error;
     }
@@ -72,7 +73,7 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
   }
 
   function resetAlphabet() {
-    alphabet.value = [];
+    alphabetSettings.value = null;
   }
 
   function resetCurrentLanguage() {
@@ -92,8 +93,9 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
 
   return {
     // State
+    currentLanguage,
     settings,
-    alphabet,
+    alphabetSettings,
     game,
     lastGameResult,
     // Actions

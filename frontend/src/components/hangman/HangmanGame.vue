@@ -9,25 +9,14 @@
     <template v-else>
       <div class="w-full">
         <HeaderSection @help-click="showDialog = true" />
-
         <img
           class="mx-auto size-60 sm:size-100"
           :src="currentHangmanImage"
           :alt="`Hangman progress: ${store.game?.totalTries} tries left`"
         />
-
-        <WordDisplay
-          :random-word="store.game?.randomWord"
-          :guessed-letters="store.game?.guessedLetters"
-        />
-
+        <WordDisplay />
         <p class="my-3">Number of tries left: {{ store.game?.totalTries }}</p>
-
-        <LetterButtons
-          :alphabet="store.alphabet"
-          :guessed-letters="store.game?.guessedLetters"
-          @guess="store.guessLetter"
-        />
+        <LetterButtons />
       </div>
     </template>
   </div>
