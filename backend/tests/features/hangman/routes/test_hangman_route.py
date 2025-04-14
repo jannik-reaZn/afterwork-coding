@@ -31,18 +31,27 @@ def test_get_settings(test_client):
 
 
 @pytest.mark.parametrize(
-    "language, alphabet",
+    "language, alphabet, layout_hints",
     [
-        (HangmanLanguage.AMERICAN, LANGUAGE_ALPHABETS[HangmanLanguage.AMERICAN]),
-        (HangmanLanguage.GERMAN, LANGUAGE_ALPHABETS[HangmanLanguage.GERMAN]),
+        (
+            HangmanLanguage.AMERICAN,
+            LANGUAGE_ALPHABETS[HangmanLanguage.AMERICAN],
+            ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"],
+        ),
+        (
+            HangmanLanguage.GERMAN,
+            LANGUAGE_ALPHABETS[HangmanLanguage.GERMAN],
+            ["QWERTZUIOPÜß", "ASDFGHJKLÖÄ", "YXCVBNM"],
+        ),
     ],
 )
-def test_get_alphabet(test_client, language, alphabet):
+def test_get_alphabet(test_client, language, alphabet, layout_hints):
     response = test_client.get(f"{HANGMAN_ROUTE}/alphabet", params={"language": language})
     data = response.json()
 
     assert response.status_code == 200
     assert data["alphabet"] == alphabet
+    assert data["layoutHints"] == layout_hints
 
 
 def test_start_game(test_client):

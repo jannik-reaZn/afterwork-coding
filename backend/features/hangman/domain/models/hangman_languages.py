@@ -23,6 +23,19 @@ LANGUAGE_ALPHABETS: Dict[HangmanLanguage, List[str]] = {
     HangmanLanguage.GERMAN: list("ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß"),
 }
 
+LANGUAGE_KEYBOARD_LAYOUTS: Dict[HangmanLanguage, List[str]] = {
+    HangmanLanguage.AMERICAN: [
+        "QWERTYUIOP",
+        "ASDFGHJKL",
+        "ZXCVBNM",
+    ],
+    HangmanLanguage.GERMAN: [
+        "QWERTZUIOPÜß",
+        "ASDFGHJKLÖÄ",
+        "YXCVBNM",
+    ],
+}
+
 
 class HangmanAlphabet(DomainModel):
     """
@@ -34,3 +47,4 @@ class HangmanAlphabet(DomainModel):
     """
 
     alphabet: List[str]
+    layout_hints: List[str]
