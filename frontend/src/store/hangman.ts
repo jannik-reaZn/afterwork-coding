@@ -42,13 +42,17 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
     }
   }
 
-  async function startGame(tries: number, language: string) {
+  async function startGame(tries: number, language: string, mode: string) {
     try {
       resetGameState();
       resetAlphabet();
       resetCurrentLanguage();
       currentLanguage.value = language.toLowerCase();
-      game.value = await startHangmanGame(tries, language.toLowerCase());
+      game.value = await startHangmanGame(
+        tries,
+        language.toLowerCase(),
+        mode.toLowerCase()
+      );
     } catch (error: any) {
       return error;
     }

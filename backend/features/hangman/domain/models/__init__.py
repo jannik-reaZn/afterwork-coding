@@ -5,4 +5,5 @@ from .hangman_languages import (
     HangmanLanguage,
 )
 from .hangman_models import HangmanGame
+from .hangman_modes import HangmanMode
 from .hangman_settings import HangmanSettings

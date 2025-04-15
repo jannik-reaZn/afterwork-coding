@@ -27,3 +27,4 @@ class HangmanSettings(DomainModel):
         default=list(range(DEFAULT_HANGMAN_TOTAL_TRIES, MAX_HANGMAN_TOTAL_TRIES + 1)),
         description="List of tries to choose from",
     )
+    modes: List[str] = Field(default=["Word", "Sentence"])

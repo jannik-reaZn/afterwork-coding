@@ -14,8 +14,9 @@ class WordProviderFaker(WordProviderInterface):
         fake (Faker): An instance of the Faker class initialized with the specified language.
     """
 
-    def __init__(self, language: str):
+    def __init__(self, language: str, mode: str):
         self.language = language
+        self.mode = mode
         self.fake = Faker(language)
 
     def get_random_word(self) -> str:
@@ -25,7 +26,11 @@ class WordProviderFaker(WordProviderInterface):
         Returns:
             str: A randomly generated word in uppercase.
         """
-        return self.fake.word().upper()
+        match self.mode.value:
+            case "word":
+                return self.fake.word().upper()
+            case "sentence":
+                return "Dies ist ein Satz".upper()
 
 
 def get_word_provider_factory() -> Callable[[str], WordProviderInterface]:
@@ -38,7 +43,7 @@ def get_word_provider_factory() -> Callable[[str], WordProviderInterface]:
         for the specified language.
     """
 
-    def factory(language: str) -> WordProviderInterface:
-        return WordProviderFaker(language=language)
+    def factory(language: str, mode: str) -> WordProviderInterface:
+        return WordProviderFaker(language=language, mode=mode)
 
     return factory

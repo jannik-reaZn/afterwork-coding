@@ -15,7 +15,7 @@ class StartHangmanGameUseCase:
         """
         self.word_provider_factory = word_provider_factory
 
-    def __call__(self, total_tries: int, language: str) -> HangmanGame:
+    def __call__(self, total_tries: int, language: str, mode: str) -> HangmanGame:
         """
         Creates a new HangmanGame instance with a random word and specified total tries.
 
@@ -28,7 +28,7 @@ class StartHangmanGameUseCase:
             the specified total tries, an empty list of guessed letters, and a default
             game-won status of False.
         """
-        word_provider = self.word_provider_factory(language)
+        word_provider = self.word_provider_factory(language, mode)
         random_word = word_provider.get_random_word()
         return HangmanGame(
             random_word=random_word,

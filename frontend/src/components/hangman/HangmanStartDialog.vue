@@ -31,6 +31,16 @@
       />
     </div>
 
+    <div class="grid grid-cols-2 gap-4">
+      <label for="mode">Mode</label>
+      <Select
+        v-model="selectedMode"
+        :options="modeOptions"
+        optionLabel="name"
+        optionValue="mode"
+        size="small"
+      />
+    </div>
     <Button
       type="submit"
       label="Start Game"
@@ -44,7 +54,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useHangmanSettings } from "@/composables/useHangmanSettings";
-import { DEFAULT_NUMBER_OF_TRIES, DEFAULT_LANGUAGE } from "@/constants/hangman";
+import {
+  DEFAULT_NUMBER_OF_TRIES,
+  DEFAULT_LANGUAGE,
+  DEFAULT_MODE,
+} from "@/constants/hangman";
 import { useHangmanStore } from "@/store/hangman";
 
 // Store
@@ -57,20 +71,24 @@ const showHangmanModal = defineModel<boolean>({ required: true });
 const {
   triesOptions,
   languageOptions,
+  modeOptions,
   defaultTry,
   defaultLanguage,
+  defaultMode,
   loadSettings,
 } = useHangmanSettings();
 
 // State
 const selectedTry = ref<number>();
 const selectedLanguage = ref<string>();
+const selectedMode = ref<string>();
 
 // Lifecycle
 onMounted(async () => {
   await loadSettings();
   selectedTry.value = defaultTry.value;
   selectedLanguage.value = defaultLanguage.value;
+  selectedMode.value = defaultMode.value;
 });
 
 // Methods
@@ -78,6 +96,7 @@ function startGame() {
   showHangmanModal.value = false;
   const tries = selectedTry.value ?? DEFAULT_NUMBER_OF_TRIES;
   const language = selectedLanguage.value ?? DEFAULT_LANGUAGE;
-  store.startGame(tries, language);
+  const mode = selectedMode.value ?? DEFAULT_MODE;
+  store.startGame(tries, language, mode);
 }
 </script>

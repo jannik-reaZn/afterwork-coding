@@ -10,6 +10,7 @@ from backend.features.hangman.domain.models import (
     HangmanAlphabet,
     HangmanGame,
     HangmanLanguage,
+    HangmanMode,
     HangmanSettings,
 )
 from backend.features.hangman.domain.use_cases import (
@@ -58,11 +59,14 @@ async def get_alphabet(
 async def start_hangman(
     tries: int = Query(...),
     language: HangmanLanguage = Query(...),
+    mode: HangmanMode = Query(...),
     word_provider_factory: Callable[[str], WordProviderInterface] = Depends(
         get_word_provider_factory
     ),
 ) -> HangmanGame:
-    return StartHangmanGameUseCase(word_provider_factory)(total_tries=tries, language=language)
+    return StartHangmanGameUseCase(word_provider_factory)(
+        total_tries=tries, language=language, mode=mode
+    )
 
 
 @router.post(
