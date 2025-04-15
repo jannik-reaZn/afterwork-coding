@@ -3,7 +3,10 @@ class WordProviderStatic:
     A static word provider that returns a predefined text content.
     """
 
-    def __init__(self, word: str):
+    def __init__(
+        self,
+        word: str,
+    ):
         self.word = word
 
     def get_random_content(self) -> str:

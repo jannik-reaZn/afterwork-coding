@@ -1,21 +1,21 @@
 from typing import Callable
 
+from backend.features.hangman.domain.content_factory.interface import ContentFactoryInterface
 from backend.features.hangman.domain.models import HangmanGame, HangmanLanguage, HangmanMode
-from backend.features.hangman.domain.word_provider.interface import WordProviderInterface
 
 
 class StartHangmanGameUseCase:
     def __init__(
-        self, word_provider_factory: Callable[[HangmanLanguage, HangmanMode], WordProviderInterface]
+        self, content_factory: Callable[[HangmanLanguage, HangmanMode], ContentFactoryInterface]
     ):
         """
         Initializes the CreateHangmanGame use case.
 
         Args:
-            word_provider_factory: A factory function that takes a language string and a HangmanMode
-            and returns an instance of WordProviderInterface, used to provide words for the game.
+            content_factory: A factory function that takes a language string and a HangmanMode
+            and returns an instance of ContentFactoryInterface, used to provide words for the game.
         """
-        self.word_provider_factory = word_provider_factory
+        self.content_factory = content_factory
 
     def __call__(
         self, total_tries: int, language: HangmanLanguage, mode: HangmanMode
@@ -33,8 +33,8 @@ class StartHangmanGameUseCase:
             the specified total tries, an empty list of guessed letters, and a default
             game-won status of False.
         """
-        word_provider = self.word_provider_factory(language, mode)
-        random_word = word_provider.get_random_content()
+        content_factory = self.content_factory(language, mode)
+        random_word = content_factory.get_random_content()
         return HangmanGame(
             random_word=random_word,
             total_tries=total_tries,

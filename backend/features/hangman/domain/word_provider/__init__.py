@@ -1,2 +1,0 @@
-from .word_provider_faker import TextContentFactory, get_text_content_factory
-from .word_provider_static import WordProviderStatic

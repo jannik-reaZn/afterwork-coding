@@ -2,11 +2,11 @@ from typing import Callable
 
 from faker import Faker
 
+from backend.features.hangman.domain.content_factory.interface import ContentFactoryInterface
 from backend.features.hangman.domain.models import HangmanLanguage, HangmanMode
-from backend.features.hangman.domain.word_provider.interface import WordProviderInterface
 
 
-class TextContentFactory(WordProviderInterface):
+class TextContentFactory(ContentFactoryInterface):
     """
     A class that provides random text content (words or sentences) using the Faker library.
 
@@ -40,17 +40,17 @@ class TextContentFactory(WordProviderInterface):
                 raise ValueError(f"Unsupported mode: {self.mode}")
 
 
-def get_text_content_factory() -> Callable[[HangmanLanguage, HangmanMode], WordProviderInterface]:
+def get_text_content_factory() -> Callable[[HangmanLanguage, HangmanMode], ContentFactoryInterface]:
     """
     Creates a factory function for generating instances of TextContentFactory.
 
     Returns:
-        Callable[[str, HangmanMode], WordProviderInterface]: A factory function that takes a
+        Callable[[str, HangmanMode], ContentFactoryInterface]: A factory function that takes a
         language string and a HangmanMode as input and returns an instance of TextContentFactory
         configured for the specified language and mode.
     """
 
-    def factory(language: HangmanLanguage, mode: HangmanMode) -> WordProviderInterface:
+    def factory(language: HangmanLanguage, mode: HangmanMode) -> ContentFactoryInterface:
         return TextContentFactory(language=language, mode=mode)
 
     return factory
