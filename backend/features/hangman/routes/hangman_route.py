@@ -4,20 +4,21 @@ from fastapi import APIRouter, Body, Depends, Query, status
 
 from backend.common.route.enums.api_routes import ApiRoutes
 from backend.common.route.enums.api_tags import ApiTags
+from backend.features.hangman.domain.content_factory import get_text_content_factory
+from backend.features.hangman.domain.content_factory.interface import ContentFactoryInterface
 from backend.features.hangman.domain.models import (
     LANGUAGE_ALPHABETS,
     LANGUAGE_KEYBOARD_LAYOUTS,
     HangmanAlphabet,
     HangmanGame,
     HangmanLanguage,
+    HangmanMode,
     HangmanSettings,
 )
 from backend.features.hangman.domain.use_cases import (
     GuessHangmanLetterUseCase,
     StartHangmanGameUseCase,
 )
-from backend.features.hangman.domain.word_provider import get_word_provider_factory
-from backend.features.hangman.domain.word_provider.interface import WordProviderInterface
 from backend.features.hangman.routes.requests import HangmanRequest
 
 router = APIRouter(prefix=f"/{ApiRoutes.HANGMAN.value}", tags=[ApiTags.HANGMAN])
@@ -58,11 +59,12 @@ async def get_alphabet(
 async def start_hangman(
     tries: int = Query(...),
     language: HangmanLanguage = Query(...),
-    word_provider_factory: Callable[[str], WordProviderInterface] = Depends(
-        get_word_provider_factory
+    mode: HangmanMode = Query(...),
+    content_factory: Callable[[HangmanLanguage, HangmanMode], ContentFactoryInterface] = Depends(
+        get_text_content_factory
     ),
 ) -> HangmanGame:
-    return StartHangmanGameUseCase(word_provider_factory)(total_tries=tries, language=language)
+    return StartHangmanGameUseCase(content_factory)(total_tries=tries, language=language, mode=mode)
 
 
 @router.post(

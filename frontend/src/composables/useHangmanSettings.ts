@@ -24,6 +24,15 @@ export function useHangmanSettings() {
     );
   });
 
+  const modeOptions = computed(() => {
+    return (
+      store.settings?.modes?.map((mode: string) => ({
+        name: capitalizeFirstLetter(mode),
+        mode: capitalizeFirstLetter(mode),
+      })) || []
+    );
+  });
+
   // Default values
   const defaultTry = computed(() => store.settings?.tries?.[0]);
   const defaultLanguage = computed(() => {
@@ -32,6 +41,7 @@ export function useHangmanSettings() {
       : undefined;
   });
 
+  const defaultMode = computed(() => store.settings?.modes?.[0]);
   // Data loading
   async function loadSettings() {
     await store.getSettings();
@@ -40,8 +50,10 @@ export function useHangmanSettings() {
   return {
     triesOptions,
     languageOptions,
+    modeOptions,
     defaultTry,
     defaultLanguage,
+    defaultMode,
     loadSettings,
   };
 }
