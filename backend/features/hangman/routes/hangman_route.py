@@ -17,7 +17,7 @@ from backend.features.hangman.domain.use_cases import (
     GuessHangmanLetterUseCase,
     StartHangmanGameUseCase,
 )
-from backend.features.hangman.domain.word_provider import get_word_provider_factory
+from backend.features.hangman.domain.word_provider import get_text_content_factory
 from backend.features.hangman.domain.word_provider.interface import WordProviderInterface
 from backend.features.hangman.routes.requests import HangmanRequest
 
@@ -60,9 +60,9 @@ async def start_hangman(
     tries: int = Query(...),
     language: HangmanLanguage = Query(...),
     mode: HangmanMode = Query(...),
-    word_provider_factory: Callable[[str], WordProviderInterface] = Depends(
-        get_word_provider_factory
-    ),
+    word_provider_factory: Callable[
+        [HangmanLanguage, HangmanMode], WordProviderInterface
+    ] = Depends(get_text_content_factory),
 ) -> HangmanGame:
     return StartHangmanGameUseCase(word_provider_factory)(
         total_tries=tries, language=language, mode=mode
