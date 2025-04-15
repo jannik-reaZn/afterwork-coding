@@ -1,3 +1,5 @@
+import os
+import random
 from typing import Callable
 
 from faker import Faker
@@ -35,9 +37,17 @@ class TextContentFactory(ContentFactoryInterface):
             case HangmanMode.WORD.value:
                 return self.fake.word().upper()
             case HangmanMode.SENTENCE.value:
-                return "Dies ist ein Satz".upper()
+                return self.choose_random_sentence_from_file()
             case _:
                 raise ValueError(f"Unsupported mode: {self.mode}")
+
+    def choose_random_sentence_from_file(self) -> str:
+        sentences = []
+        sentences_file = os.path.join(os.path.dirname(__file__), "german_sentences.txt")
+        with open(sentences_file, "r") as file:
+            for line in file:
+                sentences.append(str(line).rstrip("\n"))
+        return random.choice(sentences).upper()
 
 
 def get_text_content_factory() -> Callable[[HangmanLanguage, HangmanMode], ContentFactoryInterface]:
