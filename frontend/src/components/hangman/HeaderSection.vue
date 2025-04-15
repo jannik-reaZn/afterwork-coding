@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center py-5">
+  <div class="flex items-center py-2 md:py-5">
     <div class="flex-1 px-5 text-start">
       <Button
         @click="$router.back()"
@@ -9,7 +9,11 @@
       >
       </Button>
     </div>
-    <h1 class="flex-1 text-center text-3xl font-bold">Hangman</h1>
+    <h1
+      class="flex-1 text-center text-base font-bold sm:text-xl md:text-2xl lg:text-3xl"
+    >
+      Hangman
+    </h1>
     <div class="flex-1 px-5 text-right">
       <Button
         icon="pi pi-question"

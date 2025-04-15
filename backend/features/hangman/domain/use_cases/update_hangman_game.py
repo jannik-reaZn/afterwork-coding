@@ -37,9 +37,13 @@ class GuessHangmanLetterUseCase:
         Returns:
             bool: True if all letters in the random word have been guessed, False otherwise.
         """
+        excluded_symbols: list = [",", ".", " ", "!", "?"]
+        random_content_with_excluded_symbols = set(hangman_status.random_word) - set(
+            excluded_symbols
+        )
         return (
             True
-            if set(hangman_status.random_word).issubset(set(hangman_status.guessed_letters))
+            if random_content_with_excluded_symbols.issubset(set(hangman_status.guessed_letters))
             else False
         )
 

@@ -1,0 +1,1 @@
+from .content_factory_interface import ContentFactoryInterface

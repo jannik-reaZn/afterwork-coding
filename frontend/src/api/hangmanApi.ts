@@ -27,12 +27,14 @@ export async function getHangmanGameAlphabet(language: string) {
 
 export async function startHangmanGame(
   tries: number,
-  language: string
+  language: string,
+  mode: string
 ): Promise<HangmanGame> {
   const path = "/hangman/start";
   const params = {
     tries,
     language,
+    mode,
   };
   try {
     const response = await axiosInstance.get(path, { params });
