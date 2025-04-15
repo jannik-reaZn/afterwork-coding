@@ -42,12 +42,32 @@ class TextContentFactory(ContentFactoryInterface):
                 raise ValueError(f"Unsupported mode: {self.mode}")
 
     def choose_random_sentence_from_file(self) -> str:
+        """
+        Selects a random sentence from a file and returns it in uppercase.
+
+        This method reads sentences from a file determined by the current language
+        setting, stores them in a list, and then randomly selects one of the sentences.
+        The selected sentence is converted to uppercase before being returned.
+
+        Returns:
+            str: A randomly chosen sentence from the file, converted to uppercase.
+        """
         sentences = []
-        sentences_file = os.path.join(os.path.dirname(__file__), "german_sentences.txt")
+        sentences_file = self.get_sentence_file_based_on_language()
         with open(sentences_file, "r") as file:
             for line in file:
                 sentences.append(str(line).rstrip("\n"))
         return random.choice(sentences).upper()
+
+    def get_sentence_file_based_on_language(self) -> str:
+        """
+        Returns the path to the sentences file based on the specified language.
+
+        Returns:
+            str: The path to the sentences file.
+        """
+        sentences_file = os.path.join(os.path.dirname(__file__), f"{self.language}_sentences.txt")
+        return sentences_file
 
 
 def get_text_content_factory() -> Callable[[HangmanLanguage, HangmanMode], ContentFactoryInterface]:

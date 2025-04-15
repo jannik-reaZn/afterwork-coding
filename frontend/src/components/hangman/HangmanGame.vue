@@ -9,7 +9,6 @@
     <template v-else>
       <div class="w-full">
         <HeaderSection @help-click="showDialog = true" />
-        {{ store.game?.randomWord }}
         <img
           class="mx-auto size-60 sm:size-100"
           :class="{ 'inverted-svg': themeStore.isDarkMode }"
