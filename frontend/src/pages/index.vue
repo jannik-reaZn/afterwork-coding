@@ -13,25 +13,28 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import GameCard from "@/components/GameCard.vue";
 
-const games = [
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+
+const games = computed(() => [
   {
     id: 1,
-    title: "Hangman",
-    content:
-      "Hangman is a guessing game one player. A word is randomly generated and the player tries to guess it by suggesting letters or numbers within a certain number of guesses.",
+    title: t("hangman.title"),
+    content: t("hangman.description"),
     navigateTo: "/hangman",
     showButton: true,
   },
   {
     id: 2,
-    title: "More games",
-    content: "More games to come!",
+    title: t("card.moreGames.title"),
+    content: t("card.moreGames.description"),
     navigateTo: null,
     showButton: false,
   },
-];
+]);
 </script>
 
 <style scoped>

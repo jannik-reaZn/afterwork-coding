@@ -66,7 +66,9 @@ class TextContentFactory(ContentFactoryInterface):
         Returns:
             str: The path to the sentences file.
         """
-        sentences_file = os.path.join(os.path.dirname(__file__), f"{self.language}_sentences.txt")
+        sentences_file = os.path.join(
+            os.path.dirname(__file__), f"sentences/{self.language}_sentences.txt"
+        )
         return sentences_file
 
 

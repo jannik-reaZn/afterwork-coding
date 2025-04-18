@@ -1,0 +1,50 @@
+{
+  "navbar": {
+    "search": {
+      "title": "Suche",
+      "placeholder": "Suche nach einem Spiel"
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "language": {
+        "title": "Sprache",
+        "placeholder": "Sprache auswählen",
+        "cancel": "Abbrechen",
+        "save": "Speichern"
+      },
+      "logout": {
+        "title": "Abmelden"
+      }
+    }
+  },
+  "card": {
+    "moreGames": {
+      "title": "Mehr Spiele",
+      "description": "Weitere Spiele werden folgen!"
+    },
+    "button": {
+      "title": "Spielen"
+    }
+  },
+  "hangman": {
+    "title": "Galgenmännchen",
+    "description": "Galgenmännchen ist ein Ratespiel für einen Spieler. Alle Buchstaben eines zufälligen Wortes oder Satzes müssen erraten werden.",
+    "numberOfTries": "Anzahl der Versuche",
+    "language": "Sprache",
+    "mode": "Modus",
+    "startGame": "Starte Spiel",
+    "playAgain": "Neustart",
+    "triesLeft": "Versuche übrig:",
+    "won": "Gewonnen!",
+    "lost": "Verloren!",
+    "reveal": "Die Lösung war:",
+    "rules": {
+      "title": "Spielregeln",
+      "items": [
+        "Errate das Wort/den Satz, indem du Buchstaben vorschlägst.",
+        "Nur ein Zeichen pro Runde.",
+        "Wenn du das Wort/den Satz errätst, bevor die Versuche aufgebraucht sind, gewinnst du!"
+      ]
+    }
+  }
+}

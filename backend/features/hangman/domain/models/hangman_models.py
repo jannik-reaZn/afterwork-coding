@@ -9,7 +9,7 @@ from backend.features.hangman.domain.constants import DEFAULT_HANGMAN_TOTAL_TRIE
 class HangmanGame(DomainModel):
     random_word: str = Field(
         min_length=1,
-        description="This is the random word for the hangman game.",
+        description="This is the random word or sentence for the hangman game.",
     )
     total_tries: int = Field(
         ge=0,

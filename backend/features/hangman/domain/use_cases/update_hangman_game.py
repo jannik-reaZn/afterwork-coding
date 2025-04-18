@@ -32,10 +32,11 @@ class GuessHangmanLetterUseCase:
 
         Args:
             hangman_status (HangmanGame): The current status of the Hangman game,
-                including the random word to guess and the letters guessed so far.
+                including the random word/sentence to guess and the letters guessed so far.
 
         Returns:
-            bool: True if all letters in the random word have been guessed, False otherwise.
+            bool: True if all letters in the random word/sentence have been guessed,
+            False otherwise.
         """
         excluded_symbols: list = [",", ".", " ", "!", "?"]
         random_content_with_excluded_symbols = set(hangman_status.random_word) - set(

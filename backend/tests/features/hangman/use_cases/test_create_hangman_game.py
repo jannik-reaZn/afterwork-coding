@@ -1,7 +1,7 @@
 import pytest
 
 from backend.features.hangman.domain.constants import DEFAULT_HANGMAN_TOTAL_TRIES
-from backend.features.hangman.domain.content_factory import WordProviderStatic
+from backend.features.hangman.domain.content_factory import TextContentFactoryStatic
 from backend.features.hangman.domain.content_factory.interface import ContentFactoryInterface
 from backend.features.hangman.domain.models import HangmanMode
 from backend.features.hangman.domain.use_cases import StartHangmanGameUseCase
@@ -9,7 +9,7 @@ from backend.features.hangman.domain.use_cases import StartHangmanGameUseCase
 
 @pytest.fixture
 def word_provider_static():
-    return WordProviderStatic("hangman")
+    return TextContentFactoryStatic(text_content="hangman")
 
 
 @pytest.fixture

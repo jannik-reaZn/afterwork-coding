@@ -24,6 +24,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Select: typeof import('primevue/select')['default']
+    SettingsDialog: typeof import('./src/components/settings/SettingsDialog.vue')['default']
     WordDisplay: typeof import('./src/components/hangman/WordDisplay.vue')['default']
   }
 }
