@@ -2,7 +2,7 @@
   <Dialog
     v-model:visible="showHangmanModal"
     modal
-    header="Hangman Game"
+    :header="$t('hangman.title')"
     class="xxl:w-1/4 w-5/6 sm:w-1/2 xl:w-1/3"
     :closable="false"
     :closeOnEscape="false"
@@ -10,7 +10,7 @@
     :draggable="false"
   >
     <div class="grid grid-cols-2 gap-4">
-      <label for="tries">Number of tries</label>
+      <label for="tries">{{ $t("hangman.numberOfTries") }}</label>
       <Select
         v-model="selectedTry"
         :options="triesOptions"
@@ -21,7 +21,7 @@
     </div>
 
     <div class="grid grid-cols-2 gap-4">
-      <label for="language">Language</label>
+      <label for="language">{{ $t("hangman.language") }}</label>
       <Select
         v-model="selectedLanguage"
         :options="languageOptions"
@@ -32,7 +32,7 @@
     </div>
 
     <div class="grid grid-cols-2 gap-4">
-      <label for="mode">Mode</label>
+      <label for="mode">{{ $t("hangman.mode") }}</label>
       <Select
         v-model="selectedMode"
         :options="modeOptions"
@@ -43,7 +43,7 @@
     </div>
     <Button
       type="submit"
-      label="Start Game"
+      :label="$t('hangman.startGame')"
       class="mt-2 w-full"
       size="small"
       @click="startGame"
@@ -59,9 +59,9 @@ import {
   DEFAULT_LANGUAGE,
   DEFAULT_MODE,
 } from "@/constants/hangman";
-import { useHangmanStore } from "@/store/hangman";
 
 // Store
+import { useHangmanStore } from "@/store/hangman";
 const store = useHangmanStore();
 
 // Props/Model

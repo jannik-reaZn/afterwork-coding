@@ -2,10 +2,10 @@
   <h1 :class="gameStatusClass" class="mb-8 text-3xl font-bold">
     {{ gameStatusMessage }}
   </h1>
-  <p>The word was:</p>
+  <p>{{ $t("hangman.reveal") }}</p>
   <p class="text-2xl">{{ store.game?.randomWord }}</p>
   <Button
-    label="Play Again"
+    :label="$t('hangman.playAgain')"
     class="mt-5"
     @click="emit('game-over')"
     size="small"
@@ -14,14 +14,19 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
+// Store
 import { useHangmanStore } from "@/store/hangman";
+const store = useHangmanStore();
+
+// Internationalization
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
 const emit = defineEmits(["game-over"]);
 
-const store = useHangmanStore();
-
 const gameStatusMessage = computed(() =>
-  store.game?.isGameWonStatus ? "You Won!" : "Game Over"
+  store.game?.isGameWonStatus ? t("hangman.won") : t("hangman.lost")
 );
 
 const gameStatusClass = computed(() =>

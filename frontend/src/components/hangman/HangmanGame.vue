@@ -16,7 +16,9 @@
           :alt="`Hangman progress: ${store.game?.totalTries} tries left`"
         />
         <WordDisplay />
-        <p class="my-3">Number of tries left: {{ store.game?.totalTries }}</p>
+        <p class="my-3">
+          {{ $t("hangman.triesLeft") }} {{ store.game?.totalTries }}
+        </p>
         <LetterButtons />
       </div>
     </template>

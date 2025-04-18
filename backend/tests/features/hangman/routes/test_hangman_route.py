@@ -1,7 +1,7 @@
 import pytest
 
 from backend.features.hangman.domain.content_factory import (
-    WordProviderStatic,
+    TextContentFactoryStatic,
     get_text_content_factory,
 )
 from backend.features.hangman.domain.content_factory.interface import ContentFactoryInterface
@@ -14,7 +14,7 @@ HANGMAN_ROUTE = "api/hangman"
 @pytest.fixture(autouse=True)
 def override_word_provider():
     def static_factory(_: str, __: HangmanMode) -> ContentFactoryInterface:
-        return WordProviderStatic(word="STATICWORD")
+        return TextContentFactoryStatic(text_content="STATICWORD")
 
     app.dependency_overrides[get_text_content_factory] = lambda: static_factory
     yield

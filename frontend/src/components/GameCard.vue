@@ -2,20 +2,18 @@
   <Card class="custom-card">
     <template #title>
       <h2 class="p-card-title text-center">
-        <slot name="title">Hangman</slot>
+        <slot name="title"></slot>
       </h2>
     </template>
     <template #content>
       <p class="p-card-content text-center">
-        <slot name="content">
-          Try to guess the word before you run out of attempts!
-        </slot>
+        <slot name="content"></slot>
       </p>
     </template>
     <template #footer v-if="props.showButton">
       <div class="p-card-footer">
-        <Button class="rounded-lg px-4 py-2" @click="openGame"
-          >Open Game
+        <Button class="rounded-lg px-4 py-2" @click="openGame">
+          {{ $t("card.button.title") }}
         </Button>
       </div>
     </template>
