@@ -19,7 +19,7 @@
           type="text"
           class="w-full"
           v-model="search"
-          placeholder="Search"
+          :placeholder="t('navbar.search.placeholder')"
         />
         <Button
           :icon="themeStore.isDarkMode ? 'pi pi-moon' : 'pi pi-sun'"
@@ -41,28 +41,34 @@
       </div>
     </nav>
   </header>
+  <SettingsDialog v-model="showSettingsDialog" />
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import SettingsDialog from "@/components/settings/SettingsDialog.vue";
 
+// Theme
 import { useThemeStore } from "@/store/theme";
 const themeStore = useThemeStore();
 
-const router = useRouter();
+// Internationalization
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
+// Menu
 const menu = ref();
+const showSettingsDialog = ref(false);
 const items = ref([
   {
-    label: "Profile",
     items: [
       {
-        label: "Settings",
+        label: t("navbar.settings.title"),
         icon: "pi pi-cog",
+        command: () => (showSettingsDialog.value = true),
       },
       {
-        label: "Logout",
+        label: t("navbar.settings.logout.title"),
         icon: "pi pi-sign-out",
       },
     ],
@@ -75,6 +81,9 @@ const toggle = (event: Event) => {
 
 const search = ref(null);
 
+// Navigation
+import { useRouter } from "vue-router";
+const router = useRouter();
 const navigateToHome = () => {
   router.push("/");
 };

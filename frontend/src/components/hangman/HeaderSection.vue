@@ -12,7 +12,7 @@
     <h1
       class="flex-1 text-center text-base font-bold sm:text-xl md:text-2xl lg:text-3xl"
     >
-      Hangman
+      {{ $t("hangman.title") }}
     </h1>
     <div class="flex-1 px-5 text-right">
       <Button

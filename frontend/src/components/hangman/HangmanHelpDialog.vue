@@ -2,7 +2,7 @@
   <Dialog
     v-model:visible="showDialog"
     modal
-    header="Game Rules"
+    :header="$t('hangman.rules.title')"
     class="xxl:w-1/4 w-5/6 sm:w-1/2 xl:w-1/3"
     :dismissableMask="true"
     :draggable="false"
@@ -14,11 +14,9 @@
 </template>
 
 <script setup lang="ts">
-const showDialog = defineModel<boolean>();
+import { useI18n } from "vue-i18n";
+const { tm } = useI18n();
+const rules = tm("hangman.rules.items");
 
-const rules = [
-  "Guess the word by suggesting letters.",
-  "Only one character per guess.",
-  "If you guess the word before running out of tries, you win!",
-];
+const showDialog = defineModel<boolean>();
 </script>

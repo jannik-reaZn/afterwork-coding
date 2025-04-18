@@ -15,6 +15,7 @@ import { AlphabetSettings } from "@/models/hangmanAlphabet";
 export const useHangmanStore = defineStore("hangmanStore", () => {
   // State
   const currentLanguage = ref<string>("");
+  const currentMode = ref<string>("");
   const settings = ref<HangmanSettings>();
   const game = ref<HangmanGame>();
   const lastGameResult = ref<GameResult | null>(null);
@@ -48,6 +49,7 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
       resetAlphabet();
       resetCurrentLanguage();
       currentLanguage.value = language.toLowerCase();
+      currentMode.value = mode.toLowerCase();
       game.value = await startHangmanGame(
         tries,
         language.toLowerCase(),
@@ -82,6 +84,7 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
 
   function resetCurrentLanguage() {
     currentLanguage.value = "";
+    currentMode.value = "";
   }
 
   function checkGameCompletion() {
@@ -98,6 +101,7 @@ export const useHangmanStore = defineStore("hangmanStore", () => {
   return {
     // State
     currentLanguage,
+    currentMode,
     settings,
     alphabetSettings,
     game,

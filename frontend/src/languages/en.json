@@ -1,0 +1,50 @@
+{
+  "navbar": {
+    "search": {
+      "title": "Search",
+      "placeholder": "Search for a game"
+    },
+    "settings": {
+      "title": "Settings",
+      "language": {
+        "title": "Language",
+        "placeholder": "Select language",
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "logout": {
+        "title": "Logout"
+      }
+    }
+  },
+  "card": {
+    "moreGames": {
+      "title": "More Games",
+      "description": "More games coming soon!"
+    },
+    "button": {
+      "title": "Play"
+    }
+  },
+  "hangman": {
+    "title": "Hangman",
+    "description": "Hangman is a single-player guessing game. All letters of a random word or sentence must be guessed correctly.",
+    "numberOfTries": "Number of tries",
+    "language": "Language",
+    "mode": "Mode",
+    "startGame": "Start Game",
+    "playAgain": "Play Again",
+    "triesLeft": "Tries left:",
+    "won": "You won!",
+    "lost": "You lost!",
+    "reveal": "The solution was:",
+    "rules": {
+      "title": "Game Rules",
+      "items": [
+        "Guess the word/sentence by suggesting letters.",
+        "Only one character per turn.",
+        "If you guess the word/sentence before running out of tries, you win!"
+      ]
+    }
+  }
+}

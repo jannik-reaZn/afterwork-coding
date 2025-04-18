@@ -21,11 +21,11 @@ class StartHangmanGameUseCase:
         self, total_tries: int, language: HangmanLanguage, mode: HangmanMode
     ) -> HangmanGame:
         """
-        Creates a new HangmanGame instance with a random word and specified total tries.
+        Creates a new HangmanGame instance with a random word or sentence and specified total tries.
 
         Args:
             total_tries (int): The total number of tries allowed for the game.
-            language (HangmanLanguage): The language to be used for selecting the random word.
+            language (HangmanLanguage): The language used for selecting the random word or sentence.
             mode (HangmanMode): The mode for the hangman game (word or sentence).
 
         Returns:

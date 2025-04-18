@@ -6,7 +6,7 @@ from backend.common.domain.models import DomainModel
 
 
 class HangmanRequest(DomainModel):
-    random_word: str = Field(description="The random word for the hangman game.")
+    random_word: str = Field(description="The random word/sentence for the hangman game.")
     total_tries: int = Field(
         ge=0,
         description="The total tries for the hangman game.",
