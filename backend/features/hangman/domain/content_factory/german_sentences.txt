@@ -240,7 +240,6 @@ es wird nichts so heiß gegessen, wie es gekocht wird
 Essen und Trinken hält Leib und Seele zusammen
 etwas ist faul im Staate Dänemark
 Europa hört an den Pyrenäen auf
-F
 fette Küche macht mageren Beutel
 Fleiß ist des Glückes rechte Hand, Sparsamkeit die linke
 fleißiger Hausvater macht hurtig Gesinde
@@ -300,7 +299,6 @@ gut gekaut ist halb verdaut
 gut Gewissen und armer Herd ist Gott und allen Menschen wert
 guter Start ist halber Sieg
 Gutes braucht seine Zeit
-H
 Haben ist besser als Brauchen
 halt rechtes Maß in Speis' und Trank, so wirst du alt und selten krank
 Handwerk hat goldenen Boden
@@ -603,7 +601,7 @@ wenn dich die bösen Buben locken, dann sollst du in der Stube hocken
 wenn die Katze aus dem Haus ist, tanzen die Mäuse auf dem Tisch
 wenn die Not am größten, ist Gottes Hilfe am nächsten
 wenn du geschwiegen hättest, wärst du ein Philosoph geblieben
-wenn du nicht willst, was man dir tu´, das füg auch keinem Andren zu
+wenn du nicht willst, was man dir tu', das füg auch keinem Andren zu
 wenn einer eine Reise tut, so kann der was erzählen
 wenn einer eine Reise tut, so kann der was verzählen
 wenn es dem Esel zu gut geht, geht er aufs Eis
@@ -678,7 +676,7 @@ wes Brot ich ess, des Lied ich sing
 wie das Haupt, so die Glieder
 wie der Freitag sich neigt, so der Sonntag sich zeigt
 wie der Herr, so sein Gescherr
-wie der Herr, so’s Gescherr
+wie der Herr, so's Gescherr
 wie der Hirt, so die Herde
 wie der Acker, so die Ruben, wie der Vater, so die Buben
 wie der Vater, so der Sohn
