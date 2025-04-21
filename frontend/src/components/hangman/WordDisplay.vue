@@ -20,9 +20,36 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
+// Store
 import { useHangmanStore } from "@/store/hangman";
 const store = useHangmanStore();
-const alwaysVisible = [" ", "-", ".", ",", "!", "?"];
+
+// Characters that are always visible
+const alwaysVisible = [
+  " ",
+  "-",
+  ".",
+  ",",
+  "!",
+  "?",
+  ";",
+  "'",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "0",
+  "(",
+  ")",
+  '"',
+  ":",
+];
 
 // Group the letters by words to keep connected words together
 const wordsArray = computed(() => {
