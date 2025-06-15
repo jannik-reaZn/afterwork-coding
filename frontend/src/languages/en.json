@@ -46,5 +46,20 @@
         "If you guess the word/sentence before running out of tries, you win!"
       ]
     }
+  },
+  "battleship": {
+    "title": "Battleship",
+    "description": "Battleship is a two-player guessing game. The goal is to sink all the opponent's ships before they sink yours.",
+    "startGame": "Start Game",
+    "playAgain": "Play Again",
+    "rules": {
+      "title": "Game Rules",
+      "items": [
+        "Place your ships on the grid.",
+        "Take turns guessing the location of the opponent's ships.",
+        "If you guess correctly, you hit the ship. If not, it's a miss.",
+        "The first player to sink all the opponent's ships wins!"
+      ]
+    }
   }
 }

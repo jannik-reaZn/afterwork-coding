@@ -8,10 +8,14 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Battleship: typeof import('./src/components/battleship/Battleship.vue')['default']
+    BattleshipGameBoard: typeof import('./src/components/battleship/BattleshipGameBoard.vue')['default']
+    BattleshipHelpDialog: typeof import('./src/components/battleship/BattleshipHelpDialog.vue')['default']
     Button: typeof import('primevue/button')['default']
     Card: typeof import('primevue/card')['default']
     Dialog: typeof import('primevue/dialog')['default']
     GameCard: typeof import('./src/components/GameCard.vue')['default']
+    GameHeader: typeof import('./src/components/GameHeader.vue')['default']
     HangmanGame: typeof import('./src/components/hangman/HangmanGame.vue')['default']
     HangmanGameOver: typeof import('./src/components/hangman/HangmanGameOver.vue')['default']
     HangmanHelpDialog: typeof import('./src/components/hangman/HangmanHelpDialog.vue')['default']
@@ -25,6 +29,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Select: typeof import('primevue/select')['default']
     SettingsDialog: typeof import('./src/components/settings/SettingsDialog.vue')['default']
+    Test: typeof import('./src/components/battleship/Test.vue')['default']
     WordDisplay: typeof import('./src/components/hangman/WordDisplay.vue')['default']
   }
 }
