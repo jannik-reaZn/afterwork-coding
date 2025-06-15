@@ -46,5 +46,21 @@
         "Wenn du das Wort/den Satz errätst, bevor die Versuche aufgebraucht sind, gewinnst du!"
       ]
     }
+  },
+  "battleship": {
+    "title": "Schiffe versenken",
+    "description": "Battleship is a two-player guessing game. The goal is to sink all the opponent's ships before they sink yours.",
+    "startGame": "Starte Spiel",
+    "playAgain": "Neustart",
+    "rules": {
+      "title": "Spielregeln",
+      "items": [
+        "Platziere deine Schiffe auf dem Spielfeld.",
+        "Die Schiffe können horizontal oder vertikal platziert werden.",
+        "Die Spieler wechseln sich ab, um die Positionen der gegnerischen Schiffe zu erraten.",
+        "Wenn ein Schiff getroffen wird, wird es markiert.",
+        "Der Spieler, der zuerst alle gegnerischen Schiffe versenkt, gewinnt!"
+      ]
+    }
   }
 }

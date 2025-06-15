@@ -29,6 +29,14 @@ const games = computed(() => [
   },
   {
     id: 2,
+    title: "Battleship",
+    content:
+      "Battleship is a classic game where players try to sink each other's ships.",
+    navigateTo: "/battleship",
+    showButton: true,
+  },
+  {
+    id: 3,
     title: t("card.moreGames.title"),
     content: t("card.moreGames.description"),
     navigateTo: null,
