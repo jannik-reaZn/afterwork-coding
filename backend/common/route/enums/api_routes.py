@@ -5,3 +5,4 @@ class ApiRoutes(StrEnum):
     USER = "user"
     AUTH = "auth"
     HANGMAN = "hangman"
+    EXCEL = "excel"
