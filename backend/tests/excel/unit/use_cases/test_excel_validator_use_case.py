@@ -4,7 +4,6 @@ import pytest
 from pydantic import Field
 
 from backend.common.domain.models.domain_model import DomainModel
-from backend.features.excel.domain.errors import DEFAULT_ERROR_CATALOG, ErrorMapper
 from backend.features.excel.domain.errors.example_model_error_mapper import ExampleModelErrorMapper
 from backend.features.excel.domain.errors.row_validation_error import RowValidationError
 from backend.features.excel.domain.model.example_model import ExampleModel
@@ -212,10 +211,10 @@ def test_custom_start_row_index(start_row_index: int, expected_first_error_row: 
 
     # WHEN & THEN
     with pytest.raises(RowValidationError) as exc_info:
-        validator(invalid_rows)
+        validator(cast(list[dict[str, object]], invalid_rows))
 
     errors = exc_info.value.errors
-    assert len(errors) >= 1
+    assert len(errors) == 1
     assert errors[0].row_index == expected_first_error_row
 
 
@@ -228,10 +227,10 @@ def test_custom_error_mapper():
 
     # WHEN & THEN
     with pytest.raises(RowValidationError) as exc_info:
-        validator(invalid_rows)
+        validator(cast(list[dict[str, object]], invalid_rows))
 
     errors = exc_info.value.errors
-    assert len(errors) >= 1
+    assert len(errors) == 1
 
     # Should use custom error messages from ExampleModelErrorMapper
     code_error = next((err for err in errors if err.field == "code"), None)
@@ -247,10 +246,10 @@ def test_default_error_mapper():
 
     # WHEN & THEN
     with pytest.raises(RowValidationError) as exc_info:
-        validator(invalid_rows)
+        validator(cast(list[dict[str, object]], invalid_rows))
 
     errors = exc_info.value.errors
-    assert len(errors) >= 1
+    assert len(errors) == 1
 
     # Should use default error messages
     age_error = next((err for err in errors if err.field == "age"), None)
