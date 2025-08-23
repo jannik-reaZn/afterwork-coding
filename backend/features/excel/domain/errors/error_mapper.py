@@ -35,8 +35,14 @@ class ErrorMapper:
         code: str,
         ctx: dict[str, Any] | None = None,
         default_raw_msg: str | None = None,
+        input_value: Any = None,
     ) -> UserFriendlyError:
         ctx = ctx or {}
+
+        # Add the input value to context if provided
+        if input_value is not None:
+            ctx["input_value"] = input_value
+
         msg = (
             self.catalog.resolve(field=field, code=code)
             or self.catalog.default

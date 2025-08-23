@@ -43,6 +43,8 @@ class ExcelValidationUseCase(Generic[T]):
                     loc = e.get("loc", [])
                     code = e.get("type", "invalid")
                     field = str(loc[0]) if loc else None
+                    input_value = e.get("input")
+
                     friendly_errors.append(
                         self.error_mapper.map(
                             row_index=row_index,
@@ -50,6 +52,7 @@ class ExcelValidationUseCase(Generic[T]):
                             code=code,
                             ctx=e.get("ctx"),
                             default_raw_msg=e.get("msg"),
+                            input_value=input_value,
                         )
                     )
 
