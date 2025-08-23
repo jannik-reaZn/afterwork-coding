@@ -1,2 +1,3 @@
 from .excel_reader_use_case import ExcelReaderUseCase
 from .excel_validator_use_case import ExcelValidationUseCase
+from .file_reader_use_case_protocol import FileReaderUseCaseProtocol
