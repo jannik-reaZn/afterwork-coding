@@ -240,13 +240,13 @@ def test_map_with_ultimate_fallback(empty_error_mapper: ErrorMapper):
 
 
 @pytest.mark.parametrize(
-    "row_index,field,code,input_value,expected_message_part",
+    "row_index,field,code,ctx,input_value,expected_message_part",
     [
-        (1, "email", "string_pattern_mismatch", "invalid-email", "not a valid email address"),
-        (2, "age", "int_parsing", "not_a_number", "must be a valid number"),
-        (3, "age", "greater_than", "5", "must be greater than"),
-        (4, "code", "string_type", 12345, "must be a text value containing digits"),
-        (5, None, "missing", None, "This field is required"),
+        (1, "email", "string_pattern_mismatch", None, "invalid-email", "not a valid email address"),
+        (2, "age", "int_parsing", "not_a_number", None, "must be a valid number"),
+        (3, "age", "greater_than", {"gt": 1337}, "5", "must be greater than"),
+        (4, "code", "string_type", None, 12345, "must be a text value containing digits"),
+        (5, None, "missing", None, None, "This field is required"),
     ],
 )
 def test_map_various_scenarios(
@@ -254,13 +254,14 @@ def test_map_various_scenarios(
     row_index: int,
     field: str | None,
     code: str,
+    ctx: dict[str, Any] | None,
     input_value: Any,
     expected_message_part: str,
 ):
     """Test various mapping scenarios with parameterized inputs."""
     # WHEN
     result = basic_error_mapper.map(
-        row_index=row_index, field=field, code=code, input_value=input_value
+        row_index=row_index, field=field, code=code, ctx=ctx, input_value=input_value
     )
 
     # THEN
@@ -300,11 +301,12 @@ def test_map_missing_context_variable(basic_error_mapper: ErrorMapper):
     field = "age"
     code = "greater_than"
     input_value = "5"
-    # Not providing 'gt' context variable that the template expects
+    gt_value = 100
+    ctx = {"gt": gt_value}
 
     # WHEN
     result = basic_error_mapper.map(
-        row_index=row_index, field=field, code=code, input_value=input_value
+        row_index=row_index, field=field, code=code, ctx=ctx, input_value=input_value
     )
 
     # THEN
@@ -312,7 +314,7 @@ def test_map_missing_context_variable(basic_error_mapper: ErrorMapper):
     assert result.field == field
     assert result.code == code
     # Should use the original template since formatting failed
-    assert result.message == "Age '5' must be greater than {gt}."
+    assert result.message == f"Age '{input_value}' must be greater than {gt_value}."
 
 
 def test_map_complex_context_with_special_characters():
