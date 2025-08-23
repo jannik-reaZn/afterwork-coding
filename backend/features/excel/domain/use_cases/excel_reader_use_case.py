@@ -12,6 +12,8 @@ class ExcelReaderUseCase:
     def __call__(self, *, sheet: Optional[str] = None) -> list[dict[str, object]]:
         wb = load_workbook(BytesIO(self.file_bytes), data_only=True, read_only=True)
         ws = wb[sheet] if sheet else wb.active
+        if ws is None:
+            raise ValueError(f"Worksheet '{sheet}' not found in the Excel file.")
 
         hdr = next(ws.iter_rows(min_row=self.header_row, max_row=self.header_row, values_only=True))
         headers = [str(h).strip() if h is not None else "" for h in hdr]
