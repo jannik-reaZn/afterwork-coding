@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, Mapping, Optional
+from typing import Any, Dict, Mapping
 
 # Shape:
 #  codes: {"pydantic_code": "Message with {placeholders}"}
@@ -24,7 +24,7 @@ class ErrorCatalog:
             default=d.get("default", "Invalid value."),
         )
 
-    def resolve(self, *, field: Optional[str], code: str) -> Optional[str]:
+    def resolve(self, *, field: str | None, code: str) -> str | None:
         if field and field in self.fields and code in self.fields[field]:
             return self.fields[field][code]
         if code in self.codes:

@@ -1,5 +1,4 @@
 from io import BytesIO
-from typing import Optional
 
 from openpyxl import load_workbook
 
@@ -9,7 +8,7 @@ class ExcelReaderUseCase:
         self.file_bytes = file_bytes
         self.header_row = header_row
 
-    def __call__(self, *, sheet: Optional[str] = None) -> list[dict[str, object]]:
+    def __call__(self, *, sheet: str | None = None) -> list[dict[str, object]]:
         wb = load_workbook(BytesIO(self.file_bytes), data_only=True, read_only=True)
         ws = wb[sheet] if sheet else wb.active
         if ws is None:

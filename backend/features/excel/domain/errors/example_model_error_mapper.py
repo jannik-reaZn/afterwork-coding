@@ -1,10 +1,9 @@
-from typing import Any
-
 from backend.features.excel.domain.errors.default_error_catalog import DEFAULT_ERROR_CATALOG
 from backend.features.excel.domain.errors.error_catalog import ErrorCatalog
 from backend.features.excel.domain.errors.error_mapper import ErrorMapper
 
 
+# NOTE: That class is for testing purposes only. Needs to be moved to test/utils.py or conftest.py
 class ExampleModelErrorMapper(ErrorMapper):
     """
     Custom error mapper for ExampleModel with field-specific error messages.

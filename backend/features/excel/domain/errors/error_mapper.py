@@ -1,22 +1,7 @@
-# Catalog structure:
-# {
-#   "codes": { "<code>": "<message template>" },
-#   "fields": {
-#       "<model_field_or_alias>": { "<code>": "<message template>" }
-#   },
-#   "default": "<fallback message template>"
-# }
 from typing import Any
 
-from backend.common.domain.models.domain_model import DomainModel
-from backend.features.excel.domain.errors.error_catalog import ErrorCatalog
-
-
-class UserFriendlyError(DomainModel):
-    row_index: int
-    field: str | None
-    code: str  # pydantic error "type", e.g. "string_pattern_mismatch"
-    message: str  # mapped, user-facing message
+from backend.features.excel.domain.errors import ErrorCatalog
+from backend.features.excel.domain.errors.user_friendly_error import UserFriendlyError
 
 
 class ErrorMapper:
