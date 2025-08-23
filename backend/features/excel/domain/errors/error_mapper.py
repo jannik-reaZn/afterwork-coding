@@ -6,11 +6,10 @@
 #   },
 #   "default": "<fallback message template>"
 # }
-from typing import Any, Mapping
+from typing import Any
 
 from backend.common.domain.models.domain_model import DomainModel
-
-ErrorCatalog = Mapping[str, Any]
+from backend.features.excel.domain.errors.error_catalog import ErrorCatalog
 
 
 class UserFriendlyError(DomainModel):
@@ -21,7 +20,9 @@ class UserFriendlyError(DomainModel):
 
 
 class ErrorMapper:
-    """Maps a raw Pydantic error to a user-friendly message."""
+    """
+    Thin mapper that uses an ErrorCatalog to produce user-friendly messages.
+    """
 
     def __init__(self, catalog: ErrorCatalog):
         self.catalog = catalog
@@ -37,22 +38,15 @@ class ErrorMapper:
     ) -> UserFriendlyError:
         ctx = ctx or {}
         msg = (
-            # field-specific override first
-            (self.catalog.get("fields", {}).get(field or "", {}) or {}).get(code)
-            # then generic code-level message
-            or self.catalog.get("codes", {}).get(code)
-            # then global default
-            or self.catalog.get("default")
-            # last resort: fall back to pydantic's raw msg
+            self.catalog.resolve(field=field, code=code)
+            or self.catalog.default
             or default_raw_msg
             or "Invalid value."
         )
-        # lightweight templating via str.format on ctx
         try:
             msg = msg.format(**ctx)
         except Exception:
             pass
-
         return UserFriendlyError(
             row_index=row_index,
             field=field,

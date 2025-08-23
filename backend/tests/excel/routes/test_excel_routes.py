@@ -20,6 +20,8 @@ def make_example_model():
 def _xlsx_bytes_with_rows(rows: list[list[Any]], headers: list[str]) -> bytes:
     wb = Workbook()
     ws = wb.active
+    if ws is None:
+        ws = wb.create_sheet()
     ws.append(headers)
     for r in rows:
         ws.append(r)

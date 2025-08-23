@@ -1,29 +1,50 @@
-from typing import Any
+from __future__ import annotations
 
-DEFAULT_ERROR_CATALOG: dict[str, Any] = {
-    "codes": {
-        "string_pattern_mismatch": "Invalid format.",
-        "bool_parsing": "Must be true/false.",
-        "int_parsing": "Must be an integer.",
-        "float_parsing": "Must be a number.",
-        "date_parsing": "Use date format YYYY-MM-DD.",
-        "missing": "This field is required.",
-        "too_short": "Too short (min {min_length}).",
-        "too_long": "Too long (max {max_length}).",
-        "greater_than": "Must be greater than {gt}.",
-        "greater_than_equal": "Must be at least {ge}.",
-        "less_than": "Must be less than {lt}.",
-        "less_than_equal": "Must be at most {le}.",
-        "not_in_enum": "Unsupported value.",
-    },
-    "default": "Invalid value.",
-    "fields": {
-        # per-field overrides (match by model field name or alias; see mapper helper below)
-        "email": {
-            "string_pattern_mismatch": "Please enter a valid email like name@example.com.",
-        },
-        "Birth Date": {  # example using alias as the match key
-            "date_parsing": "Birth Date must be YYYY-MM-DD (e.g., 1990-04-23).",
-        },
-    },
-}
+from dataclasses import dataclass
+from typing import Any, Dict, Mapping, Optional
+
+# Shape:
+#  codes: {"pydantic_code": "Message with {placeholders}"}
+#  fields: {"field_or_alias": {"pydantic_code": "Message"}}
+#  default: "Fallback message"
+CatalogDict = Mapping[str, Any]
+
+
+@dataclass(frozen=True)
+class ErrorCatalog:
+    codes: Mapping[str, str]
+    fields: Mapping[str, Mapping[str, str]]
+    default: str
+
+    @staticmethod
+    def from_dict(d: CatalogDict) -> ErrorCatalog:
+        return ErrorCatalog(
+            codes=d.get("codes", {}) or {},
+            fields=d.get("fields", {}) or {},
+            default=d.get("default", "Invalid value."),
+        )
+
+    def resolve(self, *, field: Optional[str], code: str) -> Optional[str]:
+        if field and field in self.fields and code in self.fields[field]:
+            return self.fields[field][code]
+        if code in self.codes:
+            return self.codes[code]
+        return None
+
+    @staticmethod
+    def merge(*catalogs: ErrorCatalog) -> ErrorCatalog:
+        """
+        Later catalogs override earlier ones (right-most wins).
+        """
+        codes: Dict[str, str] = {}
+        fields: Dict[str, Dict[str, str]] = {}
+        default = "Invalid value."
+
+        for c in catalogs:
+            codes.update(c.codes)
+            # deep merge for fields
+            for f, mapping in c.fields.items():
+                fields.setdefault(f, {}).update(mapping)
+            default = c.default or default
+
+        return ErrorCatalog(codes=codes, fields=fields, default=default)

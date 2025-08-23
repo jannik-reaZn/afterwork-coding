@@ -1,14 +1,10 @@
-# excel_validation_use_case.py (changed)
 from typing import Generic, TypeVar
 
 from pydantic import ValidationError
 
 from backend.common.domain.models.domain_model import DomainModel
-from backend.features.excel.domain.errors import (
-    DEFAULT_ERROR_CATALOG,
-    ErrorMapper,
-    RowValidationError,
-)
+from backend.features.excel.domain.errors import DEFAULT_ERROR_CATALOG, ErrorMapper
+from backend.features.excel.domain.errors.row_validation_error import RowValidationError
 
 T = TypeVar("T", bound=DomainModel)
 
@@ -25,14 +21,9 @@ class ExcelValidationUseCase(Generic[T]):
         self.start_row_index = start_row_index
         self.error_mapper = error_mapper or ErrorMapper(DEFAULT_ERROR_CATALOG)
 
-    @staticmethod
-    def _normalize_keys(d: dict[str, object]) -> dict[str, object]:
-        return {str(k).strip(): v for k, v in d.items() if str(k).strip()}
-
     def _display_field_name(self, field_name: str | None) -> str | None:
         if field_name is None:
             return None
-        # Prefer alias for user-facing messages if available
         mf = getattr(self.model, "model_fields", {}).get(field_name)
         return (getattr(mf, "alias", None) or field_name) if mf else field_name
 
@@ -43,11 +34,12 @@ class ExcelValidationUseCase(Generic[T]):
         for i, raw in enumerate(rows):
             row_index = self.start_row_index + i
             try:
-                item = self.model.model_validate(self._normalize_keys(raw))
+                item = self.model.model_validate(
+                    {k.strip(): v for k, v in raw.items() if str(k).strip()}
+                )
                 items.append(item)
             except ValidationError as ve:
                 for e in ve.errors():
-                    # pydantic v2 error dict has keys: type, loc, msg, input, ctx
                     loc = e.get("loc", [])
                     code = e.get("type", "invalid")
                     field = str(loc[0]) if loc else None
@@ -62,7 +54,6 @@ class ExcelValidationUseCase(Generic[T]):
                     )
 
         if friendly_errors:
-            # signal to the route to return a custom 422 payload
             raise RowValidationError(friendly_errors)
 
         return items
