@@ -40,6 +40,15 @@ class ExcelValidationUseCase(Generic[T]):
                 items.append(item)
             except ValidationError as ve:
                 for e in ve.errors():
+                    # NOTE:
+                    # Pydantic throws an ErrorDetails TypedDict.
+                    # These keys keys that can be used for custom messages.
+                    # https://docs.pydantic.dev/latest/api/pydantic_core/#pydantic_core.ErrorDetails
+
+                    # NOTE:
+                    # Addtional attributes (e.g. gt, ge, pattern) will appear in the ctx.
+                    # All the attributes that appear in ctx can be seen here:
+                    # https://docs.pydantic.dev/latest/api/types/#pydantic.types
                     loc = e.get("loc", [])
                     code = e.get("type", "invalid")
                     field = str(loc[0]) if loc else None
