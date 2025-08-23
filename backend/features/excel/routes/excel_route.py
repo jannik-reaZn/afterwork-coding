@@ -14,6 +14,4 @@ async def validate_excel_file(reader: ReaderDep, validator: ValidatorDep):
         items = validator(rows)
         return items
     except RowValidationError as e:
-        # shape a predictable error body for the frontend
-        # e.errors are already user-friendly
         raise HTTPException(status_code=422, detail=[err.model_dump() for err in e.errors])
