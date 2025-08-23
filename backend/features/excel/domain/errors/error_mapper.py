@@ -37,7 +37,8 @@ class ErrorMapper:
         try:
             msg = msg.format(**ctx)
         except Exception:
-            pass
+            pass  # Use the constructed message from above instead
+
         return UserFriendlyError(
             row_index=row_index,
             field=field,

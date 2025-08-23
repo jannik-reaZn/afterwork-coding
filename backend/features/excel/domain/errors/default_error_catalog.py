@@ -3,7 +3,7 @@ from backend.features.excel.domain.errors.error_catalog import ErrorCatalog
 DEFAULT_ERROR_CATALOG = ErrorCatalog.from_dict(
     {
         "codes": {
-            "string_pattern_mismatch": "Invalid format for '{input_value}'. Expected format not met.",
+            "string_pattern_mismatch": "Invalid format for '{input_value}'. Expected format not met.",  # noqa: E501
             "bool_parsing": "'{input_value}' is not a valid boolean. Must be true/false.",
             "int_parsing": "'{input_value}' is not a valid integer. Must be a whole number.",
             "float_parsing": "'{input_value}' is not a valid number.",
